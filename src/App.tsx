@@ -1,6 +1,7 @@
 import React from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import AccountActivationPage from "./pages/AccountActivationPage"
+import IndexPage from "./pages/IndexPage"
 import LoginPage from "./pages/LoginPage"
 import ForgotPasswordPage from "./pages/ForgotPasswordPage"
 import RootPage from "./pages/RootPage"
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <RootPage />,
         children: [
+            {
+                index: true,
+                element: <IndexPage />,
+            },
             {
                 path: "/home",
                 element: <UserPanelPage />,
