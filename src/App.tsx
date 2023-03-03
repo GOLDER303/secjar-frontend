@@ -2,7 +2,7 @@ import React from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import AccountActivationPage from "./pages/AccountActivationPage"
 import LoginPage from "./pages/LoginPage"
-import PasswordResetPage from "./pages/PasswordResetPage"
+import ForgotPasswordPage from "./pages/ForgotPasswordPage"
 import RootPage from "./pages/RootPage"
 import SupportPage from "./pages/SupportPage"
 import UserPanelPage from "./pages/UserPanelPage"
@@ -27,8 +27,8 @@ const router = createBrowserRouter([
         element: <SupportPage />,
     },
     {
-        path: "/passwordReset",
-        element: <PasswordResetPage />,
+        path: "/forgotPassword",
+        element: <ForgotPasswordPage />,
     },
     {
         path: "/activateAccount",
