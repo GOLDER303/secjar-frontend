@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { IsLoggedInContext, IsLoggedInContextType } from "../IsLoggedInContext"
 import { login } from "../services/AuthService"
 
 const LoginPage: React.FC = () => {
@@ -9,6 +10,7 @@ const LoginPage: React.FC = () => {
     const passwordInputRef = React.useRef<HTMLInputElement>(null)
 
     const [loginError, setLoginError] = React.useState<string>("")
+    const { setIsUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType
 
     const handleSubmit = async () => {
         if (!usernameInputRef.current || !passwordInputRef.current) {
@@ -16,9 +18,12 @@ const LoginPage: React.FC = () => {
         }
         setLoginError("")
 
+        setIsUserLoggedIn(false)
+
         const responseStatus = await login(usernameInputRef.current.value, passwordInputRef.current.value)
 
         if (responseStatus == 200) {
+            setIsUserLoggedIn(true)
             navigate("/home")
         } else if (responseStatus == 401) {
             setLoginError("Podałeś zły login lub hasło")

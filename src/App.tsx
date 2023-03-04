@@ -1,9 +1,10 @@
 import React from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import IsLoggedInProvider from "./IsLoggedInContext"
 import AccountActivationPage from "./pages/AccountActivationPage"
+import ForgotPasswordPage from "./pages/ForgotPasswordPage"
 import IndexPage from "./pages/IndexPage"
 import LoginPage from "./pages/LoginPage"
-import ForgotPasswordPage from "./pages/ForgotPasswordPage"
 import RootPage from "./pages/RootPage"
 import SupportPage from "./pages/SupportPage"
 import UserPanelPage from "./pages/UserPanelPage"
@@ -42,7 +43,11 @@ const router = createBrowserRouter([
 ])
 
 const App: React.FC = () => {
-    return <RouterProvider router={router} />
+    return (
+        <IsLoggedInProvider>
+            <RouterProvider router={router} />
+        </IsLoggedInProvider>
+    )
 }
 
 export default App
