@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, useNavigate} from "react-router-dom"
-import { IsLoggedInContext, IsLoggedInContextType } from "../IsLoggedInContext"
+import { IsLoggedInContext, IsLoggedInContextType } from "../contexts/IsLoggedInContext"
 import { logout } from "../services/AuthService"
 
 const Navbar: React.FC = () => {

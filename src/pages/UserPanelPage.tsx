@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { IsLoggedInContext, IsLoggedInContextType } from "../IsLoggedInContext"
+import { IsLoggedInContext, IsLoggedInContextType } from "../contexts/IsLoggedInContext"
 
 const UserPanelPage: React.FC = () => {
     const { isUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType

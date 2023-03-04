@@ -1,6 +1,6 @@
 import React from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import IsLoggedInProvider from "./IsLoggedInContext"
+import IsLoggedInProvider from "./contexts/IsLoggedInContext"
 import AccountActivationPage from "./pages/AccountActivationPage"
 import ForgotPasswordPage from "./pages/ForgotPasswordPage"
 import IndexPage from "./pages/IndexPage"
