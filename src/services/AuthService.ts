@@ -16,3 +16,7 @@ export const login = async (username: string, password: string) => {
         return data.status
     }
 }
+
+export const logout = () => {
+    localStorage.removeItem("jwt")
+}
