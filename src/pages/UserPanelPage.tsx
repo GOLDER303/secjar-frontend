@@ -1,77 +1,68 @@
-import React, {ReactElement, useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { IsLoggedInContext, IsLoggedInContextType } from "../contexts/IsLoggedInContext"
-import FileEntry from "../components/FileEntry";
-import {getMyFiles} from "../services/FileSystemEntryInfoService";
-import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo";
-import FileUploadCard from "../components/FileUploadCard";
+import FileEntry from "../components/FileEntry"
+import { getFileSystemEntriesInfo } from "../services/FileSystemEntryInfoService"
+import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo"
+import FileUploadCard from "../components/FileUploadCard"
 
 const UserPanelPage: React.FC = () => {
-    const { isUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType;
-    const [fileArray, setFileArray] = React.useState<Array<ReactElement<any, any>> | null>(null);
+    const { isUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType
     const [fileUploadCardVisible, setFileUploadCardVisible] = useState(false);
     const [fileUploadDirectory, setFileUploadDirectory] = useState<string | null>(null);
-    let filesData : [FileSystemEntryInfo];
+    const [fileSystemEntriesInfo, setFileSystemEntriesInfo] = React.useState<FileSystemEntryInfo[]>([])
 
     useEffect(() => {
-        getMyFiles().then((fileData) => {
-            if (fileData.error) {
-                console.log("fileData error")
+        getFileSystemEntriesInfo().then((getFileSystemEntriesInfoResponse) => {
+            if (getFileSystemEntriesInfoResponse.error) {
+                //TODO: handle error
             }
-            if (fileData.data) {
-                filesData = fileData.data;
-                setFileArray(filesData.map((val) => {
-                    return <FileEntry key={val.id}
-                            data={val}
-                            setFileUploadCardVisible={(isVisible : boolean) => {setFileUploadCardVisible(isVisible)}}
-                            setFileUploadDirectory={(directory : string) => {setFileUploadDirectory(directory)}}
-                    />
-                }));
+            if (getFileSystemEntriesInfoResponse.data) {
+                setFileSystemEntriesInfo(getFileSystemEntriesInfoResponse.data)
             }
-        });
+        })
     }, [])
 
-    const showFileUploadCard = (visible: boolean, directory: string | null) => {
-        if (visible) {
-            return (
-                <FileUploadCard
-                    uuid={directory}
-                    setFileUploadCardVisible={(isVisible: boolean) => {setFileUploadCardVisible(isVisible)}}
-                />
-            )
-        }else{
-            return <></>
-        }
-    }
-
-    const showPage = () => {
-        return (
-            <>
-                {fileArray
-                    ? <div>
-                        <div>{fileArray}</div>
-                        <button onClick={() => {
-                            setFileUploadCardVisible(true);
-                            setFileUploadDirectory(null);
-                        }}>Upload to root</button>
-                </div>
-                    : <p>There is no files present. Try to upload a file.</p>}
-            </>
-        )
-    }
-
     return (
-        <>
+        <div>
             <h1>User Panel Page</h1>
-            {isUserLoggedIn
-                ? <>
-                    <h2>Hello</h2><br />
-                    {showPage()}
-                    {showFileUploadCard(fileUploadCardVisible, fileUploadDirectory)}
-                </>
-                : <h2>You need to <Link to={"/login"}>login</Link> first</h2>}
-
-        </>
+            {isUserLoggedIn ? (
+                <div>
+                    <table>
+                        <tr>
+                            <th>Nazwa pliku</th>
+                            <th>Typ</th>
+                            <th>Właściciel</th>
+                            <th>Rozmiar</th>
+                        </tr>
+                        {fileSystemEntriesInfo.map((fileSystemEntryInfo) => {
+                            return <FileEntry
+                                key={fileSystemEntryInfo.id}
+                                fileSystemEntryInfo={fileSystemEntryInfo}
+                                setFileUploadCardVisible={(isVisible : boolean) => {setFileUploadCardVisible(isVisible)}}
+                                setFileUploadDirectory={(directory : string) => {setFileUploadDirectory(directory)}}
+                            />
+                        })}
+                    </table>
+                    <button onClick={() => {
+                        setFileUploadCardVisible(true);
+                        setFileUploadDirectory(null);
+                    }}>
+                        Upload to root
+                    </button>
+                    {fileUploadCardVisible ? (
+                        <FileUploadCard
+                            uuid={fileUploadDirectory}
+                            setFileUploadCardVisible={(isVisible: boolean) => {setFileUploadCardVisible(isVisible)}}
+                        />
+                    ) : ("")}
+                </div>
+            ) : (
+                <h2>
+                    You need to <Link to={"/login"}>login</Link> first
+                </h2>
+            )}
+        </div>
     )
 }
 

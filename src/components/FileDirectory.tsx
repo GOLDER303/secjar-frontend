@@ -3,7 +3,7 @@ import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo";
 import FileEntry from "./FileEntry";
 
 interface FileDirectoryProps {
-    data: FileSystemEntryInfo,
+    fileSystemEntryInfo: FileSystemEntryInfo,
     setFileUploadCardVisible: (param: boolean) => void,
     setFileUploadDirectory: (param: string) => void
 }
@@ -11,22 +11,23 @@ interface FileDirectoryProps {
 const FileDirectory : React.FC<FileDirectoryProps> = (props) => {
     const [fileArray, setFileArray] = React.useState<Array<ReactElement<any, any>> | null>(null);
     const [showFileArray, setShowFileArray] = useState(false);
-    if (props.data.children.length == 0){
+    if (props.fileSystemEntryInfo.children.length == 0){
         return (<div className="directory">empty directory</div>)
     }
     else{
         useEffect(() => {
-            setFileArray(props.data.children.map((val) => {
-                return <FileEntry key={val.id}
-                    data={val}
+            setFileArray(props.fileSystemEntryInfo.children.map((val) => {
+                return <FileEntry
+                    key={val.id}
+                    fileSystemEntryInfo={val}
                     setFileUploadCardVisible={(isVisible : boolean) => {props.setFileUploadCardVisible(isVisible)}}
                     setFileUploadDirectory={(directory : string) => {props.setFileUploadDirectory(directory)}}
                 />
             }));
         }, [])
         return <div className="directory"><div>
-            <p>{props.data.name} owned by {props.data.uuid}</p>
-            <span>Last update{props.data.deleteDate ? <> on {props.data.deleteDate}</> : ": never"} </span>
+            <p>{props.fileSystemEntryInfo.name} owned by {props.fileSystemEntryInfo.uuid}</p>
+            <span>Last update{props.fileSystemEntryInfo.deleteDate ? <> on {props.fileSystemEntryInfo.deleteDate}</> : ": never"} </span>
         </div>
             <div onClick={() => {setShowFileArray(!showFileArray)}}>
                 {showFileArray ? <>▼ <>{fileArray}</></> : "► "}
@@ -35,7 +36,7 @@ const FileDirectory : React.FC<FileDirectoryProps> = (props) => {
             <button onClick={
                 () => {
                     props.setFileUploadCardVisible(true);
-                    props.setFileUploadDirectory(props.data.uuid);
+                    props.setFileUploadDirectory(props.fileSystemEntryInfo.uuid);
                 }
             }>Upload here</button>
         </div>

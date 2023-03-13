@@ -1,18 +1,16 @@
-import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO";
-import axios, {AxiosError} from "axios";
-import ApiErrorResponseDTO from "../ts/interfaces/ApiErrorResponseDTO";
-import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo";
+import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO"
+import axios, { AxiosError } from "axios"
+import ApiErrorResponseDTO from "../ts/interfaces/ApiErrorResponseDTO"
+import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo"
 
-export const getMyFiles = async () : Promise<
-    GeneralApiResponseDTO<[FileSystemEntryInfo]>
-    > => {
+export const getFileSystemEntriesInfo = async (): Promise<GeneralApiResponseDTO<[FileSystemEntryInfo]>> => {
     try {
         const response = await axios.get("http://localhost:8080/fileSystemEntries/info", {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
         })
-        return { data: response.data.fileSystemEntryInfoList}
+        return { data: response.data.fileSystemEntryInfoList }
     } catch (err) {
         const error = err as AxiosError
 

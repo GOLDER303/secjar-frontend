@@ -1,47 +1,59 @@
-import React from "react";
-import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo";
-import FileDirectory from "./FileDirectory";
+import React from "react"
+import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo"
+import FileDirectory from "./FileDirectory"
 
 interface FileEntryProps {
-    data: FileSystemEntryInfo,
-    setFileUploadCardVisible: (param: boolean) => void,
+    fileSystemEntryInfo: FileSystemEntryInfo
+    setFileUploadCardVisible: (param: boolean) => void
     setFileUploadDirectory: (param: string) => void
 }
 
-function getBaseLog(base : number, val: number) {
-    return Math.log(val) / Math.log(base);
-}
 const sizeUnits = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
-const FileEntry : React.FC<FileEntryProps> = (props) => {
-    let sizeScale = props.data.size != 0 ? Math.floor(getBaseLog(1024, props.data.size)) : 0;
-    sizeScale = Math.min(sizeScale, 6);
-    let sizeValue = Math.floor(100*props.data.size/Math.pow(1024, sizeScale))/100;
-    let sizeUnit = sizeUnits[sizeScale];
-    let typeOfContent : string;
-    switch (props.data.contentType){
+const FileEntry: React.FC<FileEntryProps> = (props) => {
+    let sizeValue = 0
+    let sizeUnit = ""
+
+    if (props.fileSystemEntryInfo.size != 0) {
+        const getBaseLog = (val: number, base: number) => {
+            return Math.log(val) / Math.log(base)
+        }
+        const sizeScale = Math.min(Math.floor(getBaseLog(props.fileSystemEntryInfo.size, 1024)), 6)
+        sizeValue = Math.floor((100 * props.fileSystemEntryInfo.size) / Math.pow(1024, sizeScale)) / 100
+        sizeUnit = sizeUnits[sizeScale]
+    }
+
+    let contentType: string
+    switch (props.fileSystemEntryInfo.contentType) {
         case "text/plain":
-            typeOfContent = "txt";
-            break;
+            contentType = "txt"
+            break
         case "directory":
-            typeOfContent = "directory";
-            break;
+            contentType = "directory"
+            break
         default:
-            typeOfContent = props.data.contentType;
+            contentType = props.fileSystemEntryInfo.contentType
     }
 
     return (
-        (typeOfContent == "directory")
-            ? <FileDirectory key={props.data.id}
-                data={props.data}
+        contentType == "directory"? (
+            <FileDirectory
+                key={props.fileSystemEntryInfo.id}
+                fileSystemEntryInfo={props.fileSystemEntryInfo}
                 setFileUploadCardVisible={(isVisible : boolean) => {props.setFileUploadCardVisible(isVisible)}}
                 setFileUploadDirectory={(directory : string) => {props.setFileUploadDirectory(directory)}}
             />
-            : <div>
-                <p>{props.data.name}.{typeOfContent} owned by {props.data.uuid}</p>
-                <span>size: {sizeValue} {sizeUnit} </span>
-                <span>Last update{props.data.deleteDate ? <> on {props.data.deleteDate}</> : ": never"}</span>
-            </div>
+        ) : (
+            <tr>
+                <td>{props.fileSystemEntryInfo.name}</td>
+                <td>{contentType}</td>
+                <td>{props.fileSystemEntryInfo.uuid}</td>
+                <td>
+                    {sizeValue} {sizeUnit}
+                </td>
+                {/* TODO: show last update date */}
+            </tr>
+        )
     )
 }
 
-export default FileEntry;
+export default FileEntry

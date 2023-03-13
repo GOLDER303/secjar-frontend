@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {fileUpload} from "../services/FileSystemEntryInfoService";
+import React, {useState} from "react"
+import {fileUpload} from "../services/FileSystemEntryInfoService"
 
 interface FileUploadCardProps {
     uuid: string | null,
