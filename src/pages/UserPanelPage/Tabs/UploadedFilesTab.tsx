@@ -11,15 +11,20 @@ const UploadedFilesTab: React.FC = () => {
     const [fileSystemEntriesInfo, setFileSystemEntriesInfo] = React.useState<FileSystemEntryInfoDTO[]>([])
 
     useEffect(() => {
-        getFileSystemEntriesInfo().then((getFileSystemEntriesInfoResponse) => {
-            if (getFileSystemEntriesInfoResponse.error) {
-                //TODO: handle error
-            }
-            if (getFileSystemEntriesInfoResponse.data) {
-                setFileSystemEntriesInfo(getFileSystemEntriesInfoResponse.data)
-            }
-        })
+        refreshFileSystemEntriesInfo();
     }, [])
+
+    const refreshFileSystemEntriesInfo = async () => {
+        const response = await getFileSystemEntriesInfo();
+        if (response.error) {
+            //TODO: handle error
+        }
+        if (response.data) {
+            setFileSystemEntriesInfo(response.data)
+        }
+        //TODO: function to load only uploaded and updated files after refresh??
+    }
+
     return (
         <>
             <h2>Przesłane pliki</h2>
@@ -38,6 +43,7 @@ const UploadedFilesTab: React.FC = () => {
                 <FileUploadCard
                     uuid={fileUploadDirectory}
                     setFileUploadCardVisible={(isVisible: boolean) => {setFileUploadCardVisible(isVisible)}}
+                    fileRefreshFunction={refreshFileSystemEntriesInfo}
                 />
             ) : ("")}
         </>

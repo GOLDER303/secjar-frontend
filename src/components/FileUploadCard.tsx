@@ -4,6 +4,7 @@ import {fileUpload} from "../services/FileSystemEntryInfoService"
 interface FileUploadCardProps {
     uuid: string | null,
     setFileUploadCardVisible: (param: boolean) => void
+    fileRefreshFunction: () => void;
 }
 
 
@@ -17,6 +18,7 @@ const FileUploadCard : React.FC<FileUploadCardProps> = (props) => {
         }else{
             console.log("file is null");
         }
+        props.fileRefreshFunction();
     }
     let closing = false;
     return (
