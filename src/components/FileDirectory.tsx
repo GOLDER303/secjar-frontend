@@ -1,45 +1,46 @@
 import React, {ReactElement, useEffect, useState} from "react";
-import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo";
-import FileEntry from "./FileEntry";
+import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO";
+import FileSystemEntryInfo from "./FileSystemEntryInfo";
 
 interface FileDirectoryProps {
-    fileSystemEntryInfo: FileSystemEntryInfo,
+    fileSystemEntryInfoDTO: FileSystemEntryInfoDTO,
     setFileUploadCardVisible: (param: boolean) => void,
     setFileUploadDirectory: (param: string) => void
 }
 
-const FileDirectory : React.FC<FileDirectoryProps> = (props) => {
+const FileDirectory : React.FC<FileDirectoryProps> = ({ fileSystemEntryInfoDTO, setFileUploadCardVisible, setFileUploadDirectory }) => {
     const [fileArray, setFileArray] = React.useState<Array<ReactElement<any, any>> | null>(null);
     const [showFileArray, setShowFileArray] = useState(false);
-    if (props.fileSystemEntryInfo.children.length == 0){
+    if (fileSystemEntryInfoDTO.children.length == 0){
         return (<div className="directory">empty directory</div>)
     }
     else{
         useEffect(() => {
-            setFileArray(props.fileSystemEntryInfo.children.map((val) => {
-                return <FileEntry
-                    key={val.id}
-                    fileSystemEntryInfo={val}
-                    setFileUploadCardVisible={(isVisible : boolean) => {props.setFileUploadCardVisible(isVisible)}}
-                    setFileUploadDirectory={(directory : string) => {props.setFileUploadDirectory(directory)}}
+            setFileArray(fileSystemEntryInfoDTO.children.map((val) => {
+                return <FileSystemEntryInfo
+                    fileSystemEntryInfoDTO={val}
+                    setFileUploadCardVisible={(isVisible : boolean) => {setFileUploadCardVisible(isVisible)}}
+                    setFileUploadDirectory={(directory : string) => {setFileUploadDirectory(directory)}}
                 />
             }));
         }, [])
-        return <div className="directory"><div>
-            <p>{props.fileSystemEntryInfo.name} owned by {props.fileSystemEntryInfo.uuid}</p>
-            <span>Last update{props.fileSystemEntryInfo.deleteDate ? <> on {props.fileSystemEntryInfo.deleteDate}</> : ": never"} </span>
-        </div>
-            <div onClick={() => {setShowFileArray(!showFileArray)}}>
-                {showFileArray ? <>▼ <>{fileArray}</></> : "► "}
+        return (
+            <div className="directory" key={fileSystemEntryInfoDTO.id}>
+                <div>
+                    <p>{fileSystemEntryInfoDTO.name} owned by {fileSystemEntryInfoDTO.uuid}</p>
+                    <span>Last update{fileSystemEntryInfoDTO.deleteDate ? <> on {fileSystemEntryInfoDTO.deleteDate}</> : ": never"} </span>
+                </div>
+                <div onClick={() => {setShowFileArray(!showFileArray)}}>
+                    {showFileArray ? <>▼ <>{fileArray}</></> : "► "}
+                </div>
+                <button onClick={
+                    () => {
+                        setFileUploadCardVisible(true);
+                        setFileUploadDirectory(fileSystemEntryInfoDTO.uuid);
+                    }
+                }>Upload here</button>
             </div>
-
-            <button onClick={
-                () => {
-                    props.setFileUploadCardVisible(true);
-                    props.setFileUploadDirectory(props.fileSystemEntryInfo.uuid);
-                }
-            }>Upload here</button>
-        </div>
+        )
     }
 }
 

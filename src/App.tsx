@@ -7,7 +7,8 @@ import IndexPage from "./pages/IndexPage"
 import LoginPage from "./pages/LoginPage/LoginPage"
 import RootPage from "./pages/RootPage"
 import SupportPage from "./pages/SupportPage"
-import UserPanelPage from "./pages/UserPanelPage"
+import UploadedFilesTab from "./pages/UserPanelPage/Tabs/UploadedFilesTab"
+import UserPanelPage from "./pages/UserPanelPage/UserPanelPage"
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,12 @@ const router = createBrowserRouter([
             {
                 path: "/home",
                 element: <UserPanelPage />,
+                children: [
+                    {
+                        path: "uploaded",
+                        element: <UploadedFilesTab />,
+                    },
+                ],
             },
             {
                 path: "/login",
