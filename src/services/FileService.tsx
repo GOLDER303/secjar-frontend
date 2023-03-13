@@ -8,7 +8,7 @@ export const getMyFiles = async () : Promise<
     > => {
     try {
         const response = await axios.get("http://localhost:8080/fileSystemEntries/info", {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
         })
@@ -22,17 +22,33 @@ export const getMyFiles = async () : Promise<
     }
 }
 
-export const fileUpload = async () : Promise<GeneralApiResponseDTO<{t : string}>> => {
+export const fileUpload = async (file: File | null, replace: boolean, parentDirectoryUuid: string | null) : Promise<GeneralApiResponseDTO<string> | null> => {
+    if (file == null){
+        return null;
+    }
     try {
-        const response = await axios.get("http://localhost:8080/fileSystemEntries/info", {})
-        console.log("Got my files:");
-        console.log(response.data);
-        return {data: {t: response.data}}
+        let body : {file: File, replace: boolean, parentDirectoryUuid?: string};
+        body = {
+            file: file,
+            replace: replace
+        }
+        if (parentDirectoryUuid) {
+            body.parentDirectoryUuid = parentDirectoryUuid;
+        }
+        const response = await axios.post("http://localhost:8080/fileSystemEntries", {
+                ...body
+            },{
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+
+        return {data: response.data}
     } catch (err) {
         const error = err as AxiosError
+        const data = error.response;
 
-        const data = error.response?.data as ApiErrorResponseDTO
-
-        return {error: data.status}
+        return {error: data?.status}
     }
 }
