@@ -22,17 +22,17 @@ export const getMyFiles = async () : Promise<
     }
 }
 
-// export const fileUpload = async () : Promise<GeneralApiResponseDTO<{t : string}>> => {
-//     try {
-//         const response = await axios.get("http://localhost:8080/fileSystemEntries/info", {})
-//         console.log("Got my files:");
-//         console.log(response.data);
-//         return {data: {t: response.data}}
-//     } catch (err) {
-//         const error = err as AxiosError
-//
-//         const data = error.response?.data as ApiErrorResponseDTO
-//
-//         return {error: data.status}
-//     }
-// }
+export const fileUpload = async () : Promise<GeneralApiResponseDTO<{t : string}>> => {
+    try {
+        const response = await axios.get("http://localhost:8080/fileSystemEntries/info", {})
+        console.log("Got my files:");
+        console.log(response.data);
+        return {data: {t: response.data}}
+    } catch (err) {
+        const error = err as AxiosError
+
+        const data = error.response?.data as ApiErrorResponseDTO
+
+        return {error: data.status}
+    }
+}

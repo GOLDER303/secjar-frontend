@@ -1,5 +1,6 @@
 import React from "react";
 import ApiFileResponseDTO from "../ts/interfaces/ApiFileResponseDTO";
+import FileDirectory from "./FileDirectory";
 
 interface FileEntryProps {
     data: ApiFileResponseDTO
@@ -19,16 +20,22 @@ const FileEntry : React.FC<FileEntryProps> = ({data}) => {
         case "text/plain":
             typeOfContent = "txt";
             break;
+        case "directory":
+            typeOfContent = "directory";
+            break;
         default:
             typeOfContent = data.contentType;
     }
 
     return (
-        <div>
-            <p>{data.name}.{typeOfContent} owned by {data.uuid}</p>
-            <span>size: {sizeValue} {sizeUnit} </span>
-            <span>Last update on {data.deleteDate} </span>
-        </div>
+        (typeOfContent == "directory")
+            // ? <FileDirectory children={data.children}/>
+            ? <FileDirectory data={data} />
+            : <div>
+                <p>{data.name}.{typeOfContent} owned by {data.uuid}</p>
+                <span>size: {sizeValue} {sizeUnit} </span>
+                <span>Last update{data.deleteDate ? <> on {data.deleteDate}</> : ": never"}</span>
+            </div>
     )
 }
 

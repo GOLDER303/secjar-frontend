@@ -5,7 +5,7 @@ export default interface ApiFileResponseDTO {
     contentType: string,
     size: number,
     deleteDate: string | null,
-    children: [],
+    children: Array<ApiFileResponseDTO>,
     sharedByLink: boolean,
     favourite: boolean
 }

@@ -19,3 +19,13 @@ body {
 .container {
     display: flex;
 }
+
+.directory {
+    /*difrentiate between directories and other entries*/
+    background: #222;
+}
+
+div {
+    display: block;
+    padding: 10px;
+}

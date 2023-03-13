@@ -7,9 +7,9 @@ import ApiFileResponseDTO from "../ts/interfaces/ApiFileResponseDTO";
 
 const UserPanelPage: React.FC = () => {
     const { isUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType;
-    const [filesArray, setFilesArray] = React.useState([<></>]);
+    const [fileArray, setFileArray] = React.useState([<></>]);
     let filesData : [ApiFileResponseDTO];
-    console.log(filesArray);
+    console.log(fileArray);
 
     useEffect(() => {
         getMyFiles().then((fileData) => {
@@ -18,19 +18,18 @@ const UserPanelPage: React.FC = () => {
             }
             if (fileData.data) {
                 filesData = fileData.data;
-                setFilesArray(filesData.map((val) => {
+                setFileArray(filesData.map((val) => {
                     return <FileEntry data={val} />
                 }));
             }
         });
-        console.log(filesArray);
     }, [])
 
     const showPage = () => {
         return (
             <>
-                {filesArray.length > 0 && filesArray[0] != <></>
-                    ? filesArray
+                {fileArray.length > 0 && fileArray[0] != <></>
+                    ? fileArray
                     : <p>There is no files present. Try to upload a file.</p>}
             </>
         )
@@ -39,7 +38,9 @@ const UserPanelPage: React.FC = () => {
     return (
         <>
             <h1>User Panel Page</h1>
-            {isUserLoggedIn ? <><h2>Hello</h2>{showPage()}</>  : <h2>You need to <Link to={"/login"}>login</Link> first</h2>}
+            {isUserLoggedIn
+                ? <><h2>Hello</h2><br />{showPage()}</>
+                : <h2>You need to <Link to={"/login"}>login</Link> first</h2>}
 
         </>
     )
