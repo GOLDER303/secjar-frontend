@@ -2,8 +2,8 @@ import React, {ReactElement, useEffect, useState} from "react"
 import { Link } from "react-router-dom"
 import { IsLoggedInContext, IsLoggedInContextType } from "../contexts/IsLoggedInContext"
 import FileEntry from "../components/FileEntry";
-import {getMyFiles} from "../services/FileService";
-import ApiFileResponseDTO from "../ts/interfaces/ApiFileResponseDTO";
+import {getMyFiles} from "../services/FileSystemEntryInfoService";
+import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo";
 import FileUploadCard from "../components/FileUploadCard";
 
 const UserPanelPage: React.FC = () => {
@@ -11,7 +11,7 @@ const UserPanelPage: React.FC = () => {
     const [fileArray, setFileArray] = React.useState<Array<ReactElement<any, any>> | null>(null);
     const [fileUploadCardVisible, setFileUploadCardVisible] = useState(false);
     const [fileUploadDirectory, setFileUploadDirectory] = useState<string | null>(null);
-    let filesData : [ApiFileResponseDTO];
+    let filesData : [FileSystemEntryInfo];
 
     useEffect(() => {
         getMyFiles().then((fileData) => {

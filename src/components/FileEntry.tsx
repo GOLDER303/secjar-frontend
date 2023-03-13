@@ -1,9 +1,9 @@
 import React from "react";
-import ApiFileResponseDTO from "../ts/interfaces/ApiFileResponseDTO";
+import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo";
 import FileDirectory from "./FileDirectory";
 
 interface FileEntryProps {
-    data: ApiFileResponseDTO,
+    data: FileSystemEntryInfo,
     setFileUploadCardVisible: (param: boolean) => void,
     setFileUploadDirectory: (param: string) => void
 }
