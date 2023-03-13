@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
 import { getFileSystemEntriesInfo } from "../../../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../../../ts/interfaces/FileSystemEntryInfoDTO"
-import FileUploadCard from "../../../components/FileUploadCard";
+import FileUploadCard from "../../../components/FileUploadCard"
 
 const UploadedFilesTab: React.FC = () => {
     const [fileUploadCardVisible, setFileUploadCardVisible] = useState(false);
