@@ -3,47 +3,44 @@ import { Link } from "react-router-dom"
 import { IsLoggedInContext, IsLoggedInContextType } from "../contexts/IsLoggedInContext"
 import FileEntry from "../components/FileEntry"
 import { getFileSystemEntriesInfo } from "../services/FileSystemEntryInfoService"
-import ApiFileResponseDTO from "../ts/interfaces/FileSystemEntryInfo"
+import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo"
 
 const UserPanelPage: React.FC = () => {
     const { isUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType
-    const [filesArray, setFilesArray] = React.useState([<></>])
-    let filesData: [ApiFileResponseDTO]
+    const [fileSystemEntriesInfo, setFileSystemEntriesInfo] = React.useState<FileSystemEntryInfo[]>([])
 
     useEffect(() => {
-        getFileSystemEntriesInfo().then((fileData) => {
-            if (fileData.error) {
+        getFileSystemEntriesInfo().then((getFileSystemEntriesInfoResponse) => {
+            if (getFileSystemEntriesInfoResponse.error) {
                 //TODO: handle error
             }
-            if (fileData.data) {
-                filesData = fileData.data
-                setFilesArray(
-                    filesData.map((val) => {
-                        return <FileEntry data={val} />
-                    })
-                )
+            if (getFileSystemEntriesInfoResponse.data) {
+                setFileSystemEntriesInfo(getFileSystemEntriesInfoResponse.data)
             }
         })
     }, [])
 
-    const showPage = () => {
-        return <>{filesArray.length > 0 && filesArray[0] != <></> ? filesArray : <p>There is no files present. Try to upload a file.</p>}</>
-    }
-
     return (
-        <>
+        <div>
             <h1>User Panel Page</h1>
             {isUserLoggedIn ? (
-                <>
-                    <h2>Hello</h2>
-                    {showPage()}
-                </>
+                <table>
+                    <tr>
+                        <th>Nazwa pliku</th>
+                        <th>Typ</th>
+                        <th>Właściciel</th>
+                        <th>Rozmiar</th>
+                    </tr>
+                    {fileSystemEntriesInfo.map((fileSystemEntryInfo) => {
+                        return <FileEntry fileSystemEntryInfo={fileSystemEntryInfo} />
+                    })}
+                </table>
             ) : (
                 <h2>
                     You need to <Link to={"/login"}>login</Link> first
                 </h2>
             )}
-        </>
+        </div>
     )
 }
 

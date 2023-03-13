@@ -2,37 +2,44 @@ import React from "react"
 import FileSystemEntryInfo from "../ts/interfaces/FileSystemEntryInfo"
 
 interface FileEntryProps {
-    data: FileSystemEntryInfo
+    fileSystemEntryInfo: FileSystemEntryInfo
 }
 
-function getBaseLog(base: number, val: number) {
-    return Math.log(val) / Math.log(base)
-}
 const sizeUnits = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
-const FileEntry: React.FC<FileEntryProps> = ({ data }) => {
-    let sizeScale = data.size != 0 ? Math.floor(getBaseLog(1024, data.size)) : 0
-    sizeScale = Math.min(sizeScale, 6)
-    let sizeValue = Math.floor((100 * data.size) / Math.pow(1024, sizeScale)) / 100
-    let sizeUnit = sizeUnits[sizeScale]
-    let typeOfContent: string
-    switch (data.contentType) {
+
+const FileEntry: React.FC<FileEntryProps> = ({ fileSystemEntryInfo }) => {
+    let sizeValue = 0
+    let sizeUnit = ""
+
+    if (fileSystemEntryInfo.size != 0) {
+        const getBaseLog = (val: number, base: number) => {
+            return Math.log(val) / Math.log(base)
+        }
+
+        const sizeScale = Math.min(Math.floor(getBaseLog(fileSystemEntryInfo.size, 1024)), 6)
+        sizeValue = Math.floor((100 * fileSystemEntryInfo.size) / Math.pow(1024, sizeScale)) / 100
+        sizeUnit = sizeUnits[sizeScale]
+    }
+
+    let contentType: string
+
+    switch (fileSystemEntryInfo.contentType) {
         case "text/plain":
-            typeOfContent = "txt"
+            contentType = "txt"
             break
         default:
-            typeOfContent = data.contentType
+            contentType = fileSystemEntryInfo.contentType
     }
 
     return (
-        <div>
-            <p>
-                {data.name}.{typeOfContent} owned by {data.uuid}
-            </p>
-            <span>
-                size: {sizeValue} {sizeUnit}{" "}
-            </span>
-            <span>Last update on {data.deleteDate} </span>
-        </div>
+        <tr>
+            <td>{fileSystemEntryInfo.name}</td>
+            <td>{contentType}</td>
+            <td>{fileSystemEntryInfo.uuid}</td>
+            <td>
+                {sizeValue} {sizeUnit}
+            </td>
+        </tr>
     )
 }
 
