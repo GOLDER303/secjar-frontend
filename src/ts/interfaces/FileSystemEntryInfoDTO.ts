@@ -1,4 +1,4 @@
-export default interface FileSystemEntryInfo {
+export default interface FileSystemEntryInfoDTO {
     id: number
     uuid: string
     name: string
