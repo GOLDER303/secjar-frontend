@@ -2,8 +2,8 @@ import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { IsLoggedInContext, IsLoggedInContextType } from "../contexts/IsLoggedInContext"
 import FileEntry from "../components/FileEntry"
-import { getMyFiles } from "../services/FileService"
-import ApiFileResponseDTO from "../ts/interfaces/ApiFileResponseDTO"
+import { getFileSystemEntriesInfo } from "../services/FileSystemEntryInfoService"
+import ApiFileResponseDTO from "../ts/interfaces/FileSystemEntryInfo"
 
 const UserPanelPage: React.FC = () => {
     const { isUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType
@@ -11,7 +11,7 @@ const UserPanelPage: React.FC = () => {
     let filesData: [ApiFileResponseDTO]
 
     useEffect(() => {
-        getMyFiles().then((fileData) => {
+        getFileSystemEntriesInfo().then((fileData) => {
             if (fileData.error) {
                 //TODO: handle error
             }
