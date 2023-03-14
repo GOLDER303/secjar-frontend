@@ -20,33 +20,57 @@ export const getFileSystemEntriesInfo = async (): Promise<GeneralApiResponseDTO<
     }
 }
 
-export const fileUpload = async (file: File | null, replace: boolean, parentDirectoryUuid: string | null) : Promise<GeneralApiResponseDTO<string> | null> => {
-    if (file == null){
-        return null;
+export const fileUpload = async (file: File | null, replace: boolean, parentDirectoryUuid: string | null): Promise<GeneralApiResponseDTO<string> | null> => {
+    if (file == null) {
+        return null
     }
     try {
-        let body : {file: File, replace: boolean, parentDirectoryUuid?: string};
+        let body: { file: File; replace: boolean; parentDirectoryUuid?: string }
         body = {
             file: file,
-            replace: replace
+            replace: replace,
         }
         if (parentDirectoryUuid) {
-            body.parentDirectoryUuid = parentDirectoryUuid;
+            body.parentDirectoryUuid = parentDirectoryUuid
         }
-        const response = await axios.post("http://localhost:8080/fileSystemEntries", {
-                ...body
-            },{
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'multipart/form-data'
+        const response = await axios.post(
+            "http://localhost:8080/fileSystemEntries",
+            {
+                ...body,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                    "Content-Type": "multipart/form-data",
+                },
             }
-        })
+        )
 
-        return {data: response.data}
+        return { data: response.data }
     } catch (err) {
         const error = err as AxiosError
-        const data = error.response;
+        const data = error.response
 
-        return {error: data?.status}
+        return { error: data?.status }
+    }
+}
+
+export const deleteFile = async (fileUuid: string, instantDelete: boolean): Promise<GeneralApiResponseDTO<void>> => {
+    try {
+        const response = await axios.delete(`http://localhost:8080/fileSystemEntries/${fileUuid}`, {
+            params: {
+                instantDelete
+            },
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        })
+
+        return {}
+    } catch (err) {
+        const error = err as AxiosError
+        const data = error.response
+
+        return { error: data?.status }
     }
 }

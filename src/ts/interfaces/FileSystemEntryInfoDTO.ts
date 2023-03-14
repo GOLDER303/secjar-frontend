@@ -5,6 +5,8 @@ export default interface FileSystemEntryInfoDTO {
     contentType: string
     size: number
     deleteDate: string | null
+    uploadDate: string
+    parent: string
     children: Array<FileSystemEntryInfoDTO>
     isSharedByLink: boolean
     isFavorite: boolean
