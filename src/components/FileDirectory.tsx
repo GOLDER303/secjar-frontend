@@ -1,6 +1,6 @@
-import React, {ReactElement, useEffect, useState} from "react";
+import React, {useState} from "react";
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO";
-import FileSystemEntryInfo from "./FileSystemEntryInfo";
+import FileSystemEntryInfoList from "./FileSystemEntryInfoList";
 
 interface FileDirectoryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO,
@@ -9,39 +9,38 @@ interface FileDirectoryProps {
 }
 
 const FileDirectory : React.FC<FileDirectoryProps> = ({ fileSystemEntryInfoDTO, setFileUploadCardVisible, setFileUploadDirectory }) => {
-    const [fileArray, setFileArray] = React.useState<Array<ReactElement<any, any>> | null>(null);
     const [showFileArray, setShowFileArray] = useState(false);
-    if (fileSystemEntryInfoDTO.children.length == 0){
-        return (<div className="directory">empty directory</div>)
-    }
-    else{
-        useEffect(() => {
-            setFileArray(fileSystemEntryInfoDTO.children.map((val) => {
-                return <FileSystemEntryInfo
-                    fileSystemEntryInfoDTO={val}
-                    setFileUploadCardVisible={(isVisible : boolean) => {setFileUploadCardVisible(isVisible)}}
-                    setFileUploadDirectory={(directory : string) => {setFileUploadDirectory(directory)}}
-                />
-            }));
-        }, [])
-        return (
-            <div className="directory" key={fileSystemEntryInfoDTO.id}>
-                <div>
-                    <p>{fileSystemEntryInfoDTO.name} owned by {fileSystemEntryInfoDTO.uuid}</p>
-                    <span>Last update{fileSystemEntryInfoDTO.deleteDate ? <> on {fileSystemEntryInfoDTO.deleteDate}</> : ": never"} </span>
-                </div>
-                <div onClick={() => {setShowFileArray(!showFileArray)}}>
-                    {showFileArray ? <>▼ <>{fileArray}</></> : "► "}
-                </div>
-                <button onClick={
-                    () => {
+    const colSpan = 4;  //number of collumns in the table
+
+    return (
+        <>
+            <tr className="directory" key={fileSystemEntryInfoDTO.id}>
+                <td>{fileSystemEntryInfoDTO.name}</td>
+                <td>Directory</td>
+                <td>{fileSystemEntryInfoDTO.uuid}</td>
+                <td><button onClick={() => {
                         setFileUploadCardVisible(true);
                         setFileUploadDirectory(fileSystemEntryInfoDTO.uuid);
-                    }
-                }>Upload here</button>
-            </div>
-        )
-    }
+                }}>
+                    Upload here
+                </button></td>
+            </tr>
+            {showFileArray ? (
+                <td className="directory" colSpan={colSpan} onClick={() => {setShowFileArray(!showFileArray)}}>
+                    ▼
+                    <FileSystemEntryInfoList
+                        fileSystemEntriesInfoDTO={fileSystemEntryInfoDTO.children}
+                        setFileUploadCardVisible={setFileUploadCardVisible}
+                        setFileUploadDirectory={setFileUploadDirectory}
+                    />
+                </td>
+            ) : (
+                <td className="directory" colSpan={colSpan} onClick={() => {setShowFileArray(!showFileArray)}}>
+                    ►
+                </td>
+            )}
+        </>
+    )
 }
 
 export default FileDirectory

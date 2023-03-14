@@ -4,9 +4,11 @@ import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList
 import { getFileSystemEntriesInfo } from "../../../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../../../ts/interfaces/FileSystemEntryInfoDTO"
 import FileUploadCard from "../../../components/FileUploadCard"
+import DirectoryNameSetCard from "../../../components/DirectoryNameSetCard";
 
 const UploadedFilesTab: React.FC = () => {
     const [fileUploadCardVisible, setFileUploadCardVisible] = useState(false);
+    const [directoryCreateCardVisible, setDirectoryCreateCardVisible] = useState(false);
     const [fileUploadDirectory, setFileUploadDirectory] = useState<string | null>(null);
     const [fileSystemEntriesInfo, setFileSystemEntriesInfo] = React.useState<FileSystemEntryInfoDTO[]>([])
 
@@ -30,8 +32,8 @@ const UploadedFilesTab: React.FC = () => {
             <h2>Przesłane pliki</h2>
             <FileSystemEntryInfoList
                 fileSystemEntriesInfoDTO={fileSystemEntriesInfo}
-                setFileUploadCardVisible={(isVisible : boolean) => {setFileUploadCardVisible(isVisible)}}
-                setFileUploadDirectory={(directory : string) => {setFileUploadDirectory(directory)}}
+                setFileUploadCardVisible={setFileUploadCardVisible}
+                setFileUploadDirectory={setFileUploadDirectory}
             />
             <button onClick={() => {
                 setFileUploadCardVisible(true);
@@ -39,10 +41,21 @@ const UploadedFilesTab: React.FC = () => {
             }}>
                 Upload to root
             </button>
+            <button onClick={() => {
+                setDirectoryCreateCardVisible(true);
+            }}>
+                Create directories
+            </button>
             {fileUploadCardVisible ? (
                 <FileUploadCard
                     uuid={fileUploadDirectory}
-                    setFileUploadCardVisible={(isVisible: boolean) => {setFileUploadCardVisible(isVisible)}}
+                    setFileUploadCardVisible={setFileUploadCardVisible}
+                    fileRefreshFunction={refreshFileSystemEntriesInfo}
+                />
+            ) : ("")}
+            {directoryCreateCardVisible ? (
+                <DirectoryNameSetCard
+                    setDirectoryCreateCardVisible={setDirectoryCreateCardVisible}
                     fileRefreshFunction={refreshFileSystemEntriesInfo}
                 />
             ) : ("")}

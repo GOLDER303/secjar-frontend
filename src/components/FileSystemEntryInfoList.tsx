@@ -20,8 +20,8 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
             {fileSystemEntriesInfoDTO.map((fileSystemEntryInfoDTO) => {
                 return <FileSystemEntryInfo
                     fileSystemEntryInfoDTO={fileSystemEntryInfoDTO}
-                    setFileUploadCardVisible={(isVisible : boolean) => {setFileUploadCardVisible(isVisible)}}
-                    setFileUploadDirectory={(directory : string) => {setFileUploadDirectory(directory)}}
+                    setFileUploadCardVisible={setFileUploadCardVisible}
+                    setFileUploadDirectory={setFileUploadDirectory}
                 />
             })}
         </table>

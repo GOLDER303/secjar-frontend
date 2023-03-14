@@ -41,8 +41,8 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
         contentType == "directory"? (
             <FileDirectory
                 fileSystemEntryInfoDTO={fileSystemEntryInfoDTO}
-                setFileUploadCardVisible={(isVisible : boolean) => {setFileUploadCardVisible(isVisible)}}
-                setFileUploadDirectory={(directory : string) => {setFileUploadDirectory(directory)}}
+                setFileUploadCardVisible={setFileUploadCardVisible}
+                setFileUploadDirectory={setFileUploadDirectory}
             />
         ) : (
             <tr key={fileSystemEntryInfoDTO.id}>
