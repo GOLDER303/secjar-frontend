@@ -1,16 +1,16 @@
-import React, {useState} from "react";
-import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO";
-import FileSystemEntryInfoList from "./FileSystemEntryInfoList";
+import React, { useState } from "react"
+import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
+import FileSystemEntryInfoList from "./FileSystemEntryInfoList"
 
 interface FileDirectoryProps {
-    fileSystemEntryInfoDTO: FileSystemEntryInfoDTO,
-    setFileUploadCardVisible: (param: boolean) => void,
+    fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
+    setFileUploadCardVisible: (param: boolean) => void
     setFileUploadDirectory: (param: string) => void
 }
 
-const FileDirectory : React.FC<FileDirectoryProps> = ({ fileSystemEntryInfoDTO, setFileUploadCardVisible, setFileUploadDirectory }) => {
-    const [showFileArray, setShowFileArray] = useState(false);
-    const colSpan = 4;  //number of collumns in the table
+const FileDirectory: React.FC<FileDirectoryProps> = ({ fileSystemEntryInfoDTO, setFileUploadCardVisible, setFileUploadDirectory }) => {
+    const [showFileArray, setShowFileArray] = useState(false)
+    const colSpan = 4 //number of collumns in the table
 
     return (
         <>
@@ -18,24 +18,36 @@ const FileDirectory : React.FC<FileDirectoryProps> = ({ fileSystemEntryInfoDTO, 
                 <td>{fileSystemEntryInfoDTO.name}</td>
                 <td>Directory</td>
                 <td>{fileSystemEntryInfoDTO.uuid}</td>
-                <td><button onClick={() => {
-                        setFileUploadCardVisible(true);
-                        setFileUploadDirectory(fileSystemEntryInfoDTO.uuid);
-                }}>
-                    Upload here
-                </button></td>
+                <td>
+                    <button
+                        onClick={() => {
+                            setFileUploadCardVisible(true)
+                            setFileUploadDirectory(fileSystemEntryInfoDTO.uuid)
+                        }}
+                    >
+                        Upload here
+                    </button>
+                </td>
             </tr>
             {showFileArray ? (
-                <td className="directory" colSpan={colSpan} onClick={() => {setShowFileArray(!showFileArray)}}>
+                <td
+                    className="directory"
+                    colSpan={colSpan}
+                    onClick={() => {
+                        setShowFileArray(!showFileArray)
+                    }}
+                >
                     ▼
-                    <FileSystemEntryInfoList
-                        fileSystemEntriesInfoDTO={fileSystemEntryInfoDTO.children}
-                        setFileUploadCardVisible={setFileUploadCardVisible}
-                        setFileUploadDirectory={setFileUploadDirectory}
-                    />
+                    <FileSystemEntryInfoList fileSystemEntriesInfoDTO={fileSystemEntryInfoDTO.children} setFileUploadCardVisible={setFileUploadCardVisible} setFileUploadDirectory={setFileUploadDirectory} />
                 </td>
             ) : (
-                <td className="directory" colSpan={colSpan} onClick={() => {setShowFileArray(!showFileArray)}}>
+                <td
+                    className="directory"
+                    colSpan={colSpan}
+                    onClick={() => {
+                        setShowFileArray(!showFileArray)
+                    }}
+                >
                     ►
                 </td>
             )}

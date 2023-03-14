@@ -37,24 +37,18 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
             contentType = fileSystemEntryInfoDTO.contentType
     }
 
-    return (
-        contentType == "directory"? (
-            <FileDirectory
-                fileSystemEntryInfoDTO={fileSystemEntryInfoDTO}
-                setFileUploadCardVisible={setFileUploadCardVisible}
-                setFileUploadDirectory={setFileUploadDirectory}
-            />
-        ) : (
-            <tr key={fileSystemEntryInfoDTO.id}>
-                <td>{fileSystemEntryInfoDTO.name}</td>
-                <td>{contentType}</td>
-                <td>{fileSystemEntryInfoDTO.uuid}</td>
-                <td>
-                    {sizeValue} {sizeUnit}
-                </td>
-                {/* TODO: show last update date */}
-            </tr>
-        )
+    return contentType == "directory" ? (
+        <FileDirectory fileSystemEntryInfoDTO={fileSystemEntryInfoDTO} setFileUploadCardVisible={setFileUploadCardVisible} setFileUploadDirectory={setFileUploadDirectory} />
+    ) : (
+        <tr key={fileSystemEntryInfoDTO.id}>
+            <td>{fileSystemEntryInfoDTO.name}</td>
+            <td>{contentType}</td>
+            <td>{fileSystemEntryInfoDTO.uuid}</td>
+            <td>
+                {sizeValue} {sizeUnit}
+            </td>
+            {/* TODO: show last update date */}
+        </tr>
     )
 }
 
