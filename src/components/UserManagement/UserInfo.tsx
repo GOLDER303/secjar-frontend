@@ -1,5 +1,5 @@
 import React from "react"
-import UserInfoDTO from "../ts/interfaces/UserInfoDTO"
+import UserInfoDTO from "../../ts/interfaces/UserInfoDTO"
 
 interface UserProps {
     userInfoDTO: UserInfoDTO

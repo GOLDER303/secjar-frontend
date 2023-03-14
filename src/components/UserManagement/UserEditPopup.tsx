@@ -1,6 +1,6 @@
 import React from "react"
-import "../css/FileUploadPopup.css"
-import UserPatchRequestDTO from "../ts/interfaces/UserPatchRequestDTO"
+import "../../css/FileUploadPopup.css"
+import UserPatchRequestDTO from "../../ts/interfaces/UserPatchRequestDTO"
 
 interface UserEditPopupProps {
     handleUserEdit: (userPatchRequestDTO: UserPatchRequestDTO) => void

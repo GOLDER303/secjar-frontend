@@ -1,6 +1,6 @@
 import React from "react"
-import "../css/FileUploadPopup.css"
-import UserInviteRequestDTO from "../ts/interfaces/UserInviteRequestDTO"
+import "../../css/FileUploadPopup.css"
+import UserInviteRequestDTO from "../../ts/interfaces/UserInviteRequestDTO"
 
 interface UserInvitationPopupProps {
     handleUserInvitation: (userInviteRequestDTO: UserInviteRequestDTO) => void

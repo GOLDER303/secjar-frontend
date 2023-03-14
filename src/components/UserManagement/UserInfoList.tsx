@@ -1,6 +1,6 @@
 import React from "react"
 import UserInfo from "./UserInfo"
-import UserInfoDTO from "../ts/interfaces/UserInfoDTO"
+import UserInfoDTO from "../../ts/interfaces/UserInfoDTO"
 
 interface UserInfoListProps {
     userInfoDTO: UserInfoDTO[]

@@ -1,10 +1,10 @@
 import React, {useEffect} from "react"
 import {editUserInfo, getAllUserInfo, inviteUser} from "../../../services/UserManagementService"
-import UserInfoList from "../../../components/UserInfoList"
+import UserInfoList from "../../../components/UserManagement/UserInfoList"
 import UserInfoDTO from "../../../ts/interfaces/UserInfoDTO"
-import UserEditPopup from "../../../components/UserEditPopup"
+import UserEditPopup from "../../../components/UserManagement/UserEditPopup"
 import UserPatchRequestDTO from "../../../ts/interfaces/UserPatchRequestDTO"
-import UserInvitationPopup from "../../../components/UserInvitationPopup"
+import UserInvitationPopup from "../../../components/UserManagement/UserInvitationPopup"
 import UserInviteRequestDTO from "../../../ts/interfaces/UserInviteRequestDTO"
 
 const UserManagementTab: React.FC = () => {
