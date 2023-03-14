@@ -50,6 +50,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                 <td>
                     {sizeValue} {sizeUnit}
                 </td>
+                <td>{new Date(fileSystemEntryInfoDTO.uploadDate).toLocaleDateString()}</td>
                 <td>
                     {isDirectory && (
                         <button

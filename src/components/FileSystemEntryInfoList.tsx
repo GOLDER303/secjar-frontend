@@ -16,6 +16,7 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
                 <th>Typ</th>
                 <th>Właściciel</th>
                 <th>Rozmiar</th>
+                <th>Data przesłania</th>
                 <th>Akcje</th>
             </tr>
             {fileSystemEntriesInfoDTO.map((fileSystemEntryInfoDTO) => {
