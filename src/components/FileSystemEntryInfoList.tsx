@@ -1,6 +1,5 @@
 import React from "react"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
-import FileDirectory from "./FileDirectory"
 import FileSystemEntryInfo from "./FileSystemEntryInfo"
 
 interface FileSystemEntryInfoListProps {
@@ -20,17 +19,13 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
                 <th>Akcje</th>
             </tr>
             {fileSystemEntriesInfoDTO.map((fileSystemEntryInfoDTO) => {
-                if (fileSystemEntryInfoDTO.contentType == "directory") {
-                    return (
-                        <FileDirectory
-                            fileSystemEntryInfoDTO={fileSystemEntryInfoDTO}
-                            openFileInputPopup={openFileInputPopup}
-                            setFileUploadDirectory={setFileUploadDirectory}
-                        />
-                    )
-                } else {
-                    return <FileSystemEntryInfo fileSystemEntryInfoDTO={fileSystemEntryInfoDTO} />
-                }
+                return (
+                    <FileSystemEntryInfo
+                        fileSystemEntryInfoDTO={fileSystemEntryInfoDTO}
+                        openFileInputPopup={openFileInputPopup}
+                        setFileUploadDirectory={setFileUploadDirectory}
+                    />
+                )
             })}
         </table>
     )
