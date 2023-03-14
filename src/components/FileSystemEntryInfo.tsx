@@ -5,11 +5,12 @@ interface FileEntryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
     openFileInputPopup: () => void
     setFileUploadDirectory: (param: string) => void
+    handleFileDelete: (fileUuid: string) => void
 }
 
 const sizeUnits = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
 
-const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, setFileUploadDirectory }) => {
+const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, setFileUploadDirectory, handleFileDelete }) => {
     const [showFileArray, setShowFileArray] = useState(false)
     const colSpan = 6 //number of collumns in the table
     let sizeValue = 0
@@ -51,6 +52,13 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                 </td>
                 <td>{new Date(fileSystemEntryInfoDTO.uploadDate).toLocaleDateString()}</td>
                 <td>
+                    <button
+                        onClick={() => {
+                            handleFileDelete(fileSystemEntryInfoDTO.uuid)
+                        }}
+                    >
+                        Delete
+                    </button>
                     {isDirectory && (
                         <button
                             onClick={() => {
@@ -83,6 +91,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                                         fileSystemEntryInfoDTO={fileSystemEntryInfo}
                                         openFileInputPopup={openFileInputPopup}
                                         setFileUploadDirectory={setFileUploadDirectory}
+                                        handleFileDelete={handleFileDelete}
                                     />
                                 )
                             })}

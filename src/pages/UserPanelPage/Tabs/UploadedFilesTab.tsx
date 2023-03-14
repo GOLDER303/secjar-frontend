@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import DirectoryNameSetCard from "../../../components/DirectoryNameSetCard"
 import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
 import FileUploadPopup from "../../../components/FileUploadPopup"
-import { fileUpload, getFileSystemEntriesInfo } from "../../../services/FileSystemEntryInfoService"
+import { deleteFile, fileUpload, getFileSystemEntriesInfo } from "../../../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../../../ts/interfaces/FileSystemEntryInfoDTO"
 
 const UploadedFilesTab: React.FC = () => {
@@ -39,13 +39,23 @@ const UploadedFilesTab: React.FC = () => {
         refreshFileSystemEntriesInfo()
     }
 
+    const handleFileDelete = async (fileUuid: string) => {
+        const response = await deleteFile(fileUuid, true)
+
+        if (response.error) {
+        }
+
+        refreshFileSystemEntriesInfo()
+    }
+
     return (
         <>
             <h2>Przesłane pliki</h2>
             <FileSystemEntryInfoList
-                fileSystemEntriesInfoDTO={fileSystemEntriesInfo}
+                fileSystemEntriesInfoDTO={fileSystemEntriesInfo.filter((fileSystemEntryInfo) => fileSystemEntryInfo.deleteDate == null)}
                 openFileUploadPopup={openFileUploadPopup}
                 setFileUploadDirectory={setFileUploadDirectory}
+                handleFileDelete={handleFileDelete}
             />
             <button
                 onClick={() => {

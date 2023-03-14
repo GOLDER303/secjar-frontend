@@ -6,9 +6,10 @@ interface FileSystemEntryInfoListProps {
     fileSystemEntriesInfoDTO: FileSystemEntryInfoDTO[]
     openFileUploadPopup: () => void
     setFileUploadDirectory: (param: string) => void
+    handleFileDelete: (fileUuid: string) => void
 }
 
-const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, openFileUploadPopup: openFileInputPopup, setFileUploadDirectory }) => {
+const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, openFileUploadPopup, setFileUploadDirectory, handleFileDelete }) => {
     return (
         <table>
             <tr>
@@ -23,8 +24,9 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
                 return (
                     <FileSystemEntryInfo
                         fileSystemEntryInfoDTO={fileSystemEntryInfoDTO}
-                        openFileInputPopup={openFileInputPopup}
+                        openFileInputPopup={openFileUploadPopup}
                         setFileUploadDirectory={setFileUploadDirectory}
+                        handleFileDelete={handleFileDelete}
                     />
                 )
             })}
