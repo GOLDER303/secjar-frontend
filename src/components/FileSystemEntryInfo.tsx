@@ -42,6 +42,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO 
             <td>
                 {sizeValue} {sizeUnit}
             </td>
+            <td></td>
             {/* TODO: show last update date */}
         </tr>
     )

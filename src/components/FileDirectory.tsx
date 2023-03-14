@@ -21,6 +21,7 @@ const FileDirectory: React.FC<FileDirectoryProps> = ({ fileSystemEntryInfoDTO, o
                 <td>{fileSystemEntryInfoDTO.name}</td>
                 <td>Directory</td>
                 <td>{fileSystemEntryInfoDTO.uuid}</td>
+                <td></td>
                 <td>
                     <button
                         onClick={() => {
