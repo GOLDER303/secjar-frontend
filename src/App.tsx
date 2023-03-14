@@ -9,6 +9,11 @@ import RootPage from "./pages/RootPage"
 import SupportPage from "./pages/SupportPage"
 import UploadedFilesTab from "./pages/UserPanelPage/Tabs/UploadedFilesTab"
 import UserPanelPage from "./pages/UserPanelPage/UserPanelPage"
+import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage";
+import DiskManagmentTab from "./pages/AdminPanelPage/Tabs/DiskManagmentTab";
+import SubmissionManagementTab from "./pages/AdminPanelPage/Tabs/SubmissionManagmentTab";
+import UserManagementTab from "./pages/AdminPanelPage/Tabs/UserManagementTab";
+import DashboardTab from "./pages/AdminPanelPage/Tabs/DashboardTab";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +31,28 @@ const router = createBrowserRouter([
                     {
                         path: "uploaded",
                         element: <UploadedFilesTab />,
+                    },
+                ],
+            },
+            {
+                path: "/adminPanel",
+                element: <AdminPanelPage />,
+                children: [
+                    {
+                        path: "dashboard",
+                        element: <DashboardTab />,
+                    },
+                    {
+                        path: "disk",
+                        element: <DiskManagmentTab />,
+                    },
+                    {
+                        path: "supportSubmissions",
+                        element: <SubmissionManagementTab />,
+                    },
+                    {
+                        path: "users",
+                        element: <UserManagementTab />,
                     },
                 ],
             },
