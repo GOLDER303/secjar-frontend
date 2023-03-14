@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
-import FileSystemEntryInfoList from "./FileSystemEntryInfoList"
 
 interface FileEntryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
@@ -12,7 +11,7 @@ const sizeUnits = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
 
 const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, setFileUploadDirectory }) => {
     const [showFileArray, setShowFileArray] = useState(false)
-    const colSpan = 4 //number of collumns in the table
+    const colSpan = 6 //number of collumns in the table
     let sizeValue = 0
     let sizeUnit = ""
 
@@ -43,7 +42,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
 
     return (
         <>
-            <tr className={isDirectory ? "directory" : ""}>
+            <tr className={fileSystemEntryInfoDTO.parent != null || isDirectory ? "directory" : ""}>
                 <td>{fileSystemEntryInfoDTO.name}</td>
                 <td>{contentType}</td>
                 <td>{fileSystemEntryInfoDTO.uuid}</td>
@@ -65,27 +64,31 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                 </td>
             </tr>
             {isDirectory && (
-                <tr className="directory">
-                    <td
-                        colSpan={colSpan}
-                        onClick={() => {
-                            setShowFileArray(!showFileArray)
-                        }}
-                    >
-                        {showFileArray ? (
-                            <>
-                                ▼
-                                <FileSystemEntryInfoList
-                                    fileSystemEntriesInfoDTO={fileSystemEntryInfoDTO.children}
-                                    openFileUploadPopup={openFileInputPopup}
-                                    setFileUploadDirectory={setFileUploadDirectory}
-                                />
-                            </>
-                        ) : (
-                            <>►</>
-                        )}
-                    </td>
-                </tr>
+                <>
+                    <tr className="directory">
+                        <td
+                            colSpan={colSpan}
+                            onClick={() => {
+                                setShowFileArray(!showFileArray)
+                            }}
+                        >
+                            {showFileArray ? "▼" : "►"}
+                        </td>
+                    </tr>
+                    {showFileArray && (
+                        <>
+                            {fileSystemEntryInfoDTO.children.map((fileSystemEntryInfo) => {
+                                return (
+                                    <FileSystemEntryInfo
+                                        fileSystemEntryInfoDTO={fileSystemEntryInfo}
+                                        openFileInputPopup={openFileInputPopup}
+                                        setFileUploadDirectory={setFileUploadDirectory}
+                                    />
+                                )
+                            })}
+                        </>
+                    )}
+                </>
             )}
         </>
     )
