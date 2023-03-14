@@ -20,6 +20,9 @@ const Navbar: React.FC = () => {
                 <li>
                     <Link to={"/home"}>Home</Link>
                 </li>
+                <li>
+                    <Link to={"/adminPanel"}>Admin panel</Link>
+                </li>
                 <li>{isUserLoggedIn ? <button onClick={logoutHandler}>Logout</button> : <Link to={"/login"}>Login</Link>}</li>
             </ul>
         </nav>

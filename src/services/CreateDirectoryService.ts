@@ -1,6 +1,6 @@
-import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO";
-import axios, {AxiosError} from "axios";
-import ApiErrorResponseDTO from "../ts/interfaces/ApiErrorResponseDTO";
+import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO"
+import axios, {AxiosError} from "axios"
+import ApiErrorResponseDTO from "../ts/interfaces/ApiErrorResponseDTO"
 
 export const createDirectory = async (directoryName: string): Promise<GeneralApiResponseDTO<{message: string}>> => {
     try {
