@@ -1,14 +1,15 @@
 import React, {useState} from "react"
 import {fileUpload} from "../services/FileSystemEntryInfoService"
+import "../css/FileUploadPopup.css"
 
-interface FileUploadCardProps {
+interface FileUploadPopupProps {
     uuid: string | null,
     setFileUploadCardVisible: (param: boolean) => void
     fileRefreshFunction: () => void;
 }
 
 
-const FileUploadCard : React.FC<FileUploadCardProps> = (props) => {
+const FileUploadPopup : React.FC<FileUploadPopupProps> = (props) => {
     const [fileToUpload, setFileToUpload] = useState<File | null>(null);
 
     const uploadFile = async () => {
@@ -20,9 +21,11 @@ const FileUploadCard : React.FC<FileUploadCardProps> = (props) => {
         }
         props.fileRefreshFunction();
     }
+
     let closing = false;
+
     return (
-        <div>
+        <div className="file-upload-popup">
             <form
                 onSubmit={(event) => {
                     event.preventDefault();
@@ -35,10 +38,10 @@ const FileUploadCard : React.FC<FileUploadCardProps> = (props) => {
             >
                 <input type="file" onChange={e => setFileToUpload(e.target.files ? e.target.files[0] : null)}/>
                 <input type="submit" />
-                <button type="submit" onClick={() => closing = true}>Close</button>
+                <button type="submit" onClick={() => props.setFileUploadCardVisible(false)}>Close</button>
             </form>
         </div>
     )
 }
 
-export default FileUploadCard;
+export default FileUploadPopup;

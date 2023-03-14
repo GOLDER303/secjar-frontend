@@ -1,6 +1,7 @@
 import React from "react"
 import { Link, Navigate, useOutlet } from "react-router-dom"
 import { IsLoggedInContext, IsLoggedInContextType } from "../../contexts/IsLoggedInContext"
+import "../../css/UserPanelPage.css"
 
 const UserPanelPage: React.FC = () => {
     const { isUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType
@@ -8,7 +9,7 @@ const UserPanelPage: React.FC = () => {
     const outlet = useOutlet()
 
     return (
-        <div>
+        <div className="user-panel-page-container">
             <h1>User Panel Page</h1>
             {isUserLoggedIn ? (
                 <>
