@@ -1,16 +1,13 @@
 import React from "react"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
-import FileDirectory from "./FileDirectory"
 
 interface FileEntryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
-    setFileUploadCardVisible: (param: boolean) => void
-    setFileUploadDirectory: (param: string) => void
 }
 
 const sizeUnits = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
 
-const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, setFileUploadCardVisible, setFileUploadDirectory }) => {
+const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO }) => {
     let sizeValue = 0
     let sizeUnit = ""
 
@@ -37,9 +34,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
             contentType = fileSystemEntryInfoDTO.contentType
     }
 
-    return contentType == "directory" ? (
-        <FileDirectory fileSystemEntryInfoDTO={fileSystemEntryInfoDTO} setFileUploadCardVisible={setFileUploadCardVisible} setFileUploadDirectory={setFileUploadDirectory} />
-    ) : (
+    return (
         <tr key={fileSystemEntryInfoDTO.id}>
             <td>{fileSystemEntryInfoDTO.name}</td>
             <td>{contentType}</td>

@@ -1,6 +1,7 @@
 import React from "react"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 import FileSystemEntryInfo from "./FileSystemEntryInfo"
+import FileDirectory from "./FileDirectory"
 
 interface FileSystemEntryInfoListProps {
     fileSystemEntriesInfoDTO: FileSystemEntryInfoDTO[]
@@ -18,7 +19,17 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
                 <th>Rozmiar</th>
             </tr>
             {fileSystemEntriesInfoDTO.map((fileSystemEntryInfoDTO) => {
-                return <FileSystemEntryInfo fileSystemEntryInfoDTO={fileSystemEntryInfoDTO} setFileUploadCardVisible={setFileUploadCardVisible} setFileUploadDirectory={setFileUploadDirectory} />
+                if (fileSystemEntryInfoDTO.contentType == "directory") {
+                    return (
+                        <FileDirectory
+                            fileSystemEntryInfoDTO={fileSystemEntryInfoDTO}
+                            setFileUploadCardVisible={setFileUploadCardVisible}
+                            setFileUploadDirectory={setFileUploadDirectory}
+                        />
+                    )
+                } else {
+                    return <FileSystemEntryInfo fileSystemEntryInfoDTO={fileSystemEntryInfoDTO} />
+                }
             })}
         </table>
     )

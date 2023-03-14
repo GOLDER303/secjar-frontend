@@ -14,7 +14,10 @@ const FileDirectory: React.FC<FileDirectoryProps> = ({ fileSystemEntryInfoDTO, s
 
     return (
         <>
-            <tr className="directory" key={fileSystemEntryInfoDTO.id}>
+            <tr
+                className="directory"
+                key={fileSystemEntryInfoDTO.id}
+            >
                 <td>{fileSystemEntryInfoDTO.name}</td>
                 <td>Directory</td>
                 <td>{fileSystemEntryInfoDTO.uuid}</td>
@@ -29,26 +32,26 @@ const FileDirectory: React.FC<FileDirectoryProps> = ({ fileSystemEntryInfoDTO, s
                     </button>
                 </td>
             </tr>
-                <td
-                    className="directory"
-                    colSpan={colSpan}
-                    onClick={() => {
-                        setShowFileArray(!showFileArray)
-                    }}
-                >
+            <td
+                className="directory"
+                colSpan={colSpan}
+                onClick={() => {
+                    setShowFileArray(!showFileArray)
+                }}
+            >
                 {showFileArray ? (
                     <>
-                    ▼
+                        ▼
                         <FileSystemEntryInfoList
                             fileSystemEntriesInfoDTO={fileSystemEntryInfoDTO.children}
                             setFileUploadCardVisible={setFileUploadCardVisible}
                             setFileUploadDirectory={setFileUploadDirectory}
                         />
                     </>
-            ) : (
+                ) : (
                     <>►</>
                 )}
-                </td>
+            </td>
         </>
     )
 }
