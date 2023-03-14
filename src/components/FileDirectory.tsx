@@ -29,7 +29,6 @@ const FileDirectory: React.FC<FileDirectoryProps> = ({ fileSystemEntryInfoDTO, s
                     </button>
                 </td>
             </tr>
-            {showFileArray ? (
                 <td
                     className="directory"
                     colSpan={colSpan}
@@ -37,20 +36,19 @@ const FileDirectory: React.FC<FileDirectoryProps> = ({ fileSystemEntryInfoDTO, s
                         setShowFileArray(!showFileArray)
                     }}
                 >
+                {showFileArray ? (
+                    <>
                     ▼
-                    <FileSystemEntryInfoList fileSystemEntriesInfoDTO={fileSystemEntryInfoDTO.children} setFileUploadCardVisible={setFileUploadCardVisible} setFileUploadDirectory={setFileUploadDirectory} />
-                </td>
+                        <FileSystemEntryInfoList
+                            fileSystemEntriesInfoDTO={fileSystemEntryInfoDTO.children}
+                            setFileUploadCardVisible={setFileUploadCardVisible}
+                            setFileUploadDirectory={setFileUploadDirectory}
+                        />
+                    </>
             ) : (
-                <td
-                    className="directory"
-                    colSpan={colSpan}
-                    onClick={() => {
-                        setShowFileArray(!showFileArray)
-                    }}
-                >
-                    ►
+                    <>►</>
+                )}
                 </td>
-            )}
         </>
     )
 }
