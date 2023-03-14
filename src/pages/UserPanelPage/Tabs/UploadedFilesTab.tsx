@@ -1,13 +1,12 @@
-import React, { useState } from "react"
-import { useEffect } from "react"
-import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
-import { getFileSystemEntriesInfo } from "../../../services/FileSystemEntryInfoService"
-import FileSystemEntryInfoDTO from "../../../ts/interfaces/FileSystemEntryInfoDTO"
+import React, { useEffect } from "react"
 import DirectoryNameSetCard from "../../../components/DirectoryNameSetCard"
+import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
 import FileUploadPopup from "../../../components/FileUploadPopup"
+import { fileUpload, getFileSystemEntriesInfo } from "../../../services/FileSystemEntryInfoService"
+import FileSystemEntryInfoDTO from "../../../ts/interfaces/FileSystemEntryInfoDTO"
 
 const UploadedFilesTab: React.FC = () => {
-    const [fileUploadCardVisible, setFileUploadCardVisible] = React.useState(false)
+    const [isFileUploadPopupVisible, setIsFileUploadPopupVisible] = React.useState(false)
     const [directoryCreateCardVisible, setDirectoryCreateCardVisible] = React.useState(false)
     const [fileUploadDirectory, setFileUploadDirectory] = React.useState<string | null>(null)
     const [fileSystemEntriesInfo, setFileSystemEntriesInfo] = React.useState<FileSystemEntryInfoDTO[]>([])
@@ -27,23 +26,50 @@ const UploadedFilesTab: React.FC = () => {
         //TODO: function to load only uploaded and updated files after refresh??
     }
 
+    const closeFileUploadPopup = () => {
+        setIsFileUploadPopupVisible(false)
+    }
+
+    const openFileUploadPopup = () => {
+        setIsFileUploadPopupVisible(true)
+    }
+
+    const handleFileUpload = async (fileToUpload: File) => {
+        const response = await fileUpload(fileToUpload, false, fileUploadDirectory)
+        refreshFileSystemEntriesInfo()
+    }
+
     return (
         <>
             <h2>Przesłane pliki</h2>
-            <FileSystemEntryInfoList fileSystemEntriesInfoDTO={fileSystemEntriesInfo} setFileUploadCardVisible={setFileUploadCardVisible} setFileUploadDirectory={setFileUploadDirectory} />
+            <FileSystemEntryInfoList
+                fileSystemEntriesInfoDTO={fileSystemEntriesInfo}
+                openFileUploadPopup={openFileUploadPopup}
+                setFileUploadDirectory={setFileUploadDirectory}
+            />
             <button
                 onClick={() => {
-                    setFileUploadCardVisible(true)
                     setFileUploadDirectory(null)
+                    openFileUploadPopup()
                 }}
             >
                 Upload to root
             </button>
             <button onClick={() => setDirectoryCreateCardVisible(true)}>Create directories</button>
 
-            {fileUploadCardVisible && <FileUploadPopup uuid={fileUploadDirectory} setFileUploadCardVisible={setFileUploadCardVisible} fileRefreshFunction={refreshFileSystemEntriesInfo} />}
+            {isFileUploadPopupVisible && (
+                <FileUploadPopup
+                    handleFileUpload={handleFileUpload}
+                    closePopup={closeFileUploadPopup}
+                />
+            )}
 
-            {directoryCreateCardVisible && <DirectoryNameSetCard setDirectoryCreateCardVisible={setDirectoryCreateCardVisible} fileRefreshFunction={refreshFileSystemEntriesInfo} />}
+            {directoryCreateCardVisible && (
+                <DirectoryNameSetCard
+                    setDirectoryCreateCardVisible={setDirectoryCreateCardVisible}
+                    fileRefreshFunction={refreshFileSystemEntriesInfo}
+                />
+            )}
         </>
     )
 }

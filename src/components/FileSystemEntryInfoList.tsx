@@ -1,15 +1,15 @@
 import React from "react"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
-import FileSystemEntryInfo from "./FileSystemEntryInfo"
 import FileDirectory from "./FileDirectory"
+import FileSystemEntryInfo from "./FileSystemEntryInfo"
 
 interface FileSystemEntryInfoListProps {
     fileSystemEntriesInfoDTO: FileSystemEntryInfoDTO[]
-    setFileUploadCardVisible: (param: boolean) => void
+    openFileUploadPopup: () => void
     setFileUploadDirectory: (param: string) => void
 }
 
-const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, setFileUploadCardVisible, setFileUploadDirectory }) => {
+const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, openFileUploadPopup: openFileInputPopup, setFileUploadDirectory }) => {
     return (
         <table>
             <tr>
@@ -23,7 +23,7 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
                     return (
                         <FileDirectory
                             fileSystemEntryInfoDTO={fileSystemEntryInfoDTO}
-                            setFileUploadCardVisible={setFileUploadCardVisible}
+                            openFileInputPopup={openFileInputPopup}
                             setFileUploadDirectory={setFileUploadDirectory}
                         />
                     )

@@ -1,38 +1,38 @@
 import React, { useState } from "react"
-import { fileUpload } from "../services/FileSystemEntryInfoService"
 import "../css/FileUploadPopup.css"
 
 interface FileUploadPopupProps {
-    uuid: string | null
-    setFileUploadCardVisible: (param: boolean) => void
-    fileRefreshFunction: () => void
+    handleFileUpload: (fileToUpload: File) => void
+    closePopup: () => void
 }
 
-const FileUploadPopup: React.FC<FileUploadPopupProps> = (props) => {
+const FileUploadPopup: React.FC<FileUploadPopupProps> = ({ handleFileUpload, closePopup }) => {
     const [fileToUpload, setFileToUpload] = useState<File | null>(null)
 
-    const uploadFile = async () => {
-        const response = await fileUpload(fileToUpload, false, props.uuid)
-        props.fileRefreshFunction()
+    const handleSubmit = () => {
+        if (fileToUpload != null) {
+            handleFileUpload(fileToUpload)
+            closePopup()
+        }
     }
-
-    let closing = false
 
     return (
         <div className="file-upload-popup">
             <form
                 onSubmit={(event) => {
                     event.preventDefault()
-                    if (closing) {
-                        props.setFileUploadCardVisible(false)
-                    } else {
-                        uploadFile()
-                    }
+                    handleSubmit()
                 }}
             >
-                <input type="file" onChange={(e) => setFileToUpload(e.target.files ? e.target.files[0] : null)} />
+                <input
+                    type="file"
+                    onChange={(e) => setFileToUpload(e.target.files ? e.target.files[0] : null)}
+                />
                 <input type="submit" />
-                <button type="submit" onClick={() => props.setFileUploadCardVisible(false)}>
+                <button
+                    type="submit"
+                    onClick={closePopup}
+                >
                     Close
                 </button>
             </form>
