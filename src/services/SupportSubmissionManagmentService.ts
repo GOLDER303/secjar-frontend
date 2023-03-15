@@ -2,7 +2,7 @@ import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO"
 import axios, {AxiosError} from "axios"
 import ApiErrorResponseDTO from "../ts/interfaces/ApiErrorResponseDTO"
 import SupportSubmisionDTO from "../ts/interfaces/SupportSubmissionDTO"
-import SupportSubmissionNoteDTO from "../ts/interfaces/SupportSubmissionNoteDTO";
+import SupportSubmissionNoteDTO from "../ts/interfaces/SupportSubmissionNoteDTO"
 
 export const getPendingSubmissions = async (): Promise<GeneralApiResponseDTO<[SupportSubmisionDTO]>> => {
     try {

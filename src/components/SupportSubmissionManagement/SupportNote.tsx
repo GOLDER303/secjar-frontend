@@ -8,10 +8,10 @@ interface SupportNoteProps {
 }
 
 const SupportNote: React.FC<SupportNoteProps> = ({ supportSubmissionNoteDTO, handleNoteEdit, handleNoteDelete }) => {
-    const [isNoteEdited, setIsNoteEdited] = React.useState(false);
-    const [submissionNoteContent, setSubmissionNoteContent] = React.useState<string | null>(null);
+    const [isNoteEdited, setIsNoteEdited] = React.useState(false)
+    const [submissionNoteContent, setSubmissionNoteContent] = React.useState<string | null>(null)
 
-    const editedNoteContent = submissionNoteContent || "";
+    const editedNoteContent = submissionNoteContent || ""
 
     useEffect(() => {
         setSubmissionNoteContent(supportSubmissionNoteDTO.noteContent)

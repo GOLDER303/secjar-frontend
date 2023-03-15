@@ -8,8 +8,8 @@ import {
     getPendingSubmissions,
     getSubmissionNotes
 } from "../../../services/SupportSubmissionManagmentService"
-import SupportSubmissionNoteDTO from "../../../ts/interfaces/SupportSubmissionNoteDTO";
-import SupportNoteList from "../../../components/SupportSubmissionManagement/SupportNoteList";
+import SupportSubmissionNoteDTO from "../../../ts/interfaces/SupportSubmissionNoteDTO"
+import SupportNoteList from "../../../components/SupportSubmissionManagement/SupportNoteList"
 
 const SubmissionManagementTab: React.FC = () => {
     const [supportSubmission, setSupportSubmission] = React.useState<SupportSubmissionDTO[]>([])

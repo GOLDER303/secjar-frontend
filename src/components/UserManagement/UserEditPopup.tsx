@@ -18,7 +18,7 @@ const UserEditPopup: React.FC<UserEditPopupProps> = ({ handleUserEdit, closePopu
     const allowedDiskSpaceMegabytes = allowedDiskSpace && Math.round(allowedDiskSpace / 1024 / 1024) || 0
 
     useEffect(() => {
-        const placeholderData = getUserEditPopupData();
+        const placeholderData = getUserEditPopupData()
         if (placeholderData){
             setFileDeletionDelay(placeholderData.fileDeletionDelay)
             setDesiredSessionTime(placeholderData.desiredSessionTime)

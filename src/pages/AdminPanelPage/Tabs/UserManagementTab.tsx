@@ -47,7 +47,7 @@ const UserManagementTab: React.FC = () => {
                 } as UserPatchRequestDTO
             }
         }
-        return null;
+        return null
     }
 
     const refreshUserInfo = async () => {
