@@ -2,6 +2,7 @@ import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO"
 import axios, {AxiosError} from "axios"
 import ApiErrorResponseDTO from "../ts/interfaces/ApiErrorResponseDTO"
 import SupportSubmisionDTO from "../ts/interfaces/SupportSubmissionDTO"
+import SupportSubmissionNoteDTO from "../ts/interfaces/SupportSubmissionNoteDTO";
 
 export const getPendingSubmissions = async (): Promise<GeneralApiResponseDTO<[SupportSubmisionDTO]>> => {
     try {
@@ -21,7 +22,7 @@ export const getPendingSubmissions = async (): Promise<GeneralApiResponseDTO<[Su
     }
 }
 
-export const getSubmissionNotes = async (uuid: string): Promise<GeneralApiResponseDTO<[SupportSubmisionDTO]>> => {
+export const getSubmissionNotes = async (uuid: string): Promise<GeneralApiResponseDTO<[SupportSubmissionNoteDTO]>> => {
     try {
         const response = await axios.get("http://localhost:8080/support/submissions/".concat(uuid).concat("/notes"), {
             headers: {
@@ -44,6 +45,46 @@ export const addNoteToSubmission = async (uuid: string, content: string): Promis
         await axios.post("http://localhost:8080/support/submissions/".concat(uuid).concat("/notes"), {
             content
         }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        })
+
+        return {}
+    } catch (err) {
+        const error = err as AxiosError
+
+        const data = error.response?.data as ApiErrorResponseDTO
+
+        return { error: data.status }
+    }
+}
+
+export const editSubmissionNote = async (uuid: string, content: string): Promise<GeneralApiResponseDTO<null>> => {
+    try {
+        console.log("uuid:" + uuid)
+        console.log(content)
+        await axios.patch("http://localhost:8080/support/submissions/notes/".concat(uuid), {
+            content
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        })
+
+        return {}
+    } catch (err) {
+        const error = err as AxiosError
+
+        const data = error.response?.data as ApiErrorResponseDTO
+
+        return { error: data.status }
+    }
+}
+
+export const deleteSubmissionNote = async (uuid: string): Promise<GeneralApiResponseDTO<null>> => {
+    try {
+        await axios.delete("http://localhost:8080/support/submissions/notes/".concat(uuid), {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("jwt")}`,
             },

@@ -2,16 +2,16 @@ import React from "react"
 import "../../css/FileUploadPopup.css"
 
 interface SupportSubmissionAddNotePopupProps {
-    handleAddNote: (submissionNoteContent: string) => void
+    handleNoteAdd: (submissionNoteContent: string) => void
     closePopup: () => void
 }
 
-const SupportSubmissionAddNotePopup: React.FC<SupportSubmissionAddNotePopupProps> = ({ handleAddNote, closePopup }) => {
+const SupportSubmissionAddNotePopup: React.FC<SupportSubmissionAddNotePopupProps> = ({ handleNoteAdd, closePopup }) => {
     const submissionNoteContent = React.useRef<HTMLTextAreaElement>(null)
 
     const handleSubmit = () => {
         if (submissionNoteContent.current) {
-            handleAddNote(submissionNoteContent.current.value)
+            handleNoteAdd(submissionNoteContent.current.value)
             closePopup()
         }
     }
