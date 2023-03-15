@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import DirectoryNameSetCard from "../../../components/DirectoryNameSetCard"
 import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
 import FileUploadPopup from "../../../components/FileUploadPopup"
-import { deleteFile, fileUpload, getFileSystemEntriesInfo } from "../../../services/FileSystemEntryInfoService"
+import { deleteFile, fileUpload, getFileSystemEntriesInfo, patchFile } from "../../../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../../../ts/interfaces/FileSystemEntryInfoDTO"
 
 const UploadedFilesTab: React.FC = () => {
@@ -58,6 +58,11 @@ const UploadedFilesTab: React.FC = () => {
         refreshFileSystemEntriesInfo()
     }
 
+    const handleFileFavoriteToggle = async (fileUuid: string, isFavorite: boolean) => {
+        const response = await patchFile(fileUuid, !isFavorite)
+        refreshFileSystemEntriesInfo()
+    }
+
     return (
         <>
             <h2>Przesłane pliki</h2>
@@ -66,6 +71,7 @@ const UploadedFilesTab: React.FC = () => {
                 openFileUploadPopup={openFileUploadPopup}
                 setFileUploadDirectory={setFileUploadDirectory}
                 handleFileDelete={handleFileDelete}
+                handleFileFavoriteToggle={handleFileFavoriteToggle}
             />
             <button
                 onClick={() => {

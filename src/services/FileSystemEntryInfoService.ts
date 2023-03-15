@@ -59,12 +59,35 @@ export const deleteFile = async (fileUuid: string, instantDelete: boolean): Prom
     try {
         const response = await axios.delete(`http://localhost:8080/fileSystemEntries/${fileUuid}`, {
             params: {
-                instantDelete
+                instantDelete,
             },
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("jwt")}`,
             },
         })
+
+        return {}
+    } catch (err) {
+        const error = err as AxiosError
+        const data = error.response
+
+        return { error: data?.status }
+    }
+}
+
+export const patchFile = async (fileUuid: string, isFavorite: boolean) => {
+    try {
+        await axios.patch(
+            `http://localhost:8080/fileSystemEntries/${fileUuid}`,
+            {
+                isFavorite,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+            }
+        )
 
         return {}
     } catch (err) {

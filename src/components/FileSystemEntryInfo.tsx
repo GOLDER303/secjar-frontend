@@ -6,11 +6,12 @@ interface FileEntryProps {
     openFileInputPopup: () => void
     setFileUploadDirectory: (param: string) => void
     handleFileDelete: (fileUuid: string) => void
+    handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
 }
 
 const sizeUnits = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
 
-const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, setFileUploadDirectory, handleFileDelete }) => {
+const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle }) => {
     const [showFileArray, setShowFileArray] = useState(false)
     const colSpan = 6 //number of collumns in the table
     let sizeValue = 0
@@ -51,6 +52,13 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                     {sizeValue} {sizeUnit}
                 </td>
                 <td>{new Date(fileSystemEntryInfoDTO.uploadDate).toLocaleDateString()}</td>
+                <td
+                    onClick={() => {
+                        handleFileFavoriteToggle(fileSystemEntryInfoDTO.uuid, fileSystemEntryInfoDTO.favorite)
+                    }}
+                >
+                    {fileSystemEntryInfoDTO.favorite ? "★" : "☆"}
+                </td>
                 <td>
                     <button
                         onClick={() => {
@@ -92,6 +100,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                                         openFileInputPopup={openFileInputPopup}
                                         setFileUploadDirectory={setFileUploadDirectory}
                                         handleFileDelete={handleFileDelete}
+                                        handleFileFavoriteToggle={handleFileFavoriteToggle}
                                     />
                                 )
                             })}

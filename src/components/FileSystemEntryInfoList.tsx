@@ -7,9 +7,10 @@ interface FileSystemEntryInfoListProps {
     openFileUploadPopup: () => void
     setFileUploadDirectory: (param: string) => void
     handleFileDelete: (fileUuid: string) => void
+    handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
 }
 
-const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, openFileUploadPopup, setFileUploadDirectory, handleFileDelete }) => {
+const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, openFileUploadPopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle }) => {
     return (
         <table>
             <tr>
@@ -18,6 +19,7 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
                 <th>Właściciel</th>
                 <th>Rozmiar</th>
                 <th>Data przesłania</th>
+                <th>Ulubiony</th>
                 <th>Akcje</th>
             </tr>
             {fileSystemEntriesInfoDTO.map((fileSystemEntryInfoDTO) => {
@@ -27,6 +29,7 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
                         openFileInputPopup={openFileUploadPopup}
                         setFileUploadDirectory={setFileUploadDirectory}
                         handleFileDelete={handleFileDelete}
+                        handleFileFavoriteToggle={handleFileFavoriteToggle}
                     />
                 )
             })}
