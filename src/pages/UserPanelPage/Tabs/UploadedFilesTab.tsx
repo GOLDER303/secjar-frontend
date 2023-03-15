@@ -21,7 +21,17 @@ const UploadedFilesTab: React.FC = () => {
             //TODO: handle error
         }
         if (response.data) {
-            setFileSystemEntriesInfo(response.data)
+            setFileSystemEntriesInfo(
+                response.data.sort((a, b) => {
+                    if (a.name > b.name) {
+                        return 1
+                    }
+                    if (a.name < b.name) {
+                        return -1
+                    }
+                    return 0
+                })
+            )
         }
         //TODO: function to load only uploaded and updated files after refresh??
     }
