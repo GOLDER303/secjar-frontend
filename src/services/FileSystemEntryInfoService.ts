@@ -99,3 +99,32 @@ export const patchFile = async (fileUuid: string, isFavorite?: boolean, parentDi
         return { error: data?.status }
     }
 }
+
+export const downloadFileSystemEntry = async (fileSystemEntryUuid: string, fileName: string, fileExtension: string) => {
+    try {
+        const response = await axios.get(`http://localhost:8080/fileSystemEntries/${fileSystemEntryUuid}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+            responseType: "blob",
+        })
+
+        const url = window.URL.createObjectURL(response.data)
+        const a = document.createElement("a")
+        a.style.display = "none"
+        a.href = url
+
+        a.download = `${fileName}.${fileExtension}`
+        document.body.appendChild(a)
+
+        a.click()
+
+        document.body.removeChild(a)
+        window.URL.revokeObjectURL(url)
+    } catch (err) {
+        const error = err as AxiosError
+        const data = error.response
+
+        return { error: data?.status }
+    }
+}

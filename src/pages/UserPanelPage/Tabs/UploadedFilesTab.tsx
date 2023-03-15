@@ -3,7 +3,7 @@ import DirectoryNameSetCard from "../../../components/DirectoryNameSetCard"
 import FileMovePopup from "../../../components/FileMovePopup"
 import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
 import FileUploadPopup from "../../../components/FileUploadPopup"
-import { deleteFile, fileUpload, getFileSystemEntriesInfo, patchFile } from "../../../services/FileSystemEntryInfoService"
+import { deleteFile, downloadFileSystemEntry, fileUpload, getFileSystemEntriesInfo, patchFile } from "../../../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../../../ts/interfaces/FileSystemEntryInfoDTO"
 
 const UploadedFilesTab: React.FC = () => {
@@ -84,6 +84,10 @@ const UploadedFilesTab: React.FC = () => {
         refreshFileSystemEntriesInfo()
     }
 
+    const handleFileSystemEntryDownload = async (fileSystemEntryUuid: string, fileName: string, fileExtension: string) => {
+        downloadFileSystemEntry(fileSystemEntryUuid, fileName, fileExtension)
+    }
+
     return (
         <>
             <h2>Przesłane pliki</h2>
@@ -94,6 +98,7 @@ const UploadedFilesTab: React.FC = () => {
                 setFileUploadDirectory={setFileUploadDirectory}
                 handleFileDelete={handleFileDelete}
                 handleFileFavoriteToggle={handleFileFavoriteToggle}
+                handleFileSystemEntryDownload={handleFileSystemEntryDownload}
             />
             <button
                 onClick={() => {

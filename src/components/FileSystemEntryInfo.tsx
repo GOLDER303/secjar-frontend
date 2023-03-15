@@ -12,15 +12,16 @@ interface FileEntryProps {
     setFileUploadDirectory: (param: string) => void
     handleFileDelete: (fileUuid: string) => void
     handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
+    handleFileSystemEntryDownload: (fileSystemEntryUuid: string, fileName: string, fileExtension: string) => void
 }
 
-const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, openFileMovePopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle }) => {
+const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, openFileMovePopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle, handleFileSystemEntryDownload }) => {
     const [showFileArray, setShowFileArray] = useState(false)
     const colSpan = 6 //number of collumns in the table
 
     const { sizeValue, sizeUnit } = formatFileSize(fileSystemEntryInfoDTO.size)
 
-    const {contentType, isDirectory} = formatFileContentType(fileSystemEntryInfoDTO.contentType)
+    const { contentType, isDirectory } = formatFileContentType(fileSystemEntryInfoDTO.contentType)
 
     const handleNameChange = (name: string) => {
         patchFile(fileSystemEntryInfoDTO.uuid, undefined, undefined, name)
@@ -49,6 +50,13 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                     {fileSystemEntryInfoDTO.favorite ? "★" : "☆"}
                 </td>
                 <td>
+                    <button
+                        onClick={() => {
+                            handleFileSystemEntryDownload(fileSystemEntryInfoDTO.uuid, fileSystemEntryInfoDTO.name, contentType)
+                        }}
+                    >
+                        Download
+                    </button>
                     <button
                         onClick={() => {
                             handleFileDelete(fileSystemEntryInfoDTO.uuid)
@@ -98,6 +106,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                                         setFileUploadDirectory={setFileUploadDirectory}
                                         handleFileDelete={handleFileDelete}
                                         handleFileFavoriteToggle={handleFileFavoriteToggle}
+                                        handleFileSystemEntryDownload={handleFileSystemEntryDownload}
                                     />
                                 )
                             })}
