@@ -22,6 +22,27 @@ export const getPendingSubmissions = async (): Promise<GeneralApiResponseDTO<[Su
     }
 }
 
+
+export const closeSubmission = async (uuid: string): Promise<GeneralApiResponseDTO<null>> => {
+    try {
+        const response = await axios.patch("http://localhost:8080/support/submissions/".concat(uuid), {
+            submissionStatus: "COMPLETED"
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        })
+
+        return { data: response.data.pendingSubmissions }
+    } catch (err) {
+        const error = err as AxiosError
+
+        const data = error.response?.data as ApiErrorResponseDTO
+
+        return { error: data.status }
+    }
+}
+
 export const getSubmissionNotes = async (uuid: string): Promise<GeneralApiResponseDTO<[SupportSubmissionNoteDTO]>> => {
     try {
         const response = await axios.get("http://localhost:8080/support/submissions/".concat(uuid).concat("/notes"), {
@@ -62,8 +83,6 @@ export const addNoteToSubmission = async (uuid: string, content: string): Promis
 
 export const editSubmissionNote = async (uuid: string, content: string): Promise<GeneralApiResponseDTO<null>> => {
     try {
-        console.log("uuid:" + uuid)
-        console.log(content)
         await axios.patch("http://localhost:8080/support/submissions/notes/".concat(uuid), {
             content
         }, {

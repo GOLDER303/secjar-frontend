@@ -6,9 +6,10 @@ interface SupportSubmissionProps {
     openAddNotePopup: () => void
     openReadNotesSidePanel: () => void
     setSupportSubmissionTarget: (param: string) => void
+    handleSubmissionClose: () => void
 }
 
-const SupportSubmission: React.FC<SupportSubmissionProps> = ({ supportSubmissionDTO, openAddNotePopup, openReadNotesSidePanel, setSupportSubmissionTarget }) => {
+const SupportSubmission: React.FC<SupportSubmissionProps> = ({ supportSubmissionDTO, openAddNotePopup, openReadNotesSidePanel, setSupportSubmissionTarget, handleSubmissionClose }) => {
     return (
         <tr>
             <td>{supportSubmissionDTO.name}</td>
@@ -32,6 +33,14 @@ const SupportSubmission: React.FC<SupportSubmissionProps> = ({ supportSubmission
                     }}
                 >
                     Czytaj notatki
+                </button>
+                <button
+                    onClick={() => {
+                        handleSubmissionClose()
+                        setSupportSubmissionTarget(supportSubmissionDTO.uuid)
+                    }}
+                >
+                    Zamknij zgłoszenie
                 </button>
             </td>
         </tr>

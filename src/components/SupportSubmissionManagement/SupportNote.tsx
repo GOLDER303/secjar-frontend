@@ -19,8 +19,6 @@ const SupportNote: React.FC<SupportNoteProps> = ({ supportSubmissionNoteDTO, han
 
     const handleSubmit = () => {
         if (submissionNoteContent) {
-            console.log("uuid:" + supportSubmissionNoteDTO.uuid)
-            console.log(submissionNoteContent)
             handleNoteEdit(supportSubmissionNoteDTO.uuid, submissionNoteContent)
             setIsNoteEdited(false)
         }
@@ -29,32 +27,32 @@ const SupportNote: React.FC<SupportNoteProps> = ({ supportSubmissionNoteDTO, han
     return (
         isNoteEdited ? (
             <tr>
-                    <td>
-            <form
-                onSubmit={(event) => {
-                    event.preventDefault()
-                    handleSubmit()
-                }}
-            >
-                <textarea
-                    name="content"
-                    id="content"
-                    value={editedNoteContent}
-                    cols={30} rows={10}
-                    onChange={(e) => {
-                        setSubmissionNoteContent(e.target.value)
-                    }}
-                />
-                        <input type="submit" />
-                        <button type="submit"
-                            onClick={() => {
-                                setIsNoteEdited(false)
+                <td>
+                    <form
+                        onSubmit={(event) => {
+                            event.preventDefault()
+                            handleSubmit()
+                        }}
+                    >
+                        <textarea
+                            name="content"
+                            id="content"
+                            value={editedNoteContent}
+                            cols={30} rows={10}
+                            onChange={(e) => {
+                                setSubmissionNoteContent(e.target.value)
                             }}
-                        >
-                            Anuluj edycję
-                        </button>
-            </form>
-                    </td>
+                        />
+                                <input type="submit" />
+                                <button type="submit"
+                                    onClick={() => {
+                                        setIsNoteEdited(false)
+                                    }}
+                                >
+                                    Anuluj edycję
+                                </button>
+                    </form>
+                </td>
             </tr>
         ) : (
             <tr>

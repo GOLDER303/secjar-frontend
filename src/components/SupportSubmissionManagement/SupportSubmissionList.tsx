@@ -7,9 +7,10 @@ interface UserInfoListProps {
     openAddNotePopup: () => void
     openReadNotesSidePanel: () => void
     setSupportSubmissionTarget: (param: string) => void
+    handleSubmissionClose: () => void
 }
 
-const SupportSubmissionList: React.FC<UserInfoListProps> = ({ supportSubmissionDTO, openAddNotePopup, openReadNotesSidePanel, setSupportSubmissionTarget }) => {
+const SupportSubmissionList: React.FC<UserInfoListProps> = ({ supportSubmissionDTO, openAddNotePopup, openReadNotesSidePanel, setSupportSubmissionTarget, handleSubmissionClose }) => {
     return (
         <table>
             <tr>
@@ -25,6 +26,7 @@ const SupportSubmissionList: React.FC<UserInfoListProps> = ({ supportSubmissionD
                         openAddNotePopup={openAddNotePopup}
                         openReadNotesSidePanel={openReadNotesSidePanel}
                         setSupportSubmissionTarget={setSupportSubmissionTarget}
+                        handleSubmissionClose={handleSubmissionClose}
                     />
                 )
             })}

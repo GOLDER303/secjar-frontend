@@ -4,7 +4,7 @@ import SupportSubmissionDTO from "../../../ts/interfaces/SupportSubmissionDTO"
 import SupportSubmissionAddNotePopup
     from "../../../components/SupportSubmissionManagement/SupportSubmissionAddNotePopup"
 import {
-    addNoteToSubmission, deleteSubmissionNote, editSubmissionNote,
+    addNoteToSubmission, closeSubmission, deleteSubmissionNote, editSubmissionNote,
     getPendingSubmissions,
     getSubmissionNotes
 } from "../../../services/SupportSubmissionManagmentService"
@@ -62,6 +62,14 @@ const SubmissionManagementTab: React.FC = () => {
         }
     }
 
+    const handleSubmissionClose = async () => {
+        if (supportSubmissionTarget) {
+            await closeSubmission(supportSubmissionTarget)
+            // TODO: handle errors
+            await refreshSupportSubmission()
+        }
+    }
+
     const handleNoteAdd = async (noteContent: string) => {
         if (supportSubmissionTarget) {
             await addNoteToSubmission(supportSubmissionTarget, noteContent)
@@ -95,6 +103,7 @@ const SubmissionManagementTab: React.FC = () => {
                     openAddNotePopup={openAddNotePopup}
                     openReadNotesSidePanel={openReadNotesSidePanel}
                     setSupportSubmissionTarget={setSupportSubmissionTarget}
+                    handleSubmissionClose={handleSubmissionClose}
                 />
                 <button
                     onClick={() => {
