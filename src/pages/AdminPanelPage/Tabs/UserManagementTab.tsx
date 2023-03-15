@@ -15,7 +15,7 @@ const UserManagementTab: React.FC = () => {
 
     useEffect(() => {
         refreshUserInfo()
-    })
+    }, [])
 
     const closeUserEditPopup = () => {
         setIsUserEditPopupVisible(false)
