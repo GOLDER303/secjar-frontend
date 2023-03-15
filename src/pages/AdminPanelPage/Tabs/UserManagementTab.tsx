@@ -33,6 +33,23 @@ const UserManagementTab: React.FC = () => {
         setIsUserInvitationPopupVisible(true)
     }
 
+    const getUserEditPopupData = () => {
+        if (whichUserToEdit) {
+            const user = userInfo.find((value) => {
+                return value.uuid == whichUserToEdit
+            })
+            if (user){
+                return {
+                    fileDeletionDelay: user.fileDeletionDelay,
+                    desiredSessionTime: 0,
+                    // TODO: replace with desiredSessionTime taken from user
+                    allowedDiskSpace: user.allowedDiscSpace,
+                } as UserPatchRequestDTO
+            }
+        }
+        return null;
+    }
+
     const refreshUserInfo = async () => {
         const response = await getAllUserInfo()
         if (response.data) {
@@ -73,6 +90,7 @@ const UserManagementTab: React.FC = () => {
                 <UserEditPopup
                     handleUserEdit={handleUserEdit}
                     closePopup={closeUserEditPopup}
+                    getUserEditPopupData={getUserEditPopupData}
                 />
             )}
             {isUserInvitationPopupVisible && (
