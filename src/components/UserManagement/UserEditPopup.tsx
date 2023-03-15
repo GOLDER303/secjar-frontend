@@ -38,24 +38,30 @@ const UserEditPopup: React.FC<UserEditPopupProps> = ({ handleUserEdit, closePopu
                         required
                         type="number"
                         onChange={(e) => setFileDeletionDelay(e.target.value ? parseInt(e.target.value) * 3600 * 24 : null)}
-                    /> dni
-                </label><br />
+                    />
+                    dni
+                </label>
+                <br />
                 <label>
                     Okres oczekiwanej sesji użytkownika:
                     <input
                         required
                         type="number"
                         onChange={(e) => setDesiredSessionTime(e.target.value ? parseInt(e.target.value) * 3600 * 24 : null)}
-                    /> dni
-                </label><br />
+                    />
+                    dni
+                </label>
+                <br />
                 <label>
                     Wielkość przestrzeni dysku:
                     <input
                         required
                         type="number"
                         onChange={(e) => setAllowedDiskSpace(e.target.value ? parseInt(e.target.value) * 1024 * 1024 : null)}
-                    /> MB
-                </label><br />
+                    />
+                    MB
+                </label>
+                <br />
                 <input type="submit" />
                 <button
                     type="submit"

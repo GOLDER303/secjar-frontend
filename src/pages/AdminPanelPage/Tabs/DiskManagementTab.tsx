@@ -1,6 +1,6 @@
 import React from "react"
 
-const DiskManagmentTab: React.FC = () => {
+const DiskManagementTab: React.FC = () => {
     return (
         <div>
             Disk management
@@ -8,4 +8,4 @@ const DiskManagmentTab: React.FC = () => {
     )
 }
 
-export default DiskManagmentTab
+export default DiskManagementTab

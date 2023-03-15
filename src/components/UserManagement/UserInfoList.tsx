@@ -12,7 +12,7 @@ const UserInfoList: React.FC<UserInfoListProps> = ({ userInfoDTO, openUserEditPo
     return (
         <table>
             <tr>
-                <th>Imie</th>
+                <th>Imię</th>
                 <th>Nazwisko</th>
                 <th>Dane kontaktowe</th>
                 <th>Ilość zajętego miejsca</th>

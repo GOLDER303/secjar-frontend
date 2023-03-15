@@ -9,7 +9,7 @@ interface UserProps {
 
 const sizeUnits = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
 
-const UserInfo: React.FC<UserProps> = ({ userInfoDTO, openUserEditPopup, setWhichUserToEdit}) => {
+const UserInfo: React.FC<UserProps> = ({ userInfoDTO, openUserEditPopup, setWhichUserToEdit }) => {
     let sizeValue = [0, 0]
     let sizeUnit = ["", ""]
     let sizeValues = [userInfoDTO.currentDiscSpace, userInfoDTO.allowedDiscSpace]

@@ -10,8 +10,8 @@ import SupportPage from "./pages/SupportPage"
 import UploadedFilesTab from "./pages/UserPanelPage/Tabs/UploadedFilesTab"
 import UserPanelPage from "./pages/UserPanelPage/UserPanelPage"
 import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage"
-import DiskManagmentTab from "./pages/AdminPanelPage/Tabs/DiskManagmentTab"
-import SubmissionManagementTab from "./pages/AdminPanelPage/Tabs/SubmissionManagmentTab"
+import DiskManagementTab from "./pages/AdminPanelPage/Tabs/DiskManagementTab"
+import SubmissionManagementTab from "./pages/AdminPanelPage/Tabs/SubmissionManagementTab"
 import UserManagementTab from "./pages/AdminPanelPage/Tabs/UserManagementTab"
 import DashboardTab from "./pages/AdminPanelPage/Tabs/DashboardTab"
 
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "disk",
-                        element: <DiskManagmentTab />,
+                        element: <DiskManagementTab />,
                     },
                     {
                         path: "supportSubmissions",

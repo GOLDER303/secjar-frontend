@@ -40,32 +40,40 @@ const UserInvitationPopup: React.FC<UserInvitationPopupProps> = ({ handleUserInv
                         required
                         type="text"
                         onChange={(e) => setUsername(e.target.value)}
-                    /> dni
-                </label><br />
+                    />
+                    dni
+                </label>
+                <br />
                 <label>
                     Imię:
                     <input
                         required
                         type="text"
                         onChange={(e) => setName(e.target.value)}
-                    /> dni
-                </label><br />
+                    />
+                    dni
+                </label>
+                <br />
                 <label>
                     Nazwisko:
                     <input
                         required
                         type="text"
                         onChange={(e) => setSurname(e.target.value)}
-                    /> MB
-                </label><br />
+                    />
+                    MB
+                </label>
+                <br />
                 <label>
                     Adres email:
                     <input
                         required
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
-                    /> MB
-                </label><br />
+                    />
+                    MB
+                </label>
+                <br />
                 <input type="submit" />
                 <button
                     type="submit"
