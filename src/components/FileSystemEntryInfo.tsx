@@ -4,6 +4,7 @@ import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 interface FileEntryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
     openFileInputPopup: () => void
+    openFileMovePopup: (targetFileUuid: string) => void
     setFileUploadDirectory: (param: string) => void
     handleFileDelete: (fileUuid: string) => void
     handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
@@ -11,7 +12,7 @@ interface FileEntryProps {
 
 const sizeUnits = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
 
-const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle }) => {
+const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, openFileMovePopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle }) => {
     const [showFileArray, setShowFileArray] = useState(false)
     const colSpan = 6 //number of collumns in the table
     let sizeValue = 0
@@ -67,6 +68,13 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                     >
                         Delete
                     </button>
+                    <button
+                        onClick={() => {
+                            openFileMovePopup(fileSystemEntryInfoDTO.uuid)
+                        }}
+                    >
+                        Move
+                    </button>
                     {isDirectory && (
                         <button
                             onClick={() => {
@@ -98,6 +106,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                                     <FileSystemEntryInfo
                                         fileSystemEntryInfoDTO={fileSystemEntryInfo}
                                         openFileInputPopup={openFileInputPopup}
+                                        openFileMovePopup={openFileMovePopup}
                                         setFileUploadDirectory={setFileUploadDirectory}
                                         handleFileDelete={handleFileDelete}
                                         handleFileFavoriteToggle={handleFileFavoriteToggle}

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import DirectoryNameSetCard from "../../../components/DirectoryNameSetCard"
+import FileMovePopup from "../../../components/FileMovePopup"
 import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
 import FileUploadPopup from "../../../components/FileUploadPopup"
 import { deleteFile, fileUpload, getFileSystemEntriesInfo, patchFile } from "../../../services/FileSystemEntryInfoService"
@@ -10,6 +11,8 @@ const UploadedFilesTab: React.FC = () => {
     const [directoryCreateCardVisible, setDirectoryCreateCardVisible] = React.useState(false)
     const [fileUploadDirectory, setFileUploadDirectory] = React.useState<string | null>(null)
     const [fileSystemEntriesInfo, setFileSystemEntriesInfo] = React.useState<FileSystemEntryInfoDTO[]>([])
+    const [isFileMovePopupVisible, setIsFileMovePopupVisible] = React.useState(false)
+    const [targetFileUuid, setTargetFileUuid] = React.useState("")
 
     useEffect(() => {
         refreshFileSystemEntriesInfo()
@@ -44,8 +47,26 @@ const UploadedFilesTab: React.FC = () => {
         setIsFileUploadPopupVisible(true)
     }
 
+    const closeFileMovePopup = () => {
+        setIsFileMovePopupVisible(false)
+    }
+
+    const openFileMovePopup = (targetFileUuid: string) => {
+        setTargetFileUuid(targetFileUuid)
+        setIsFileMovePopupVisible(true)
+    }
+
     const handleFileUpload = async (fileToUpload: File) => {
         const response = await fileUpload(fileToUpload, false, fileUploadDirectory)
+        refreshFileSystemEntriesInfo()
+    }
+
+    const handleFileMove = async (fileUuid: string, targetDirName: string) => {
+        let targetDirUuid = ""
+        if (targetDirName != "") {
+            targetDirUuid = fileSystemEntriesInfo.filter((fileSystemEntryInfo) => fileSystemEntryInfo.name == targetDirName)[0].uuid
+        }
+        const response = await patchFile(fileUuid, undefined, targetDirUuid)
         refreshFileSystemEntriesInfo()
     }
 
@@ -69,6 +90,7 @@ const UploadedFilesTab: React.FC = () => {
             <FileSystemEntryInfoList
                 fileSystemEntriesInfoDTO={fileSystemEntriesInfo.filter((fileSystemEntryInfo) => fileSystemEntryInfo.deleteDate == null)}
                 openFileUploadPopup={openFileUploadPopup}
+                openFileMovePopup={openFileMovePopup}
                 setFileUploadDirectory={setFileUploadDirectory}
                 handleFileDelete={handleFileDelete}
                 handleFileFavoriteToggle={handleFileFavoriteToggle}
@@ -87,6 +109,14 @@ const UploadedFilesTab: React.FC = () => {
                 <FileUploadPopup
                     handleFileUpload={handleFileUpload}
                     closePopup={closeFileUploadPopup}
+                />
+            )}
+
+            {isFileMovePopupVisible && (
+                <FileMovePopup
+                    targetFileUuid={targetFileUuid}
+                    handleFileMove={handleFileMove}
+                    closePopup={closeFileMovePopup}
                 />
             )}
 
