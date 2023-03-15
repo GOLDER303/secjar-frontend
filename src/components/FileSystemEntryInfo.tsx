@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
+import { formatFileSize } from "../utils/FormatFileSizeUtil"
 
 interface FileEntryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
@@ -10,23 +11,11 @@ interface FileEntryProps {
     handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
 }
 
-const sizeUnits = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
-
 const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, openFileMovePopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle }) => {
     const [showFileArray, setShowFileArray] = useState(false)
     const colSpan = 6 //number of collumns in the table
-    let sizeValue = 0
-    let sizeUnit = ""
 
-    if (fileSystemEntryInfoDTO.size != 0) {
-        const getBaseLog = (val: number, base: number) => {
-            return Math.log(val) / Math.log(base)
-        }
-
-        const sizeScale = Math.min(Math.floor(getBaseLog(fileSystemEntryInfoDTO.size, 1024)), 6)
-        sizeValue = Math.floor((100 * fileSystemEntryInfoDTO.size) / Math.pow(1024, sizeScale)) / 100
-        sizeUnit = sizeUnits[sizeScale]
-    }
+    const { sizeValue, sizeUnit } = formatFileSize(fileSystemEntryInfoDTO.size)
 
     let contentType: string
 
