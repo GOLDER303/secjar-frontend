@@ -3,6 +3,7 @@ import { patchFile } from "../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 import { formatFileSize } from "../utils/FormatFileSizeUtil"
 import DoubleClickEditText from "./DoubleClickEditText"
+import formatFileContentType from "../utils/FormatFileContentType"
 
 interface FileEntryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
@@ -19,20 +20,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
 
     const { sizeValue, sizeUnit } = formatFileSize(fileSystemEntryInfoDTO.size)
 
-    let contentType: string
-
-    switch (fileSystemEntryInfoDTO.contentType) {
-        case "text/plain":
-            contentType = "txt"
-            break
-        case "directory":
-            contentType = "directory"
-            break
-        default:
-            contentType = fileSystemEntryInfoDTO.contentType
-    }
-
-    const isDirectory = contentType === "directory"
+    const {contentType, isDirectory} = formatFileContentType(fileSystemEntryInfoDTO.contentType)
 
     const handleNameChange = (name: string) => {
         patchFile(fileSystemEntryInfoDTO.uuid, undefined, undefined, name)
