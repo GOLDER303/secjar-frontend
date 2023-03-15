@@ -1,5 +1,8 @@
 export default interface UserInfoDTO {
+    uuid: string
     username: string
+    name: string
+    surname: string
     email: string
     isVerified: boolean
     mfaType: string

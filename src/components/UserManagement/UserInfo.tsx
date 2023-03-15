@@ -28,8 +28,8 @@ const UserInfo: React.FC<UserProps> = ({ userInfoDTO, openUserEditPopup, setWhic
     return (
         <tr>
             <td>{userInfoDTO.username}</td>
-            <td>{/* userInfoDTO.surname */}</td>
-            {/* TODO: name and surname instead of username */}
+            <td>{userInfoDTO.name}</td>
+            <td>{userInfoDTO.surname}</td>
             <td>{userInfoDTO.email}</td>
             <td>
                 <progress
@@ -43,8 +43,7 @@ const UserInfo: React.FC<UserProps> = ({ userInfoDTO, openUserEditPopup, setWhic
                 <button
                     onClick={() => {
                         openUserEditPopup()
-                        // setWhichUserToEdit(userInfoDTO.uuid)
-                        // TODO: edit user by uuid
+                        setWhichUserToEdit(userInfoDTO.uuid)
                     }}
                 >
                     Edytuj
