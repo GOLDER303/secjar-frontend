@@ -75,13 +75,14 @@ export const deleteFile = async (fileUuid: string, instantDelete: boolean): Prom
     }
 }
 
-export const patchFile = async (fileUuid: string, isFavorite?: boolean, parentDirectoryUuid?: string) => {
+export const patchFile = async (fileUuid: string, isFavorite?: boolean, parentDirectoryUuid?: string, name?: string) => {
     try {
         await axios.patch(
             `http://localhost:8080/fileSystemEntries/${fileUuid}`,
             {
                 isFavorite,
                 parentDirectoryUuid,
+                name,
             },
             {
                 headers: {

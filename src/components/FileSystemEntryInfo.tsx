@@ -1,6 +1,8 @@
 import React, { useState } from "react"
+import { patchFile } from "../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 import { formatFileSize } from "../utils/FormatFileSizeUtil"
+import DoubleClickEditText from "./DoubleClickEditText"
 
 interface FileEntryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
@@ -32,10 +34,19 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
 
     const isDirectory = contentType === "directory"
 
+    const handleNameChange = (name: string) => {
+        patchFile(fileSystemEntryInfoDTO.uuid, undefined, undefined, name)
+    }
+
     return (
         <>
             <tr className={fileSystemEntryInfoDTO.parent != null || isDirectory ? "directory" : ""}>
-                <td>{fileSystemEntryInfoDTO.name}</td>
+                <td>
+                    <DoubleClickEditText
+                        value={fileSystemEntryInfoDTO.name}
+                        onBlurCallback={handleNameChange}
+                    />
+                </td>
                 <td>{contentType}</td>
                 <td>{fileSystemEntryInfoDTO.uuid}</td>
                 <td>
