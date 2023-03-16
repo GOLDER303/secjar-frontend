@@ -1,4 +1,5 @@
 import React from "react"
+import { deleteFile, downloadFileSystemEntry, patchFile } from "../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 import FileSystemEntryInfo from "./FileSystemEntryInfo"
 
@@ -7,12 +8,24 @@ interface FileSystemEntryInfoListProps {
     openFileUploadPopup: () => void
     openFileMovePopup: (targetFileUuid: string) => void
     setFileUploadDirectory: (param: string) => void
-    handleFileDelete: (fileUuid: string) => void
-    handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
-    handleFileSystemEntryDownload: (fileSystemEntryUuid: string, fileName: string, fileExtension: string) => void
+    refreshFileSystemEntriesInfos: () => void
 }
 
-const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, openFileUploadPopup, openFileMovePopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle, handleFileSystemEntryDownload }) => {
+const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, openFileUploadPopup, openFileMovePopup, setFileUploadDirectory, refreshFileSystemEntriesInfos }) => {
+    const handleFileDelete = async (fileUuid: string) => {
+        const response = await deleteFile(fileUuid, true)
+        refreshFileSystemEntriesInfos()
+    }
+
+    const handleFileFavoriteToggle = async (fileUuid: string, isFavorite: boolean) => {
+        const response = await patchFile(fileUuid, !isFavorite)
+        refreshFileSystemEntriesInfos()
+    }
+
+    const handleFileSystemEntryDownload = async (fileSystemEntryUuid: string, fileName: string, fileExtension: string) => {
+        downloadFileSystemEntry(fileSystemEntryUuid, fileName, fileExtension)
+    }
+
     return (
         <table>
             <tr>
