@@ -58,7 +58,7 @@ const DiskInfo: React.FC<DiskInfoProps> = ({ diskInfoDTO, handleMaxUserSessionTi
                     </form>
                 ) : (
                     <>
-                        {maxUserSessionTimeMinutes}
+                        {maxUserSessionTimeMinutes} minut
                         <button
                             onClick={() => {
                                 setIsMaxUserSessionTimeEdited(true)

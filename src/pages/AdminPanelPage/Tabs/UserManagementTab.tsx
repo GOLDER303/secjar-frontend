@@ -12,6 +12,7 @@ const UserManagementTab: React.FC = () => {
     const [isUserEditPopupVisible, setIsUserEditPopupVisible] = React.useState(false)
     const [isUserInvitationPopupVisible, setIsUserInvitationPopupVisible] = React.useState(false)
     const [whichUserToEdit, setWhichUserToEdit] = React.useState<string | null>(null)
+    const [statusMessage, setStatusMessage] = React.useState<string | null>(null)
 
     useEffect(() => {
         refreshUserInfo()
@@ -55,21 +56,25 @@ const UserManagementTab: React.FC = () => {
         if (response.data) {
             setUserInfo(response.data)
         } else {
-            //TODO: handle error
+            setStatusMessage("Wystąpił nieoczekiwany błąd")
         }
     }
 
     const handleUserEdit = async (userPatchRequestDTO: UserPatchRequestDTO) => {
         if (whichUserToEdit) {
-            await editUserInfo(whichUserToEdit, userPatchRequestDTO)
-            // TODO: handle errors
+            const response = await editUserInfo(whichUserToEdit, userPatchRequestDTO)
+            if (response.error) {
+                setStatusMessage("Wystąpił nieoczekiwany błąd")
+            }
             refreshUserInfo()
         }
     }
 
     const handleUserInvitation = async (userInviteRequestDTO: UserInviteRequestDTO) => {
-        await inviteUser(userInviteRequestDTO)
-        // TODO: handle errors
+        const response = await inviteUser(userInviteRequestDTO)
+        if (response.error) {
+            setStatusMessage("Wystąpił nieoczekiwany błąd")
+        }
     }
 
     return (
@@ -87,6 +92,7 @@ const UserManagementTab: React.FC = () => {
             >
                 Zaproś użytkownika
             </button>
+            <div className="error">{statusMessage}</div>
             {isUserEditPopupVisible && (
                 <UserEditPopup
                     handleUserEdit={handleUserEdit}
