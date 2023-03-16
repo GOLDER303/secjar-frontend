@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
 
     const hasAdminRole = () => {
         const token = localStorage.getItem("jwt")
-        if (token){
+        if (token && isUserLoggedIn){
             const decodedJwt = jwt_decode(token) as {scope: string}
             if (decodedJwt.scope.includes("ROLE_ADMIN")){
                 return true
