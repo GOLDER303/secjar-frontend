@@ -29,7 +29,10 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
 
     return (
         <>
-            <tr className={fileSystemEntryInfoDTO.parent != null || isDirectory ? "directory" : ""}>
+            <tr
+                className={fileSystemEntryInfoDTO.parent != null || isDirectory ? "directory" : ""}
+                key={fileSystemEntryInfoDTO.uuid}
+            >
                 <td>
                     <DoubleClickEditText
                         value={fileSystemEntryInfoDTO.name}
@@ -85,7 +88,10 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
             </tr>
             {isDirectory && (
                 <>
-                    <tr className="directory">
+                    <tr
+                        className="directory"
+                        key={fileSystemEntryInfoDTO.uuid + "dir"}
+                    >
                         <td
                             colSpan={colSpan}
                             onClick={() => {
