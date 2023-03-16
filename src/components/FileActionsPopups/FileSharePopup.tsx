@@ -2,12 +2,12 @@ import React, { useRef, useState } from "react"
 import "../../css/FileUploadPopup.css"
 import { shareFileSystemEntry } from "../../services/FileSystemEntryInfoService"
 
-interface FileMovePopupProps {
+interface FileSharePopupProps {
     targetFileUuid: string
     closePopup: () => void
 }
 
-const FileSharePopup: React.FC<FileMovePopupProps> = ({ targetFileUuid, closePopup }) => {
+const FileSharePopup: React.FC<FileSharePopupProps> = ({ targetFileUuid, closePopup }) => {
     const shareAction = useRef<HTMLSelectElement>(null)
 
     const [shareLink, setShareLink] = useState("")
