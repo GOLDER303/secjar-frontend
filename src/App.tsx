@@ -14,6 +14,7 @@ import DiskManagementTab from "./pages/AdminPanelPage/Tabs/DiskManagementTab"
 import SubmissionManagementTab from "./pages/AdminPanelPage/Tabs/SubmissionManagementTab"
 import UserManagementTab from "./pages/AdminPanelPage/Tabs/UserManagementTab"
 import DashboardTab from "./pages/AdminPanelPage/Tabs/DashboardTab"
+import FavoriteFilesTab from "./pages/UserPanelPage/Tabs/FavoriteFilesTab"
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
                     {
                         path: "uploaded",
                         element: <UploadedFilesTab />,
+                    },
+                    {
+                        path: "favorite",
+                        element: <FavoriteFilesTab />,
                     },
                 ],
             },

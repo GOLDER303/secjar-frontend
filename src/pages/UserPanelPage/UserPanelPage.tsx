@@ -46,6 +46,7 @@ const UserPanelPage: React.FC = () => {
                 <>
                     <nav>
                         <Link to={"uploaded"}>Przesłane pliki</Link>
+                        <Link to={"favorite"}>Ulubione pliki</Link>
                     </nav>
 
                     {outlet ? <Outlet context={{ fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList }} /> : <Navigate to={"uploaded"} />}
