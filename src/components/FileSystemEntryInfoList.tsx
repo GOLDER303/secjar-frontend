@@ -5,16 +5,16 @@ import FileSystemEntryInfo from "./FileSystemEntryInfo"
 
 interface FileSystemEntryInfoListProps {
     fileSystemEntriesInfoDTO: FileSystemEntryInfoDTO[]
-    openFileUploadPopup: () => void
-    openFileMovePopup: (targetFileUuid: string) => void
-    openFileSharePopup: (targetFileUuid: string) => void
-    setFileUploadDirectory: (param: string) => void
+    openFileUploadPopup?: () => void
+    openFileMovePopup?: (targetFileUuid: string) => void
+    openFileSharePopup?: (targetFileUuid: string) => void
+    setFileUploadDirectory?: (param: string) => void
     refreshFileSystemEntriesInfos: () => void
 }
 
 const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, openFileUploadPopup, openFileMovePopup, openFileSharePopup, setFileUploadDirectory, refreshFileSystemEntriesInfos }) => {
-    const handleFileDelete = async (fileUuid: string) => {
-        const response = await deleteFile(fileUuid, true)
+    const handleFileDelete = async (fileUuid: string, instantDelete: boolean) => {
+        const response = await deleteFile(fileUuid, instantDelete)
         refreshFileSystemEntriesInfos()
     }
 

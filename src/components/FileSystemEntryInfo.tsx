@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useLocation } from "react-router"
 import { patchFile } from "../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 import formatFileContentType from "../utils/FormatFileContentType"
@@ -7,11 +8,11 @@ import DoubleClickEditText from "./DoubleClickEditText"
 
 interface FileEntryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
-    openFileInputPopup: () => void
-    openFileMovePopup: (targetFileUuid: string) => void
-    openFileSharePopup: (targetFileUuid: string) => void
-    setFileUploadDirectory: (param: string) => void
-    handleFileDelete: (fileUuid: string) => void
+    openFileInputPopup?: () => void
+    openFileMovePopup?: (targetFileUuid: string) => void
+    openFileSharePopup?: (targetFileUuid: string) => void
+    setFileUploadDirectory?: (param: string) => void
+    handleFileDelete: (fileUuid: string, instantDelete: boolean) => void
     handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
     handleFileSystemEntryDownload: (fileSystemEntryUuid: string, fileName: string, fileExtension: string) => void
 }
@@ -19,6 +20,8 @@ interface FileEntryProps {
 const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, openFileMovePopup, openFileSharePopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle, handleFileSystemEntryDownload }) => {
     const [showFileArray, setShowFileArray] = useState(false)
     const colSpan = 6 //number of collumns in the table
+
+    const location = useLocation()
 
     const { sizeValue, sizeUnit } = formatFileSize(fileSystemEntryInfoDTO.size)
 
@@ -63,26 +66,30 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                     </button>
                     <button
                         onClick={() => {
-                            handleFileDelete(fileSystemEntryInfoDTO.uuid)
+                            handleFileDelete(fileSystemEntryInfoDTO.uuid, location.pathname === "/home/deleted")
                         }}
                     >
                         Delete
                     </button>
-                    <button
-                        onClick={() => {
-                            openFileMovePopup(fileSystemEntryInfoDTO.uuid)
-                        }}
-                    >
-                        Move
-                    </button>
-                    <button
-                        onClick={() => {
-                            openFileSharePopup(fileSystemEntryInfoDTO.uuid)
-                        }}
-                    >
-                        Share
-                    </button>
-                    {isDirectory && (
+                    {openFileMovePopup && (
+                        <button
+                            onClick={() => {
+                                openFileMovePopup(fileSystemEntryInfoDTO.uuid)
+                            }}
+                        >
+                            Move
+                        </button>
+                    )}
+                    {openFileSharePopup && (
+                        <button
+                            onClick={() => {
+                                openFileSharePopup(fileSystemEntryInfoDTO.uuid)
+                            }}
+                        >
+                            Share
+                        </button>
+                    )}
+                    {isDirectory && openFileInputPopup && setFileUploadDirectory && (
                         <button
                             onClick={() => {
                                 openFileInputPopup()

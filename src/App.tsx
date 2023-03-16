@@ -2,19 +2,20 @@ import React from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import IsLoggedInProvider from "./contexts/IsLoggedInContext"
 import AccountActivationPage from "./pages/AccountActivationPage"
+import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage"
+import DashboardTab from "./pages/AdminPanelPage/Tabs/DashboardTab"
+import DiskManagementTab from "./pages/AdminPanelPage/Tabs/DiskManagementTab"
+import SubmissionManagementTab from "./pages/AdminPanelPage/Tabs/SubmissionManagementTab"
+import UserManagementTab from "./pages/AdminPanelPage/Tabs/UserManagementTab"
 import ForgotPasswordPage from "./pages/ForgotPasswordPage"
 import IndexPage from "./pages/IndexPage"
 import LoginPage from "./pages/LoginPage/LoginPage"
 import RootPage from "./pages/RootPage"
 import SupportPage from "./pages/SupportPage"
+import DeletedFilesTab from "./pages/UserPanelPage/Tabs/DeletedFilesTab"
+import FavoriteFilesTab from "./pages/UserPanelPage/Tabs/FavoriteFilesTab"
 import UploadedFilesTab from "./pages/UserPanelPage/Tabs/UploadedFilesTab"
 import UserPanelPage from "./pages/UserPanelPage/UserPanelPage"
-import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage"
-import DiskManagementTab from "./pages/AdminPanelPage/Tabs/DiskManagementTab"
-import SubmissionManagementTab from "./pages/AdminPanelPage/Tabs/SubmissionManagementTab"
-import UserManagementTab from "./pages/AdminPanelPage/Tabs/UserManagementTab"
-import DashboardTab from "./pages/AdminPanelPage/Tabs/DashboardTab"
-import FavoriteFilesTab from "./pages/UserPanelPage/Tabs/FavoriteFilesTab"
 
 const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
                     {
                         path: "favorite",
                         element: <FavoriteFilesTab />,
+                    },
+                    {
+                        path: "deleted",
+                        element: <DeletedFilesTab />,
                     },
                 ],
             },
