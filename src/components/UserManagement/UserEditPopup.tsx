@@ -13,20 +13,21 @@ const UserEditPopup: React.FC<UserEditPopupProps> = ({ handleUserEdit, closePopu
     const [desiredSessionTime, setDesiredSessionTime] = React.useState<number | null>(null)
     const [allowedDiskSpace, setAllowedDiskSpace] = React.useState<number | null>(null)
 
-    const fileDeletionDelayMinutes = fileDeletionDelay && Math.round(fileDeletionDelay / 3600_000 / 24) || 0
-    const desiredSessionTimeMinutes = desiredSessionTime && Math.round(desiredSessionTime / 60_000) || 0
-    const allowedDiskSpaceMegabytes = allowedDiskSpace && Math.round(allowedDiskSpace / 1024 / 1024) || 0
+    const fileDeletionDelayDays = fileDeletionDelay != null && Math.round(fileDeletionDelay / 3600_000 / 24) || undefined
+    const desiredSessionTimeMinutes = desiredSessionTime != null && Math.round(desiredSessionTime / 60_000) || undefined
+    const allowedDiskSpaceMegabytes = allowedDiskSpace != null && Math.round(allowedDiskSpace / 1024 / 1024) || undefined
 
     useEffect(() => {
         const placeholderData = getUserEditPopupData()
         if (placeholderData){
-            setFileDeletionDelay(placeholderData.fileDeletionDelay)
-            setDesiredSessionTime(placeholderData.desiredSessionTime)
-            setAllowedDiskSpace(placeholderData.allowedDiskSpace)
+            setFileDeletionDelay(placeholderData.fileDeletionDelay || null)
+            setDesiredSessionTime(placeholderData.desiredSessionTime || null)
+            setAllowedDiskSpace(placeholderData.allowedDiskSpace || null)
         }
     }, [])
+
     const handleSubmit = () => {
-        if (fileDeletionDelay && desiredSessionTime && allowedDiskSpace) {
+        if (fileDeletionDelay || desiredSessionTime || allowedDiskSpace) {
             const userPatchRequestDTO = {
                 fileDeletionDelay: fileDeletionDelay,
                 desiredSessionTime: desiredSessionTime,
@@ -49,10 +50,9 @@ const UserEditPopup: React.FC<UserEditPopupProps> = ({ handleUserEdit, closePopu
                     Okres usunięcia pliku po przeniesieniu do kosza:
                     <input
                         min={0}
-                        required
                         type="number"
-                        value={fileDeletionDelayMinutes}
-                        onChange={(e) => setFileDeletionDelay(e.target.value ? parseInt(e.target.value) * 60_000 : null)}
+                        value={fileDeletionDelayDays}
+                        onChange={(e) => setFileDeletionDelay(e.target.value ? parseInt(e.target.value) *  3600_000 * 24 : null)}
                     />
                     dni
                 </label>
@@ -61,7 +61,6 @@ const UserEditPopup: React.FC<UserEditPopupProps> = ({ handleUserEdit, closePopu
                     Okres oczekiwanej sesji użytkownika:
                     <input
                         min={0}
-                        required
                         type="number"
                         value={desiredSessionTimeMinutes}
                         onChange={(e) => setDesiredSessionTime(e.target.value ? parseInt(e.target.value) * 60_000 : null)}
@@ -73,7 +72,6 @@ const UserEditPopup: React.FC<UserEditPopupProps> = ({ handleUserEdit, closePopu
                     Wielkość przestrzeni dysku:
                     <input
                         min={0}
-                        required
                         type="number"
                         value={allowedDiskSpaceMegabytes}
                         onChange={(e) => setAllowedDiskSpace(e.target.value ? parseInt(e.target.value) * 1024 * 1024 : null)}
