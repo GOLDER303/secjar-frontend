@@ -11,6 +11,10 @@ body {
     color: #ccc;
 }
 
+a {
+    color: aqua
+}
+
 .site-bar {
     width: 20vw;
     height: 100vh;
