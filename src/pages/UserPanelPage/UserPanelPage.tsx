@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Link, Navigate, Outlet, useOutlet, useOutletContext } from "react-router-dom"
+import { Link, Navigate, Outlet, useOutlet } from "react-router-dom"
 import { IsLoggedInContext, IsLoggedInContextType } from "../../contexts/IsLoggedInContext"
 import "../../css/UserPanelPage.css"
 import { getFileSystemEntriesInfo } from "../../services/FileSystemEntryInfoService"

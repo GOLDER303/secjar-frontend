@@ -1,6 +1,5 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useOutletContext } from "react-router"
-import DirectoryNameSetCard from "../../../components/DirectoryNameSetCard"
 import FileMovePopup from "../../../components/FileActionsPopups/FileMovePopup"
 import FileUploadPopup from "../../../components/FileActionsPopups/FileUploadPopup"
 import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"

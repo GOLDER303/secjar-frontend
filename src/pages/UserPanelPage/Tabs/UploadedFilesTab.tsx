@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useOutletContext } from "react-router"
 import DirectoryNameSetCard from "../../../components/DirectoryNameSetCard"
 import FileMovePopup from "../../../components/FileActionsPopups/FileMovePopup"
@@ -15,7 +15,7 @@ const UploadedFilesTab: React.FC = () => {
     const [fileUploadDirectory, setFileUploadDirectory] = React.useState<string | undefined>(undefined)
     const [targetFileUuid, setTargetFileUuid] = React.useState("")
 
-    const {fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList} = useOutletContext<fileSystemEntriesInfoListContextType>()
+    const { fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList } = useOutletContext<fileSystemEntriesInfoListContextType>()
 
     const closeFileUploadPopup = () => {
         setIsFileUploadPopupVisible(false)
