@@ -1,12 +1,43 @@
-import React from "react"
-import { Link, Navigate, useOutlet } from "react-router-dom"
+import React, { useEffect } from "react"
+import { Link, Navigate, Outlet, useOutlet, useOutletContext } from "react-router-dom"
 import { IsLoggedInContext, IsLoggedInContextType } from "../../contexts/IsLoggedInContext"
 import "../../css/UserPanelPage.css"
+import { getFileSystemEntriesInfo } from "../../services/FileSystemEntryInfoService"
+import FileSystemEntryInfoDTO from "../../ts/interfaces/FileSystemEntryInfoDTO"
+
+export type fileSystemEntriesInfoListContextType = { fileSystemEntriesInfoList: FileSystemEntryInfoDTO[]; refreshFileSystemEntriesInfoList: () => void }
 
 const UserPanelPage: React.FC = () => {
     const { isUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType
 
     const outlet = useOutlet()
+
+    const [fileSystemEntriesInfoList, setFileSystemEntriesInfoList] = React.useState<FileSystemEntryInfoDTO[]>([])
+
+    const refreshFileSystemEntriesInfoList = async () => {
+        const response = await getFileSystemEntriesInfo()
+        if (response.error) {
+            //TODO: handle error
+        }
+        if (response.data) {
+            setFileSystemEntriesInfoList(
+                response.data.sort((a, b) => {
+                    if (a.name > b.name) {
+                        return 1
+                    }
+                    if (a.name < b.name) {
+                        return -1
+                    }
+                    return 0
+                })
+            )
+        }
+        //TODO: function to load only uploaded and updated files after refresh??
+    }
+
+    useEffect(() => {
+        refreshFileSystemEntriesInfoList()
+    }, [])
 
     return (
         <div className="user-panel-page-container">
@@ -17,7 +48,7 @@ const UserPanelPage: React.FC = () => {
                         <Link to={"uploaded"}>Przesłane pliki</Link>
                     </nav>
 
-                    {outlet || <Navigate to={"uploaded"} />}
+                    {outlet ? <Outlet context={{ fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList }} /> : <Navigate to={"uploaded"} />}
                 </>
             ) : (
                 <h2>
