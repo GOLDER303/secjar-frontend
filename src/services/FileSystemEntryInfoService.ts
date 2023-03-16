@@ -2,6 +2,8 @@ import axios, { AxiosError } from "axios"
 import ApiErrorResponseDTO from "../ts/interfaces/ApiErrorResponseDTO"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO"
+import ShareActionType from "../ts/types/ShareActionType"
+import ShareTypeType from "../ts/types/ShareTypeType"
 
 export const getFileSystemEntriesInfo = async (): Promise<GeneralApiResponseDTO<[FileSystemEntryInfoDTO]>> => {
     try {
@@ -121,6 +123,30 @@ export const downloadFileSystemEntry = async (fileSystemEntryUuid: string, fileN
 
         document.body.removeChild(a)
         window.URL.revokeObjectURL(url)
+    } catch (err) {
+        const error = err as AxiosError
+        const data = error.response
+
+        return { error: data?.status }
+    }
+}
+
+export const shareFileSystemEntry = async (fileSystemEntriesUuid: string[], shareAction: ShareActionType, shareType: ShareTypeType, usersUuids?: string[]) => {
+    try {
+        const response = await axios.post(
+            "http://localhost:8080/fileSystemEntries/share",
+            {
+                fileSystemEntriesUuid,
+                shareType,
+                shareAction,
+                usersUuids,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+            }
+        )
     } catch (err) {
         const error = err as AxiosError
         const data = error.response

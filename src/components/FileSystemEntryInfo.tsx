@@ -1,21 +1,22 @@
 import React, { useState } from "react"
 import { patchFile } from "../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
+import formatFileContentType from "../utils/FormatFileContentType"
 import { formatFileSize } from "../utils/FormatFileSizeUtil"
 import DoubleClickEditText from "./DoubleClickEditText"
-import formatFileContentType from "../utils/FormatFileContentType"
 
 interface FileEntryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
     openFileInputPopup: () => void
     openFileMovePopup: (targetFileUuid: string) => void
+    openFileSharePopup: (targetFileUuid: string) => void
     setFileUploadDirectory: (param: string) => void
     handleFileDelete: (fileUuid: string) => void
     handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
     handleFileSystemEntryDownload: (fileSystemEntryUuid: string, fileName: string, fileExtension: string) => void
 }
 
-const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, openFileMovePopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle, handleFileSystemEntryDownload }) => {
+const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, openFileMovePopup, openFileSharePopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle, handleFileSystemEntryDownload }) => {
     const [showFileArray, setShowFileArray] = useState(false)
     const colSpan = 6 //number of collumns in the table
 
@@ -74,6 +75,13 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                     >
                         Move
                     </button>
+                    <button
+                        onClick={() => {
+                            openFileSharePopup(fileSystemEntryInfoDTO.uuid)
+                        }}
+                    >
+                        Share
+                    </button>
                     {isDirectory && (
                         <button
                             onClick={() => {
@@ -109,6 +117,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                                         fileSystemEntryInfoDTO={fileSystemEntryInfo}
                                         openFileInputPopup={openFileInputPopup}
                                         openFileMovePopup={openFileMovePopup}
+                                        openFileSharePopup={openFileSharePopup}
                                         setFileUploadDirectory={setFileUploadDirectory}
                                         handleFileDelete={handleFileDelete}
                                         handleFileFavoriteToggle={handleFileFavoriteToggle}

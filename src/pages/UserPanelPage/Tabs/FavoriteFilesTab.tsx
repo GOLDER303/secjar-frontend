@@ -1,6 +1,7 @@
 import React from "react"
 import { useOutletContext } from "react-router"
 import FileMovePopup from "../../../components/FileActionsPopups/FileMovePopup"
+import FileSharePopup from "../../../components/FileActionsPopups/FileSharePopup"
 import FileUploadPopup from "../../../components/FileActionsPopups/FileUploadPopup"
 import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
 import { fileSystemEntriesInfoListContextType } from "../UserPanelPage"
@@ -8,6 +9,7 @@ import { fileSystemEntriesInfoListContextType } from "../UserPanelPage"
 const FavoriteFilesTab: React.FC = () => {
     const [isFileUploadPopupVisible, setIsFileUploadPopupVisible] = React.useState(false)
     const [isFileMovePopupVisible, setIsFileMovePopupVisible] = React.useState(false)
+    const [isFileSharePopupVisible, setIsFileSharePopupVisible] = React.useState(false)
 
     const [fileUploadDirectory, setFileUploadDirectory] = React.useState<string | undefined>(undefined)
     const [targetFileUuid, setTargetFileUuid] = React.useState("")
@@ -31,6 +33,15 @@ const FavoriteFilesTab: React.FC = () => {
         setIsFileMovePopupVisible(true)
     }
 
+    const closeFileSharePopup = () => {
+        setIsFileSharePopupVisible(false)
+    }
+
+    const openFileSharePopup = (targetFileUuid: string) => {
+        setTargetFileUuid(targetFileUuid)
+        setIsFileSharePopupVisible(true)
+    }
+
     return (
         <>
             <h2>Ulubione pliki</h2>
@@ -40,6 +51,7 @@ const FavoriteFilesTab: React.FC = () => {
                 })}
                 openFileUploadPopup={openFileUploadPopup}
                 openFileMovePopup={openFileMovePopup}
+                openFileSharePopup={openFileSharePopup}
                 setFileUploadDirectory={setFileUploadDirectory}
                 refreshFileSystemEntriesInfos={refreshFileSystemEntriesInfoList}
             />
@@ -49,6 +61,13 @@ const FavoriteFilesTab: React.FC = () => {
                     targetDirUuid={fileUploadDirectory}
                     fileUploadCallback={refreshFileSystemEntriesInfoList}
                     closePopup={closeFileUploadPopup}
+                />
+            )}
+
+            {isFileSharePopupVisible && (
+                <FileSharePopup
+                    targetFileUuid={targetFileUuid}
+                    closePopup={closeFileSharePopup}
                 />
             )}
 
