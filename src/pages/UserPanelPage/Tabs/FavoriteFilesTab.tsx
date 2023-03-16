@@ -68,6 +68,7 @@ const FavoriteFilesTab: React.FC = () => {
                 <FileSharePopup
                     targetFileUuid={targetFileUuid}
                     closePopup={closeFileSharePopup}
+                    fileShareCallback={refreshFileSystemEntriesInfoList}
                 />
             )}
 

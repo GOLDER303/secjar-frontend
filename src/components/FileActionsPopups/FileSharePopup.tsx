@@ -5,9 +5,10 @@ import { shareFileSystemEntry } from "../../services/FileSystemEntryInfoService"
 interface FileSharePopupProps {
     targetFileUuid: string
     closePopup: () => void
+    fileShareCallback: () => void
 }
 
-const FileSharePopup: React.FC<FileSharePopupProps> = ({ targetFileUuid, closePopup }) => {
+const FileSharePopup: React.FC<FileSharePopupProps> = ({ targetFileUuid, closePopup, fileShareCallback }) => {
     const shareAction = useRef<HTMLSelectElement>(null)
 
     const [shareLink, setShareLink] = useState("")
@@ -30,6 +31,8 @@ const FileSharePopup: React.FC<FileSharePopupProps> = ({ targetFileUuid, closePo
             default:
                 break
         }
+
+        fileShareCallback()
     }
 
     return (

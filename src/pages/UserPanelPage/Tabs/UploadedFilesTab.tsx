@@ -87,6 +87,7 @@ const UploadedFilesTab: React.FC = () => {
                 <FileSharePopup
                     targetFileUuid={targetFileUuid}
                     closePopup={closeFileSharePopup}
+                    fileShareCallback={refreshFileSystemEntriesInfoList}
                 />
             )}
 
