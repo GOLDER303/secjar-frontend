@@ -1,15 +1,15 @@
 import React, { useEffect } from "react"
 import DirectoryNameSetCard from "../../../components/DirectoryNameSetCard"
-import FileMovePopup from "../../../components/FileMovePopup"
+import FileMovePopup from "../../../components/FileActionsPopups/FileMovePopup"
+import FileUploadPopup from "../../../components/FileActionsPopups/FileUploadPopup"
 import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
-import FileUploadPopup from "../../../components/FileUploadPopup"
-import { deleteFile, downloadFileSystemEntry, fileUpload, getFileSystemEntriesInfo, patchFile } from "../../../services/FileSystemEntryInfoService"
+import { deleteFile, downloadFileSystemEntry, getFileSystemEntriesInfo, patchFile } from "../../../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../../../ts/interfaces/FileSystemEntryInfoDTO"
 
 const UploadedFilesTab: React.FC = () => {
     const [isFileUploadPopupVisible, setIsFileUploadPopupVisible] = React.useState(false)
     const [directoryCreateCardVisible, setDirectoryCreateCardVisible] = React.useState(false)
-    const [fileUploadDirectory, setFileUploadDirectory] = React.useState<string | null>(null)
+    const [fileUploadDirectory, setFileUploadDirectory] = React.useState<string | undefined>(undefined)
     const [fileSystemEntriesInfo, setFileSystemEntriesInfo] = React.useState<FileSystemEntryInfoDTO[]>([])
     const [isFileMovePopupVisible, setIsFileMovePopupVisible] = React.useState(false)
     const [targetFileUuid, setTargetFileUuid] = React.useState("")
@@ -56,20 +56,6 @@ const UploadedFilesTab: React.FC = () => {
         setIsFileMovePopupVisible(true)
     }
 
-    const handleFileUpload = async (fileToUpload: File) => {
-        const response = await fileUpload(fileToUpload, false, fileUploadDirectory)
-        refreshFileSystemEntriesInfo()
-    }
-
-    const handleFileMove = async (fileUuid: string, targetDirName: string) => {
-        let targetDirUuid = ""
-        if (targetDirName != "") {
-            targetDirUuid = fileSystemEntriesInfo.filter((fileSystemEntryInfo) => fileSystemEntryInfo.name == targetDirName)[0].uuid
-        }
-        const response = await patchFile(fileUuid, undefined, targetDirUuid)
-        refreshFileSystemEntriesInfo()
-    }
-
     const handleFileDelete = async (fileUuid: string) => {
         const response = await deleteFile(fileUuid, true)
 
@@ -102,7 +88,7 @@ const UploadedFilesTab: React.FC = () => {
             />
             <button
                 onClick={() => {
-                    setFileUploadDirectory(null)
+                    setFileUploadDirectory(undefined)
                     openFileUploadPopup()
                 }}
             >
@@ -112,7 +98,8 @@ const UploadedFilesTab: React.FC = () => {
 
             {isFileUploadPopupVisible && (
                 <FileUploadPopup
-                    handleFileUpload={handleFileUpload}
+                    targetDirUuid={fileUploadDirectory}
+                    fileUploadCallback={refreshFileSystemEntriesInfo}
                     closePopup={closeFileUploadPopup}
                 />
             )}
@@ -120,7 +107,8 @@ const UploadedFilesTab: React.FC = () => {
             {isFileMovePopupVisible && (
                 <FileMovePopup
                     targetFileUuid={targetFileUuid}
-                    handleFileMove={handleFileMove}
+                    fileSystemEntriesInfos={fileSystemEntriesInfo}
+                    fileMoveCallback={refreshFileSystemEntriesInfo}
                     closePopup={closeFileMovePopup}
                 />
             )}

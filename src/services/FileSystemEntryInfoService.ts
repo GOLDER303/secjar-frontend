@@ -20,7 +20,7 @@ export const getFileSystemEntriesInfo = async (): Promise<GeneralApiResponseDTO<
     }
 }
 
-export const fileUpload = async (file: File | null, replace: boolean, parentDirectoryUuid: string | null): Promise<GeneralApiResponseDTO<string> | null> => {
+export const fileUpload = async (file: File | null, replace: boolean, parentDirectoryUuid: string | undefined): Promise<GeneralApiResponseDTO<string> | null> => {
     if (file == null) {
         return null
     }

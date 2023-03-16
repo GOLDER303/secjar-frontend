@@ -1,17 +1,21 @@
 import React, { useState } from "react"
-import "../css/FileUploadPopup.css"
+import "../../css/FileUploadPopup.css"
+import { fileUpload } from "../../services/FileSystemEntryInfoService"
 
 interface FileUploadPopupProps {
-    handleFileUpload: (fileToUpload: File) => void
+    targetDirUuid: string | undefined
+    fileUploadCallback: () => void
     closePopup: () => void
 }
 
-const FileUploadPopup: React.FC<FileUploadPopupProps> = ({ handleFileUpload, closePopup }) => {
+const FileUploadPopup: React.FC<FileUploadPopupProps> = ({ fileUploadCallback, closePopup, targetDirUuid }) => {
     const [fileToUpload, setFileToUpload] = useState<File | null>(null)
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (fileToUpload != null) {
-            handleFileUpload(fileToUpload)
+            const response = await fileUpload(fileToUpload, false, targetDirUuid)
+            fileUploadCallback()
+
             closePopup()
         }
     }

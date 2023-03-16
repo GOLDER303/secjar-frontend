@@ -1,20 +1,31 @@
-import React, { useRef, useState } from "react"
-import "../css/FileUploadPopup.css"
+import React, { useRef } from "react"
+import "../../css/FileUploadPopup.css"
+import { patchFile } from "../../services/FileSystemEntryInfoService"
+import FileSystemEntryInfoDTO from "../../ts/interfaces/FileSystemEntryInfoDTO"
 
 interface FileMovePopupProps {
-    handleFileMove: (fileUuid: string, targetDirUuid: string) => void
-    closePopup: () => void
     targetFileUuid: string
+    fileSystemEntriesInfos: FileSystemEntryInfoDTO[]
+    closePopup: () => void
+    fileMoveCallback: () => void
 }
 
-const FileMovePopup: React.FC<FileMovePopupProps> = ({ handleFileMove, closePopup, targetFileUuid }) => {
+const FileMovePopup: React.FC<FileMovePopupProps> = ({ targetFileUuid, fileSystemEntriesInfos, closePopup, fileMoveCallback }) => {
     const targetDirInputRef = useRef<HTMLInputElement>(null)
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!targetDirInputRef.current) {
             return
         }
-        handleFileMove(targetFileUuid, targetDirInputRef.current.value)
+
+        let targetDirUuid = ""
+        if (targetDirInputRef.current.value != "") {
+            targetDirUuid = fileSystemEntriesInfos.filter((fileSystemEntryInfo) => fileSystemEntryInfo.name == targetDirInputRef.current!.value)[0].uuid
+        }
+
+        const response = await patchFile(targetFileUuid, undefined, targetDirUuid)
+        fileMoveCallback()
+
         closePopup()
     }
 
