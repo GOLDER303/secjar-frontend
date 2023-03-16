@@ -41,7 +41,6 @@ const UserInvitationPopup: React.FC<UserInvitationPopupProps> = ({ handleUserInv
                         type="text"
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                    dni
                 </label>
                 <br />
                 <label>
@@ -51,7 +50,6 @@ const UserInvitationPopup: React.FC<UserInvitationPopupProps> = ({ handleUserInv
                         type="text"
                         onChange={(e) => setName(e.target.value)}
                     />
-                    dni
                 </label>
                 <br />
                 <label>
@@ -61,7 +59,6 @@ const UserInvitationPopup: React.FC<UserInvitationPopupProps> = ({ handleUserInv
                         type="text"
                         onChange={(e) => setSurname(e.target.value)}
                     />
-                    MB
                 </label>
                 <br />
                 <label>
@@ -71,7 +68,6 @@ const UserInvitationPopup: React.FC<UserInvitationPopupProps> = ({ handleUserInv
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    MB
                 </label>
                 <br />
                 <input type="submit" />

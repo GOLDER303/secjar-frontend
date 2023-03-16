@@ -74,6 +74,7 @@ const UserManagementTab: React.FC = () => {
 
     return (
         <div>
+            <h2>Użytkownicy</h2>
             <UserInfoList
                 userInfoDTO={userInfo}
                 openUserEditPopup={openUserEditPopup}

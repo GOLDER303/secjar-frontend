@@ -17,7 +17,6 @@ const UserInfoList: React.FC<UserInfoListProps> = ({ userInfoDTO, openUserEditPo
                 <th>Nazwisko</th>
                 <th>Dane kontaktowe</th>
                 <th>Ilość zajętego miejsca</th>
-                {/*<th>Rozmiar</th>*/}
             </tr>
             {userInfoDTO.map((userInfoDTO) => {
                 return (
