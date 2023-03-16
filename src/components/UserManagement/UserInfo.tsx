@@ -1,5 +1,6 @@
 import React from "react"
 import UserInfoDTO from "../../ts/interfaces/UserInfoDTO"
+import {formatFileSize} from "../../utils/FormatFileSizeUtil";
 
 interface UserProps {
     userInfoDTO: UserInfoDTO
@@ -7,23 +8,9 @@ interface UserProps {
     setWhichUserToEdit: (param: string) => void
 }
 
-const sizeUnits = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
-
 const UserInfo: React.FC<UserProps> = ({ userInfoDTO, openUserEditPopup, setWhichUserToEdit }) => {
-    let sizeValue = [0, 0]
-    let sizeUnit = ["", ""]
-    let sizeValues = [userInfoDTO.currentDiscSpace, userInfoDTO.allowedDiscSpace]
-
-    const getBaseLog = (val: number, base: number) => {
-        return Math.log(val) / Math.log(base)
-    }
-    sizeValues.map((size, index) => {
-        if (size != 0) {
-            const sizeScale = Math.min(Math.floor(getBaseLog(size, 1024)), 6)
-            sizeValue[index] = Math.floor((100 * size) / Math.pow(1024, sizeScale)) / 100
-            sizeUnit[index] = sizeUnits[sizeScale]
-        }
-    })
+    const { sizeValue: currentDiscSpaceValue, sizeUnit: currentDiscSpaceUnit } = formatFileSize(userInfoDTO.currentDiscSpace)
+    const { sizeValue: allowedDiscSpaceValue, sizeUnit: allowedDiscSpaceUnit } = formatFileSize(userInfoDTO.allowedDiscSpace)
 
     return (
         <tr>
@@ -37,7 +24,7 @@ const UserInfo: React.FC<UserProps> = ({ userInfoDTO, openUserEditPopup, setWhic
                     value={userInfoDTO.currentDiscSpace}
                     max={userInfoDTO.allowedDiscSpace}
                 />
-                {sizeValue[0]} {sizeUnit[0]} / {sizeValue[1]} {sizeUnit[1]}
+                {currentDiscSpaceValue} {currentDiscSpaceUnit} / {allowedDiscSpaceValue} {allowedDiscSpaceUnit}
             </td>
             <td>
                 <button
