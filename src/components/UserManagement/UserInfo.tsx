@@ -1,6 +1,6 @@
 import React from "react"
 import UserInfoDTO from "../../ts/interfaces/UserInfoDTO"
-import {formatFileSize} from "../../utils/FormatFileSizeUtil";
+import {formatFileSize} from "../../utils/FormatFileSizeUtil"
 
 interface UserProps {
     userInfoDTO: UserInfoDTO

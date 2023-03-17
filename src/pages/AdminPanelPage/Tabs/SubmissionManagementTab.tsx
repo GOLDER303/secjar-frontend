@@ -17,6 +17,7 @@ const SubmissionManagementTab: React.FC = () => {
     const [supportSubmissionTarget, setSupportSubmissionTarget] = React.useState<string | null>(null)
     const [isAddNotePopupVisible, setIsAddNotePopupVisible] = React.useState(false)
     const [isReadNotesSidePanelVisible, setIsReadNotesSidePanelVisible] = React.useState(false)
+    const [statusMessage, setStatusMessage] = React.useState("")
 
     useEffect(() => {
         refreshSupportSubmission()
@@ -47,7 +48,7 @@ const SubmissionManagementTab: React.FC = () => {
         if (response.data) {
             setSupportSubmission(response.data)
         } else {
-            //TODO: handle error
+            setStatusMessage("Wystąpił nieoczekiwany błąd")
         }
     }
 
@@ -57,39 +58,58 @@ const SubmissionManagementTab: React.FC = () => {
             if (response.data) {
                 setSupportSubmissionNote(response.data)
             } else {
-                //TODO: handle error
+                setStatusMessage("Wystąpił nieoczekiwany błąd")
             }
         }
     }
 
     const handleSubmissionClose = async () => {
         if (supportSubmissionTarget) {
-            await closeSubmission(supportSubmissionTarget)
-            // TODO: handle errors
+            const respond = await closeSubmission(supportSubmissionTarget)
+            setStatusMessage("")
+            if (respond.error){
+                setStatusMessage("Wystąpił nieoczekiwany błąd")
+            }
             await refreshSupportSubmission()
         }
     }
 
     const handleNoteAdd = async (noteContent: string) => {
         if (supportSubmissionTarget) {
-            await addNoteToSubmission(supportSubmissionTarget, noteContent)
-            // TODO: handle errors
+            if (noteContent == ""){
+                setStatusMessage("Pole nie może być puste")
+                return
+            }
+            const respond = await addNoteToSubmission(supportSubmissionTarget, noteContent)
+            setStatusMessage("")
+            if (respond.error){
+                setStatusMessage("Wystąpił nieoczekiwany błąd")
+            }
             await refreshSupportSubmissionNote()
         }
     }
 
     const handleNoteEdit = async (uuid: string, noteContent: string) => {
         if (supportSubmissionTarget) {
-            await editSubmissionNote(uuid, noteContent)
-            // TODO: handle errors
+            if (noteContent == ""){
+                await handleNoteDelete(uuid);
+            }else {
+                const respond = await editSubmissionNote(uuid, noteContent)
+                if (respond.error) {
+                    setStatusMessage("Wystąpił nieoczekiwany błąd")
+                }
+            }
             await refreshSupportSubmissionNote()
         }
     }
 
     const handleNoteDelete = async (uuid: string) => {
         if (supportSubmissionTarget) {
-            await deleteSubmissionNote(uuid)
-            // TODO: handle errors
+            const respond = await deleteSubmissionNote(uuid)
+            setStatusMessage("")
+            if (respond.error) {
+                setStatusMessage("Wystąpił nieoczekiwany błąd")
+            }
             await refreshSupportSubmissionNote()
         }
     }
@@ -105,6 +125,11 @@ const SubmissionManagementTab: React.FC = () => {
                     setSupportSubmissionTarget={setSupportSubmissionTarget}
                     handleSubmissionClose={handleSubmissionClose}
                 />
+                {supportSubmission.length == 0 &&
+                    <div>
+                        Brak zgłoszeń.
+                    </div>
+                }
                 <button
                     onClick={() => {
                         refreshSupportSubmission()
@@ -112,6 +137,7 @@ const SubmissionManagementTab: React.FC = () => {
                 >
                     Odśwież
                 </button>
+                <div className="error">{statusMessage}</div>
                 {isAddNotePopupVisible && (
                     <SupportSubmissionAddNotePopup
                         handleNoteAdd={handleNoteAdd}

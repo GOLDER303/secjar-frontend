@@ -49,10 +49,11 @@ const UserEditPopup: React.FC<UserEditPopupProps> = ({ handleUserEdit, closePopu
                 <label>
                     Okres usunięcia pliku po przeniesieniu do kosza:
                     <input
-                        min={0}
+                        min={1}
+                        max={30}
                         type="number"
                         value={fileDeletionDelayDays}
-                        onChange={(e) => setFileDeletionDelay(e.target.value ? parseInt(e.target.value) *  3600_000 * 24 : null)}
+                        onChange={(e) => setFileDeletionDelay(e.target.value ? parseInt(e.target.value) * 3600_000 * 24 : null)}
                     />
                     dni
                 </label>
