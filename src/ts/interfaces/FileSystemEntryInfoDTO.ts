@@ -8,6 +8,7 @@ export default interface FileSystemEntryInfoDTO {
     uploadDate: string
     parent: string
     children: Array<FileSystemEntryInfoDTO>
+    authorizedUsers: string[]
     sharedByLink: boolean
     favorite: boolean
 }
