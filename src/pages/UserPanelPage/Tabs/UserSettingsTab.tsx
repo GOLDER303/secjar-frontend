@@ -1,21 +1,20 @@
 import jwt_decode from "jwt-decode"
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import DoubleClickEditText from "../../../components/DoubleClickEditText"
 import PasswordChangeForm from "../../../components/PasswordChangeForm"
-import { getUserInfo } from "../../../services/UserManagementService"
+import { editUserInfo, getUserInfo } from "../../../services/UserManagementService"
 import UserInfoDTO from "../../../ts/interfaces/UserInfoDTO"
 
 const UserSettingsTab: React.FC = () => {
     const navigate = useNavigate()
     const [userInfo, setUserInfo] = React.useState<UserInfoDTO | null>(null)
-    const [statusMessage, setStatusMessage] = React.useState<string | null>(null)
     const [isPasswordChangeFormVisible, setIsPasswordChangeFormVisible] = React.useState(false)
+    const [statusMessage, setStatusMessage] = React.useState<string | null>(null)
 
-    useEffect(() => {
-        refreshDiskInfo()
-    }, [])
+    const [fileDeletionDelay, setFileDeletionDelay] = React.useState<string>("")
 
-    const refreshDiskInfo = async () => {
+    const refreshUserInfo = async () => {
         const token = localStorage.getItem("jwt")
         if (!token) {
             navigate("/login")
@@ -34,13 +33,41 @@ const UserSettingsTab: React.FC = () => {
         }
     }
 
+    useEffect(() => {
+        refreshUserInfo()
+    }, [])
+
+    useEffect(() => {
+        if (userInfo) {
+            setFileDeletionDelay((userInfo.fileDeletionDelay / 3600_000 / 24).toString())
+        }
+    }, [userInfo])
+
+    const handleFileDeletionDelayChange = async (newFileDeletionDelay: string) => {
+        if (!userInfo) {
+            return
+        }
+        const response = await editUserInfo(userInfo.uuid, parseInt(newFileDeletionDelay) * 3600_000 * 24)
+        if (response.error) {
+            setStatusMessage("Coś poszło nie tak, spróbuj ponownie później")
+        }
+
+        refreshUserInfo()
+    }
+
     return (
         <div>
             <h2>Ustawienia użytkownika</h2>
-            {userInfo && (
+            {userInfo && fileDeletionDelay && (
                 <ul>
                     <li>Typ używanego mfa: {userInfo.mfaType}</li>
-                    <li>Czas do ostatecznego usunięcia pliku: {userInfo.fileDeletionDelay / 3600_000 / 24} dni</li>
+                    <li>
+                        <DoubleClickEditText
+                            value={fileDeletionDelay}
+                            onBlurCallback={handleFileDeletionDelayChange}
+                        />{" "}
+                        dni
+                    </li>
                     <li>
                         <button onClick={() => setIsPasswordChangeFormVisible(true)}>Zmień hasło</button>
                     </li>

@@ -1,8 +1,7 @@
-import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO"
-import axios, {AxiosError} from "axios"
+import axios, { AxiosError } from "axios"
 import ApiErrorResponseDTO from "../ts/interfaces/ApiErrorResponseDTO"
+import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO"
 import UserInfoDTO from "../ts/interfaces/UserInfoDTO"
-import UserPatchRequestDTO from "../ts/interfaces/UserPatchRequestDTO"
 import UserInviteRequestDTO from "../ts/interfaces/UserInviteRequestDTO"
 
 export const getAllUserInfo = async (): Promise<GeneralApiResponseDTO<[UserInfoDTO]>> => {
@@ -41,15 +40,21 @@ export const getUserInfo = async (userUuid: string): Promise<GeneralApiResponseD
     }
 }
 
-export const editUserInfo = async (uuid: string, userPatchInfo: UserPatchRequestDTO): Promise<GeneralApiResponseDTO<null>> => {
+export const editUserInfo = async (uuid: string, fileDeletionDelay?: number, desiredSessionTime?: number, allowedDiskSpace?: number): Promise<GeneralApiResponseDTO<null>> => {
     try {
-        await axios.patch("http://localhost:8080/users/".concat(uuid), {
-                ...userPatchInfo
-            },{
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        await axios.patch(
+            "http://localhost:8080/users/".concat(uuid),
+            {
+                fileDeletionDelay,
+                desiredSessionTime,
+                allowedDiskSpace,
             },
-        })
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+            }
+        )
         return {}
     } catch (err) {
         const error = err as AxiosError
@@ -60,16 +65,19 @@ export const editUserInfo = async (uuid: string, userPatchInfo: UserPatchRequest
     }
 }
 
-
 export const inviteUser = async (userInvite: UserInviteRequestDTO): Promise<GeneralApiResponseDTO<null>> => {
     try {
-        await axios.patch("http://localhost:8080/invite", {
-            ...userInvite
-        },{
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        await axios.patch(
+            "http://localhost:8080/invite",
+            {
+                ...userInvite,
             },
-        })
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+            }
+        )
         return {}
     } catch (err) {
         const error = err as AxiosError

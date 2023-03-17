@@ -1,11 +1,11 @@
 import React, { useEffect } from "react"
-import { editUserInfo, getAllUserInfo, inviteUser } from "../../../services/UserManagementService"
-import UserInfoList from "../../../components/UserManagement/UserInfoList"
-import UserInfoDTO from "../../../ts/interfaces/UserInfoDTO"
 import UserEditPopup from "../../../components/UserManagement/UserEditPopup"
-import UserPatchRequestDTO from "../../../ts/interfaces/UserPatchRequestDTO"
+import UserInfoList from "../../../components/UserManagement/UserInfoList"
 import UserInvitationPopup from "../../../components/UserManagement/UserInvitationPopup"
+import { editUserInfo, getAllUserInfo, inviteUser } from "../../../services/UserManagementService"
+import UserInfoDTO from "../../../ts/interfaces/UserInfoDTO"
 import UserInviteRequestDTO from "../../../ts/interfaces/UserInviteRequestDTO"
+import UserPatchRequestDTO from "../../../ts/interfaces/UserPatchRequestDTO"
 
 const UserManagementTab: React.FC = () => {
     const [userInfo, setUserInfo] = React.useState<UserInfoDTO[]>([])
@@ -39,7 +39,7 @@ const UserManagementTab: React.FC = () => {
             const user = userInfo.find((value) => {
                 return value.uuid == whichUserToEdit
             })
-            if (user){
+            if (user) {
                 return {
                     fileDeletionDelay: user.fileDeletionDelay,
                     desiredSessionTime: 0,
@@ -62,7 +62,7 @@ const UserManagementTab: React.FC = () => {
 
     const handleUserEdit = async (userPatchRequestDTO: UserPatchRequestDTO) => {
         if (whichUserToEdit) {
-            const response = await editUserInfo(whichUserToEdit, userPatchRequestDTO)
+            const response = await editUserInfo(whichUserToEdit, userPatchRequestDTO.fileDeletionDelay, userPatchRequestDTO.desiredSessionTime, userPatchRequestDTO.allowedDiskSpace)
             if (response.error) {
                 setStatusMessage("Wystąpił nieoczekiwany błąd")
             }
