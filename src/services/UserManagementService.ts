@@ -23,6 +23,24 @@ export const getAllUserInfo = async (): Promise<GeneralApiResponseDTO<[UserInfoD
     }
 }
 
+export const getUserInfo = async (userUuid: string): Promise<GeneralApiResponseDTO<UserInfoDTO>> => {
+    try {
+        const response = await axios.get(`http://localhost:8080/users/${userUuid}/info`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        })
+
+        return { data: response.data }
+    } catch (err) {
+        const error = err as AxiosError
+
+        const data = error.response?.data as ApiErrorResponseDTO
+
+        return { error: data.status }
+    }
+}
+
 export const editUserInfo = async (uuid: string, userPatchInfo: UserPatchRequestDTO): Promise<GeneralApiResponseDTO<null>> => {
     try {
         await axios.patch("http://localhost:8080/users/".concat(uuid), {

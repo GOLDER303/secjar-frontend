@@ -49,6 +49,7 @@ const UserPanelPage: React.FC = () => {
                         <Link to={"favorite"}>Ulubione pliki</Link>
                         <Link to={"deleted"}>Usunięte pliki</Link>
                         <Link to={"shared"}>Udostępnione pliki</Link>
+                        <Link to={"settings"}>Ustawienia</Link>
                     </nav>
 
                     {outlet ? <Outlet context={{ fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList }} /> : <Navigate to={"uploaded"} />}

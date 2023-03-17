@@ -16,6 +16,7 @@ import DeletedFilesTab from "./pages/UserPanelPage/Tabs/DeletedFilesTab"
 import FavoriteFilesTab from "./pages/UserPanelPage/Tabs/FavoriteFilesTab"
 import SharedFilesTab from "./pages/UserPanelPage/Tabs/SharedFilesTab"
 import UploadedFilesTab from "./pages/UserPanelPage/Tabs/UploadedFilesTab"
+import UserSettingsTab from "./pages/UserPanelPage/Tabs/UserSettingsTab"
 import UserPanelPage from "./pages/UserPanelPage/UserPanelPage"
 
 const router = createBrowserRouter([
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
                     {
                         path: "shared",
                         element: <SharedFilesTab />,
+                    },
+                    {
+                        path: "settings",
+                        element: <UserSettingsTab />,
                     },
                 ],
             },
