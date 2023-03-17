@@ -32,6 +32,9 @@ const Navbar: React.FC = () => {
                 <li>
                     <Link to={"/home"}>Home</Link>
                 </li>
+                <li>
+                    <Link to={"/support"}>Pomoc Techniczna</Link>
+                </li>
                 {hasAdminRole() && (
                     <li>
                         <Link to={"/adminPanel"}>Admin panel</Link>
