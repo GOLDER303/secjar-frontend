@@ -67,7 +67,7 @@ export const editUserInfo = async (uuid: string, fileDeletionDelay?: number, des
 
 export const inviteUser = async (userInvite: UserInviteRequestDTO): Promise<GeneralApiResponseDTO<null>> => {
     try {
-        await axios.patch(
+        await axios.post(
             "http://localhost:8080/invite",
             {
                 ...userInvite,
