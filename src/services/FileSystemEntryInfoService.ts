@@ -116,6 +116,9 @@ export const downloadFileSystemEntry = async (fileSystemEntryUuid: string, fileN
         a.style.display = "none"
         a.href = url
 
+        if (fileExtension == "directory") {
+            fileExtension = "zip"
+        }
         a.download = `${fileName}.${fileExtension}`
         document.body.appendChild(a)
 
