@@ -44,7 +44,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                     />
                 </td>
                 <td>{contentType}</td>
-                <td>{fileSystemEntryInfoDTO.uuid}</td>
+                <td>{fileSystemEntryInfoDTO.user}</td>
                 <td>
                     {sizeValue} {sizeUnit}
                 </td>
