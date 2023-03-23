@@ -1,5 +1,6 @@
 import React from "react"
-import { deleteFile, downloadFileSystemEntry, patchFile } from "../services/FileSystemEntryInfoService"
+import { useNavigate } from "react-router-dom"
+import { deleteFile, downloadFileSystemEntry, patchFile, restoreFileSystemEntry } from "../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 import FileSystemEntryInfo from "./FileSystemEntryInfo"
 
@@ -13,6 +14,8 @@ interface FileSystemEntryInfoListProps {
 }
 
 const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, openFileUploadPopup, openFileMovePopup, openFileSharePopup, setFileUploadDirectory, refreshFileSystemEntriesInfos }) => {
+    const navigate = useNavigate()
+
     const handleFileDelete = async (fileUuid: string, instantDelete: boolean) => {
         const response = await deleteFile(fileUuid, instantDelete)
         refreshFileSystemEntriesInfos()
@@ -25,6 +28,15 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
 
     const handleFileSystemEntryDownload = async (fileSystemEntryUuid: string, fileName: string, fileExtension: string) => {
         downloadFileSystemEntry(fileSystemEntryUuid, fileName, fileExtension)
+    }
+
+    const handleFileSystemEntryRestore = async (fileSystemEntryUuid: string) => {
+        const response = await restoreFileSystemEntry(fileSystemEntryUuid)
+
+        if (response.error == 401) {
+            navigate("/login")
+        }
+        refreshFileSystemEntriesInfos()
     }
 
     return (
@@ -49,6 +61,7 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
                         handleFileDelete={handleFileDelete}
                         handleFileFavoriteToggle={handleFileFavoriteToggle}
                         handleFileSystemEntryDownload={handleFileSystemEntryDownload}
+                        handleFileSystemEntryRestore={handleFileSystemEntryRestore}
                     />
                 )
             })}

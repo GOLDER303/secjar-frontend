@@ -15,9 +15,20 @@ interface FileEntryProps {
     handleFileDelete: (fileUuid: string, instantDelete: boolean) => void
     handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
     handleFileSystemEntryDownload: (fileSystemEntryUuid: string, fileName: string, fileExtension: string) => void
+    handleFileSystemEntryRestore: (fileSystemEntryUuid: string) => void
 }
 
-const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO, openFileInputPopup, openFileMovePopup, openFileSharePopup, setFileUploadDirectory, handleFileDelete, handleFileFavoriteToggle, handleFileSystemEntryDownload }) => {
+const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
+    fileSystemEntryInfoDTO,
+    openFileInputPopup,
+    openFileMovePopup,
+    openFileSharePopup,
+    setFileUploadDirectory,
+    handleFileDelete,
+    handleFileFavoriteToggle,
+    handleFileSystemEntryDownload,
+    handleFileSystemEntryRestore,
+}) => {
     const [showFileArray, setShowFileArray] = useState(false)
     const colSpan = 6 //number of collumns in the table
 
@@ -71,6 +82,15 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                     >
                         Delete
                     </button>
+                    {location.pathname === "/home/deleted" && (
+                        <button
+                            onClick={() => {
+                                handleFileSystemEntryRestore(fileSystemEntryInfoDTO.uuid)
+                            }}
+                        >
+                            Restore
+                        </button>
+                    )}
                     {openFileMovePopup && (
                         <button
                             onClick={() => {
@@ -129,6 +149,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({ fileSystemEntryInfoDTO,
                                         handleFileDelete={handleFileDelete}
                                         handleFileFavoriteToggle={handleFileFavoriteToggle}
                                         handleFileSystemEntryDownload={handleFileSystemEntryDownload}
+                                        handleFileSystemEntryRestore={handleFileSystemEntryRestore}
                                     />
                                 )
                             })}
