@@ -4,8 +4,6 @@ import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO"
 
 export const createDirectory = async (directoryName: string, parentDirectoryUuid?: string): Promise<GeneralApiResponseDTO<string>> => {
     try {
-        console.log(parentDirectoryUuid)
-
         const response = await axios.post(
             "http://localhost:8080/fileSystemEntries",
             {
