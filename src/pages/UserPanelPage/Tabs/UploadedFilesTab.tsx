@@ -63,6 +63,7 @@ const UploadedFilesTab: React.FC = () => {
                 openFileUploadPopup={openFileUploadPopup}
                 openFileMovePopup={openFileMovePopup}
                 openFileSharePopup={openFileSharePopup}
+                openDirectoryCreatePopup={openDirectoryCreatePopup}
                 setFileUploadDirectory={setFileUploadDirectory}
                 refreshFileSystemEntriesInfos={refreshFileSystemEntriesInfoList}
             />

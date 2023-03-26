@@ -11,6 +11,7 @@ interface FileEntryProps {
     openFileInputPopup?: () => void
     openFileMovePopup?: (targetFileUuid: string) => void
     openFileSharePopup?: (targetFileUuid: string) => void
+    openDirectoryCreatePopup?: (targetDirUuid: string) => void
     setFileUploadDirectory?: (param: string) => void
     handleFileDelete: (fileUuid: string, instantDelete: boolean) => void
     handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
@@ -23,6 +24,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
     openFileInputPopup,
     openFileMovePopup,
     openFileSharePopup,
+    openDirectoryCreatePopup,
     setFileUploadDirectory,
     handleFileDelete,
     handleFileFavoriteToggle,
@@ -109,6 +111,15 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                             Share
                         </button>
                     )}
+                    {isDirectory && openDirectoryCreatePopup && (
+                        <button
+                            onClick={() => {
+                                openDirectoryCreatePopup(fileSystemEntryInfoDTO.uuid)
+                            }}
+                        >
+                            Create Directory
+                        </button>
+                    )}
                     {isDirectory && openFileInputPopup && setFileUploadDirectory && (
                         <button
                             onClick={() => {
@@ -145,6 +156,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                                         openFileInputPopup={openFileInputPopup}
                                         openFileMovePopup={openFileMovePopup}
                                         openFileSharePopup={openFileSharePopup}
+                                        openDirectoryCreatePopup={openDirectoryCreatePopup}
                                         setFileUploadDirectory={setFileUploadDirectory}
                                         handleFileDelete={handleFileDelete}
                                         handleFileFavoriteToggle={handleFileFavoriteToggle}
