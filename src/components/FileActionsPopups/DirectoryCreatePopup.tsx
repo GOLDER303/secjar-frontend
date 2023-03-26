@@ -17,6 +17,7 @@ const DirectoryCreatePopup: React.FC<DirectoryCreatePopupProps> = ({ parenDirect
 
         await createDirectory(directoryNameInputRev.current.value, parenDirectoryUuid)
         directoryCreateCallback()
+        closePopup()
     }
 
     return (
