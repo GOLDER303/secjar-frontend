@@ -29,7 +29,7 @@ export const changeUserPassword = async (currentPassword: string, newPassword: s
 
         const data = error.response?.data as ApiErrorResponseDTO
 
-        return { error: data.status }
+        return { data: data.error, error: data.status }
     }
 }
 
@@ -39,6 +39,27 @@ export const sendPasswordResetLink = async (userEmail: string): Promise<GeneralA
             `http://localhost:8080/users/passwordReset`,
             {
                 userEmail,
+            },
+        )
+
+        return { data: response.data }
+    } catch (err) {
+        const error = err as AxiosError
+
+        const data = error.response?.data as ApiErrorResponseDTO
+
+        return { error: data.status }
+    }
+}
+
+export const resetUserPassword = async (token: string, email: string, newPassword: string): Promise<GeneralApiResponseDTO<string>> => {
+    try {
+        const response = await axios.post(
+            `http://localhost:8080/users/passwordReset/confirm`,
+            {
+                token,
+                email,
+                newPassword,
             },
         )
 
