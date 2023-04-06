@@ -1,6 +1,6 @@
-import React, {useEffect} from "react"
-import {useNavigate, useSearchParams} from "react-router-dom"
-import {confirmEmail} from "../services/UserAccountService"
+import React, { useEffect } from "react"
+import { useNavigate, useSearchParams } from "react-router-dom"
+import { confirmEmail } from "../services/UserAccountService"
 
 const AccountEmailConfirmPage: React.FC = () => {
     const [searchParams] = useSearchParams()
@@ -14,16 +14,16 @@ const AccountEmailConfirmPage: React.FC = () => {
 
     const handleSubmit = async () => {
         if (!confirmEmailToken) {
-            setStatusMessage("Niepoprawny link.");
+            setStatusMessage("Niepoprawny link.")
             return
         }
 
         const response = await confirmEmail(confirmEmailToken)
 
         if (response.data) {
-            setStatusMessage("Email potwierdzony");
+            setStatusMessage("Email potwierdzony")
         } else {
-            setStatusMessage("Coś poszło nietak");
+            setStatusMessage("Coś poszło nie tak")
         }
     }
 
@@ -31,8 +31,7 @@ const AccountEmailConfirmPage: React.FC = () => {
         <div>
             {statusMessage && (
                 <div>
-                    {statusMessage}{" "}
-                    <button onClick={() => navigate("/login")}>Powrót do strony logowania</button>
+                    {statusMessage} <button onClick={() => navigate("/login")}>Powrót do strony logowania</button>
                 </div>
             )}
         </div>
