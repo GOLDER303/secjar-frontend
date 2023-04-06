@@ -1,6 +1,6 @@
 import React from "react"
-import { sendPasswordResetLink } from "../services/PasswordChangeService"
 import { useNavigate } from "react-router-dom"
+import { sendPasswordResetLink } from "../../services/PasswordChangeService"
 
 const PasswordResetPage: React.FC = () => {
     const [stage, setStage] = React.useState(0) //current stage of resetting password process
@@ -29,14 +29,14 @@ const PasswordResetPage: React.FC = () => {
                         handleSubmit()
                     }}
                 >
-                    <label>
-                        Adres e-mail:{" "}
-                        <input
-                            ref={emailInputRef}
-                            type="email"
-                            required
-                        />
-                    </label>
+                    <label htmlFor="email">Adres e-mail: </label>
+                    <input
+                        ref={emailInputRef}
+                        name="email"
+                        id="email"
+                        type="email"
+                        required
+                    />
                     <input type="submit" />
                     {responseMessage && <p>{responseMessage}</p>}
                 </form>

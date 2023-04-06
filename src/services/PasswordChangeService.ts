@@ -35,12 +35,9 @@ export const changeUserPassword = async (currentPassword: string, newPassword: s
 
 export const sendPasswordResetLink = async (userEmail: string): Promise<GeneralApiResponseDTO<string>> => {
     try {
-        const response = await axios.post(
-            `http://localhost:8080/users/passwordReset`,
-            {
-                userEmail,
-            },
-        )
+        const response = await axios.post(`http://localhost:8080/users/passwordReset`, {
+            userEmail,
+        })
 
         return { data: response.data }
     } catch (err) {
@@ -52,16 +49,12 @@ export const sendPasswordResetLink = async (userEmail: string): Promise<GeneralA
     }
 }
 
-export const resetUserPassword = async (token: string, email: string, newPassword: string): Promise<GeneralApiResponseDTO<string>> => {
+export const resetUserPassword = async (token: string, newPassword: string): Promise<GeneralApiResponseDTO<string>> => {
     try {
-        const response = await axios.post(
-            `http://localhost:8080/users/passwordReset/confirm`,
-            {
-                token,
-                email,
-                newPassword,
-            },
-        )
+        const response = await axios.post(`http://localhost:8080/users/passwordReset/confirm`, {
+            token,
+            newPassword,
+        })
 
         return { data: response.data }
     } catch (err) {
