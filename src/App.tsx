@@ -7,7 +7,7 @@ import DashboardTab from "./pages/AdminPanelPage/Tabs/DashboardTab"
 import DiskManagementTab from "./pages/AdminPanelPage/Tabs/DiskManagementTab"
 import SubmissionManagementTab from "./pages/AdminPanelPage/Tabs/SubmissionManagementTab"
 import UserManagementTab from "./pages/AdminPanelPage/Tabs/UserManagementTab"
-import ForgotPasswordPage from "./pages/ForgotPasswordPage"
+import PasswordResetPage from "./pages/PasswordResetPage"
 import IndexPage from "./pages/IndexPage"
 import LoginPage from "./pages/LoginPage/LoginPage"
 import RootPage from "./pages/RootPage"
@@ -87,8 +87,8 @@ const router = createBrowserRouter([
         element: <SupportPage />,
     },
     {
-        path: "/forgotPassword",
-        element: <ForgotPasswordPage />,
+        path: "/resetPassword",
+        element: <PasswordResetPage />,
     },
     {
         path: "/activateAccount",
