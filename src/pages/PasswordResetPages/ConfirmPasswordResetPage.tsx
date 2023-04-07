@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
-import { resetUserPassword } from "../../services/PasswordChangeService"
+import { resetUserPassword } from "../../services/PasswordResetService"
 
 const ConfirmPasswordReset: React.FC = () => {
     const [statusMessage, setStatusMessage] = React.useState<string>("")
