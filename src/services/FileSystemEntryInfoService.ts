@@ -22,23 +22,14 @@ export const getFileSystemEntriesInfo = async (): Promise<GeneralApiResponseDTO<
     }
 }
 
-export const fileUpload = async (file: File | null, replace: boolean, parentDirectoryUuid: string | undefined): Promise<GeneralApiResponseDTO<string> | null> => {
-    if (file == null) {
-        return null
-    }
+export const uploadFile = async (file: File, replace: boolean, parentDirectoryUuid?: string): Promise<GeneralApiResponseDTO<string>> => {
     try {
-        let body: { file: File; replace: boolean; parentDirectoryUuid?: string }
-        body = {
-            file: file,
-            replace: replace,
-        }
-        if (parentDirectoryUuid) {
-            body.parentDirectoryUuid = parentDirectoryUuid
-        }
         const response = await axios.post(
             "http://localhost:8080/fileSystemEntries",
             {
-                ...body,
+                file,
+                replace,
+                parentDirectoryUuid,
             },
             {
                 headers: {
