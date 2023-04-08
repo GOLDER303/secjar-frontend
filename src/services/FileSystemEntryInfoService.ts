@@ -162,8 +162,6 @@ export const restoreFileSystemEntry = async (fileSystemEntryUuid: string): Promi
         const error = err as AxiosError
         const data = error.response
 
-        console.log(error)
-
         return { error: data?.status }
     }
 }
