@@ -1,8 +1,9 @@
-import React from "react"
-import { Link, useNavigate} from "react-router-dom"
-import { IsLoggedInContext, IsLoggedInContextType } from "../contexts/IsLoggedInContext"
-import { logout } from "../services/AuthService"
 import jwt_decode from "jwt-decode"
+import React from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { IsLoggedInContext, IsLoggedInContextType } from "../contexts/IsLoggedInContext"
+import "../css/Navbar.css"
+import { logout } from "../services/AuthService"
 
 const Navbar: React.FC = () => {
     const { isUserLoggedIn, setIsUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType
@@ -17,9 +18,9 @@ const Navbar: React.FC = () => {
 
     const hasAdminRole = () => {
         const token = localStorage.getItem("jwt")
-        if (token && isUserLoggedIn){
-            const decodedJwt = jwt_decode(token) as {scope: string}
-            if (decodedJwt.scope.includes("ROLE_ADMIN")){
+        if (token && isUserLoggedIn) {
+            const decodedJwt = jwt_decode(token) as { scope: string }
+            if (decodedJwt.scope.includes("ROLE_ADMIN")) {
                 return true
             }
         }
@@ -27,7 +28,7 @@ const Navbar: React.FC = () => {
     }
 
     return (
-        <nav className="site-bar">
+        <nav>
             <ul>
                 <li>
                     <Link to={"/home"}>Home</Link>
