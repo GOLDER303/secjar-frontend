@@ -4,7 +4,7 @@ import { IsLoggedInContext, IsLoggedInContextType } from "../../contexts/IsLogge
 import { login, sendMFAToken } from "../../services/AuthService"
 import LoginPasswordForm from "./LoginPasswordForm"
 import MFAForm from "./MFAForm"
-import "../../css/LoginPage.css"
+import "../../css/GenericForm.css"
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate()

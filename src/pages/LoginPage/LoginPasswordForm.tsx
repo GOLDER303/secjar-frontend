@@ -25,14 +25,14 @@ const LoginPasswordForm: React.FC<LoginPasswordFormProps> = ({ handleLoginPasswo
             <div className="inputBox">
                 <input placeholder=" " ref={usernameInputRef} type="text" name="username" id="username" />
                 <label htmlFor="username">Nazwa użytkownika: </label>
-                <i></i>
             </div>
             <div className="inputBox">
                 <input placeholder=" " ref={passwordInputRef} type="password" name="password" id="password" />
                 <label htmlFor="password">Hasło: </label>
-                <i></i>
             </div>
-            <input type="submit" value="Zaloguj się" />
+            <div className="buttons">
+                <input type="submit" value="Zaloguj się" />
+            </div>
         </form>
     )
 }
