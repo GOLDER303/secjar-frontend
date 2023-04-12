@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import "../../css/FileUploadPopup.css"
+import "../../css/GenericPopup.css"
 import { uploadFile } from "../../services/FileSystemEntryInfoService"
 
 interface FileUploadPopupProps {
@@ -21,7 +21,7 @@ const FileUploadPopup: React.FC<FileUploadPopupProps> = ({ fileUploadCallback, c
     }
 
     return (
-        <div className="file-upload-popup">
+        <div className="popup">
             <form
                 onSubmit={(event) => {
                     event.preventDefault()
@@ -32,13 +32,15 @@ const FileUploadPopup: React.FC<FileUploadPopupProps> = ({ fileUploadCallback, c
                     type="file"
                     onChange={(e) => setFileToUpload(e.target.files ? e.target.files[0] : null)}
                 />
-                <input type="submit" />
-                <button
-                    type="submit"
-                    onClick={closePopup}
-                >
-                    Close
-                </button>
+                <div className="buttons">
+                    <input type="submit" />
+                    <button
+                        type="submit"
+                        onClick={closePopup}
+                    >
+                        Zamknij
+                    </button>
+                </div>
             </form>
         </div>
     )

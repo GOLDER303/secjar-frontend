@@ -21,20 +21,25 @@ const DirectoryCreatePopup: React.FC<DirectoryCreatePopupProps> = ({ parenDirect
     }
 
     return (
-        <div className="file-upload-popup">
+        <div className="popup">
             <form
                 onSubmit={(event) => {
                     event.preventDefault()
                     handleSubmit()
                 }}
             >
-                <label htmlFor="directoryName">Nazwa folderu: </label>
-                <input
-                    type="text"
-                    ref={directoryNameInputRev}
-                />
-                <button onClick={() => closePopup()}>Cancel</button>
-                <button type="submit">Apply</button>
+                <div className="inputBox">
+                    <input
+                        placeholder=" "
+                        type="text"
+                        ref={directoryNameInputRev}
+                    />
+                    <label htmlFor="directoryName">Nazwa folderu: </label>
+                </div>
+                <div className="buttons">
+                    <button onClick={() => closePopup()}>Annuluj</button>
+                    <button type="submit">Zatwierdź</button>
+                </div>
             </form>
         </div>
     )

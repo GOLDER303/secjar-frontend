@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import "../../css/FileUploadPopup.css"
+import "../../css/GenericPopup.css"
 import { patchFile } from "../../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../../ts/interfaces/FileSystemEntryInfoDTO"
 
@@ -30,22 +30,27 @@ const FileMovePopup: React.FC<FileMovePopupProps> = ({ targetFileUuid, fileSyste
     }
 
     return (
-        <div className="file-upload-popup">
+        <div className="popup">
             <form
                 onSubmit={(event) => {
                     event.preventDefault()
                     handleSubmit()
                 }}
             >
-                <label htmlFor="targetDirUuid">Gdzie chcesz przenieść plik?</label>
-                <input
-                    type="string"
-                    name="targetDirUuid"
-                    id="targetDirUuid"
-                    ref={targetDirInputRef}
-                />
-                <button type="submit">Przenieś</button>
-                <button onClick={closePopup}>Close</button>
+                <div className="inputBox">
+                    <input
+                        placeholder=" "
+                        type="string"
+                        name="targetDirUuid"
+                        id="targetDirUuid"
+                        ref={targetDirInputRef}
+                    />
+                    <label htmlFor="targetDirUuid">Gdzie chcesz przenieść plik?</label>
+                </div>
+                <div className="buttons">
+                    <button type="submit">Przenieś</button>
+                    <button onClick={closePopup}>Zamknij</button>
+                </div>
             </form>
         </div>
     )
