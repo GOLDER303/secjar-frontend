@@ -12,7 +12,7 @@ export const login = async (username: string, password: string, mfaToken?: strin
 
         localStorage.setItem("jwt", response.data.accessToken)
 
-        return {}
+        return { data: response.data }
     } catch (err) {
         const error = err as AxiosError
 

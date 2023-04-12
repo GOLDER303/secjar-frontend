@@ -1,6 +1,7 @@
 import React from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import IsLoggedInProvider from "./contexts/IsLoggedInContext"
+import UserInfoProvider from "./contexts/UserInfoContext"
 import AccountActivationPage from "./pages/AccountActivationPage"
 import EmailConfirmationPage from "./pages/AccountEmailConfirmPage"
 import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage"
@@ -109,7 +110,9 @@ const router = createBrowserRouter([
 const App: React.FC = () => {
     return (
         <IsLoggedInProvider>
-            <RouterProvider router={router} />
+            <UserInfoProvider>
+                <RouterProvider router={router} />
+            </UserInfoProvider>
         </IsLoggedInProvider>
     )
 }
