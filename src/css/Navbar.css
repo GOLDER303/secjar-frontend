@@ -1,0 +1,12 @@
+nav {
+    display: flex;
+    position: sticky;
+    width: 100vw;
+    margin-bottom: 10px;
+    z-index: 10;
+}
+nav li {
+    display: inline-block;
+    padding: 10px;
+    list-style-type: none;
+}

@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { UserInfoContext, UserInfoContextType } from "../../contexts/UserInfoContext"
 import "../../css/FileUploadPopup.css"
 import { uploadFile } from "../../services/FileSystemEntryInfoService"
 
@@ -10,14 +11,28 @@ interface FileUploadPopupProps {
 
 const FileUploadPopup: React.FC<FileUploadPopupProps> = ({ fileUploadCallback, closePopup, targetDirUuid }) => {
     const [fileToUpload, setFileToUpload] = useState<File | null>(null)
+    const [errorMessage, setErrorMessage] = useState("")
+    const { userInfoDTO } = React.useContext(UserInfoContext) as UserInfoContextType
 
     const handleSubmit = async () => {
-        if (fileToUpload != null) {
-            const response = await uploadFile(fileToUpload, false, targetDirUuid)
-            fileUploadCallback()
-
-            closePopup()
+        if (!fileToUpload || !userInfoDTO) {
+            return
         }
+
+        if (userInfoDTO.allowedDiscSpace - userInfoDTO.currentDiscSpace < fileToUpload.size) {
+            setErrorMessage("Nie masz wystarczającej ilości miejsca na dysku")
+            return
+        }
+
+        const response = await uploadFile(fileToUpload, false, targetDirUuid)
+
+        if (response.error) {
+            setErrorMessage("Coś poszło nie tak")
+        }
+
+        fileUploadCallback()
+
+        closePopup()
     }
 
     return (
@@ -40,6 +55,7 @@ const FileUploadPopup: React.FC<FileUploadPopupProps> = ({ fileUploadCallback, c
                     Close
                 </button>
             </form>
+            {errorMessage && <div>{errorMessage}</div>}
         </div>
     )
 }

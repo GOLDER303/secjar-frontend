@@ -1,7 +1,11 @@
+import jwt_decode from "jwt-decode"
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { IsLoggedInContext, IsLoggedInContextType } from "../../contexts/IsLoggedInContext"
+import { UserInfoContext, UserInfoContextType } from "../../contexts/UserInfoContext"
+import "../../css/LoginPage.css"
 import { login, sendMFAToken } from "../../services/AuthService"
+import { getUserInfo } from "../../services/UserManagementService"
 import LoginPasswordForm from "./LoginPasswordForm"
 import MFAForm from "./MFAForm"
 import "../../css/GenericForm.css"
@@ -12,6 +16,7 @@ const LoginPage: React.FC = () => {
     const [formStep, setFormStep] = React.useState<1 | 2>(1)
     const [loginError, setLoginError] = React.useState<string>("")
     const { setIsUserLoggedIn } = React.useContext(IsLoggedInContext) as IsLoggedInContextType
+    const { setUserInfoDTO } = React.useContext(UserInfoContext) as UserInfoContextType
     const [username, setUsername] = React.useState<string>()
     const [password, setPassword] = React.useState<string>()
 
@@ -52,7 +57,7 @@ const LoginPage: React.FC = () => {
     const handleLogin = async (username: string, password: string, mfaToken?: string) => {
         const loginResponse = await login(username, password, mfaToken)
 
-        if (loginResponse.error) {
+        if (loginResponse.error || loginResponse.data == null) {
             if (loginResponse.error == 401) {
                 setLoginError("Podałeś zły login, hasło lub token mfa")
             } else {
@@ -61,7 +66,20 @@ const LoginPage: React.FC = () => {
             return
         }
 
+        const jwtToken = localStorage.getItem("jwt")
+        if (!jwtToken) {
+            setLoginError("Coś poszło nie tak, spróbuj później")
+            return
+        }
+
         setIsUserLoggedIn(true)
+
+        const jwt = jwt_decode(jwtToken) as { userUuid: string }
+
+        const userInfoResponse = await getUserInfo(jwt.userUuid)
+
+        setUserInfoDTO(userInfoResponse.data || null)
+
         navigate("/home")
     }
 
