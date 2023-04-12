@@ -8,6 +8,7 @@ import { login, sendMFAToken } from "../../services/AuthService"
 import { getUserInfo } from "../../services/UserManagementService"
 import LoginPasswordForm from "./LoginPasswordForm"
 import MFAForm from "./MFAForm"
+import "../../css/GenericForm.css"
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate()
