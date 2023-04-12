@@ -1,12 +1,40 @@
 nav {
     display: flex;
     position: sticky;
-    width: 100vw;
+    width: 100%;
     margin-bottom: 10px;
+    background-color: var(--secondary-color);
+}
+#root > nav {
     z-index: 10;
 }
-nav li {
+#root > nav::before {
+    content: ' ';
+    padding-right: 80px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 5px 50%;
+    margin-right: 5px;
+    background-image: url("../img/logoSECJAR_orygina_4.png");
+}
+
+nav li *{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-decoration: none;
+    font-size: unset;
+    color: var(--main-color);
+    font-weight: 600;
+}
+nav > ul > *,
+nav > a {
     display: inline-block;
     padding: 10px;
     list-style-type: none;
+}
+nav > ul *:hover,
+nav > ul *:hover *,
+nav > a:hover {
+    background-color: var(--secondary-background);
 }
