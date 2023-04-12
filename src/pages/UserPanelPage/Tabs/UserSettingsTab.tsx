@@ -1,10 +1,11 @@
 import jwt_decode from "jwt-decode"
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import DoubleClickEditText from "../../../components/DoubleClickEditText"
 import PasswordChangeForm from "../../../components/PasswordChangeForm"
-import { editUserInfo, getUserInfo } from "../../../services/UserManagementService"
+import { editUserInfo, getUserInfo, updateUsingMFA } from "../../../services/UserManagementService"
 import UserInfoDTO from "../../../ts/interfaces/UserInfoDTO"
+import MFATypes from "../../../ts/types/MFATypes"
 
 const UserSettingsTab: React.FC = () => {
     const navigate = useNavigate()
@@ -13,6 +14,9 @@ const UserSettingsTab: React.FC = () => {
     const [statusMessage, setStatusMessage] = React.useState<string | null>(null)
 
     const [fileDeletionDelay, setFileDeletionDelay] = React.useState<string>("")
+    const [totpQrCode, setTotpQrCode] = React.useState("")
+
+    const mfaTypeSelectRef = useRef<HTMLSelectElement>(null)
 
     const refreshUserInfo = async () => {
         const token = localStorage.getItem("jwt")
@@ -34,6 +38,7 @@ const UserSettingsTab: React.FC = () => {
     }
 
     useEffect(() => {
+        setTotpQrCode("")
         refreshUserInfo()
     }, [])
 
@@ -55,12 +60,47 @@ const UserSettingsTab: React.FC = () => {
         refreshUserInfo()
     }
 
+    const handleMFATypeChange = async () => {
+        if (!userInfo || !mfaTypeSelectRef.current) {
+            return
+        }
+
+        setTotpQrCode("")
+
+        const response = await updateUsingMFA(userInfo.uuid, mfaTypeSelectRef.current.value as MFATypes)
+
+        if (response.error) {
+            setStatusMessage("Coś poszło nie tak, spróbuj ponownie później")
+        }
+
+        if (mfaTypeSelectRef.current.value == "TOTP") {
+            setTotpQrCode(response.data.qrCodeLink)
+        } else {
+            setStatusMessage("MFA zostało zaktualizowane")
+        }
+
+        refreshUserInfo()
+    }
+
     return (
         <div>
             <h2>Ustawienia użytkownika</h2>
             {userInfo && fileDeletionDelay && (
                 <ul>
-                    <li>Typ używanego mfa: {userInfo.mfaType}</li>
+                    <li>
+                        Typ używanego mfa:
+                        <select
+                            name="mfaType"
+                            id="mfaType"
+                            ref={mfaTypeSelectRef}
+                            onChange={handleMFATypeChange}
+                            value={userInfo.mfaType}
+                        >
+                            <option value="NONE">Brak</option>
+                            <option value="OTP_EMAIL">Hasło wysyłane na email</option>
+                            <option value="TOTP">TOTP</option>
+                        </select>
+                    </li>
                     <li>
                         <DoubleClickEditText
                             value={fileDeletionDelay}
@@ -75,6 +115,8 @@ const UserSettingsTab: React.FC = () => {
             )}
             {isPasswordChangeFormVisible && <PasswordChangeForm />}
             <div className="error">{statusMessage}</div>
+            {totpQrCode && <img src={totpQrCode} />}
+            <img></img>
         </div>
     )
 }

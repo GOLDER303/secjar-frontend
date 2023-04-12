@@ -3,6 +3,7 @@ import ApiErrorResponseDTO from "../ts/interfaces/ApiErrorResponseDTO"
 import GeneralApiResponseDTO from "../ts/interfaces/GeneralApiResponseDTO"
 import UserInfoDTO from "../ts/interfaces/UserInfoDTO"
 import UserInviteRequestDTO from "../ts/interfaces/UserInviteRequestDTO"
+import MFATypes from "../ts/types/MFATypes"
 
 export const getAllUserInfo = async (): Promise<GeneralApiResponseDTO<[UserInfoDTO]>> => {
     try {
@@ -79,6 +80,30 @@ export const inviteUser = async (userInvite: UserInviteRequestDTO): Promise<Gene
             }
         )
         return {}
+    } catch (err) {
+        const error = err as AxiosError
+
+        const data = error.response?.data as ApiErrorResponseDTO
+
+        return { error: data.status }
+    }
+}
+
+export const updateUsingMFA = async (userUuid: string, mfaType: MFATypes) => {
+    try {
+        const response = await axios.post(
+            `http://localhost:8080/users/${userUuid}/2fa/update`,
+            {
+                mfaType,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+            }
+        )
+
+        return { data: response.data }
     } catch (err) {
         const error = err as AxiosError
 
