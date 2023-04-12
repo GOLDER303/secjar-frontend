@@ -3,12 +3,11 @@ import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { IsLoggedInContext, IsLoggedInContextType } from "../../contexts/IsLoggedInContext"
 import { UserInfoContext, UserInfoContextType } from "../../contexts/UserInfoContext"
-import "../../css/LoginPage.css"
+import "../../css/GenericForm.css"
 import { login, sendMFAToken } from "../../services/AuthService"
 import { getUserInfo } from "../../services/UserManagementService"
 import LoginPasswordForm from "./LoginPasswordForm"
 import MFAForm from "./MFAForm"
-import "../../css/GenericForm.css"
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate()
