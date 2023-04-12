@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { deleteFile, downloadFileSystemEntry, patchFile, restoreFileSystemEntry } from "../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 import FileSystemEntryInfo from "./FileSystemEntryInfo"
+import "../css/FileSystemEntryInfo.css"
 
 interface FileSystemEntryInfoListProps {
     fileSystemEntriesInfoDTO: FileSystemEntryInfoDTO[]
