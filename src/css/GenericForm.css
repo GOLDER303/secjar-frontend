@@ -13,7 +13,7 @@
     flex-direction: column;
     position: relative;
     height: min-content;
-    background: #451919;
+    background: var(--secondary-background);
     border-radius: 8px;
     overflow: hidden;
 }
@@ -176,6 +176,7 @@ input[type="submit"] {
     margin-top: 10px;
 }
 
+button:active,
 input[type="submit"]:active {
     opacity: 0.8;
 }
