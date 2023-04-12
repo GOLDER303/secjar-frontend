@@ -1,0 +1,37 @@
+table {
+    box-shadow: #0005 0px 0px 10px 0px;
+    border-collapse: collapse;
+}
+
+table td,
+table th {
+    white-space: nowrap;
+    padding: 10px;
+    border: solid 1px var(--secondary-background);
+}
+
+table td.wrap,
+table th.wrap {
+    white-space: unset;
+}
+
+table td button{
+    margin: 0;
+    flex-grow: 1;
+    padding: 5px 10px;
+    white-space: nowrap;
+}
+
+.table-buttons {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 5px 10px;
+}
+
+table td:nth-child(6) {
+    text-align: center;
+    font-size: 18pt;
+    color: #FF0;
+}

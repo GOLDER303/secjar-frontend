@@ -32,7 +32,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
     handleFileSystemEntryRestore,
 }) => {
     const [showFileArray, setShowFileArray] = useState(false)
-    const colSpan = 6 //number of collumns in the table
+    const colSpan = 7 //number of collumns in the table
 
     const location = useLocation()
 
@@ -50,7 +50,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                 className={fileSystemEntryInfoDTO.parent != null || isDirectory ? "directory" : ""}
                 key={fileSystemEntryInfoDTO.uuid}
             >
-                <td>
+                <td className="wrap">
                     <DoubleClickEditText
                         value={fileSystemEntryInfoDTO.name}
                         onBlurCallback={handleNameChange}
@@ -70,66 +70,68 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                     {fileSystemEntryInfoDTO.favorite ? "★" : "☆"}
                 </td>
                 <td>
-                    <button
-                        onClick={() => {
-                            handleFileSystemEntryDownload(fileSystemEntryInfoDTO.uuid, fileSystemEntryInfoDTO.name, contentType)
-                        }}
-                    >
-                        Download
-                    </button>
-                    <button
-                        onClick={() => {
-                            handleFileDelete(fileSystemEntryInfoDTO.uuid, location.pathname === "/home/deleted")
-                        }}
-                    >
-                        Delete
-                    </button>
-                    {location.pathname === "/home/deleted" && (
+                    <div className="table-buttons">
                         <button
                             onClick={() => {
-                                handleFileSystemEntryRestore(fileSystemEntryInfoDTO.uuid)
+                                handleFileSystemEntryDownload(fileSystemEntryInfoDTO.uuid, fileSystemEntryInfoDTO.name, contentType)
                             }}
                         >
-                            Restore
+                            Download
                         </button>
-                    )}
-                    {openFileMovePopup && (
                         <button
                             onClick={() => {
-                                openFileMovePopup(fileSystemEntryInfoDTO.uuid)
+                                handleFileDelete(fileSystemEntryInfoDTO.uuid, location.pathname === "/home/deleted")
                             }}
                         >
-                            Move
+                            Delete
                         </button>
-                    )}
-                    {openFileSharePopup && (
-                        <button
-                            onClick={() => {
-                                openFileSharePopup(fileSystemEntryInfoDTO.uuid)
-                            }}
-                        >
-                            Share
-                        </button>
-                    )}
-                    {isDirectory && openDirectoryCreatePopup && (
-                        <button
-                            onClick={() => {
-                                openDirectoryCreatePopup(fileSystemEntryInfoDTO.uuid)
-                            }}
-                        >
-                            Create Directory
-                        </button>
-                    )}
-                    {isDirectory && openFileInputPopup && setFileUploadDirectory && (
-                        <button
-                            onClick={() => {
-                                openFileInputPopup()
-                                setFileUploadDirectory(fileSystemEntryInfoDTO.uuid)
-                            }}
-                        >
-                            Upload here
-                        </button>
-                    )}
+                        {location.pathname === "/home/deleted" && (
+                            <button
+                                onClick={() => {
+                                    handleFileSystemEntryRestore(fileSystemEntryInfoDTO.uuid)
+                                }}
+                            >
+                                Restore
+                            </button>
+                        )}
+                        {openFileMovePopup && (
+                            <button
+                                onClick={() => {
+                                    openFileMovePopup(fileSystemEntryInfoDTO.uuid)
+                                }}
+                            >
+                                Move
+                            </button>
+                        )}
+                        {openFileSharePopup && (
+                            <button
+                                onClick={() => {
+                                    openFileSharePopup(fileSystemEntryInfoDTO.uuid)
+                                }}
+                            >
+                                Share
+                            </button>
+                        )}
+                        {isDirectory && openDirectoryCreatePopup && (
+                            <button
+                                onClick={() => {
+                                    openDirectoryCreatePopup(fileSystemEntryInfoDTO.uuid)
+                                }}
+                            >
+                                Create Directory
+                            </button>
+                        )}
+                        {isDirectory && openFileInputPopup && setFileUploadDirectory && (
+                            <button
+                                onClick={() => {
+                                    openFileInputPopup()
+                                    setFileUploadDirectory(fileSystemEntryInfoDTO.uuid)
+                                }}
+                            >
+                                Upload here
+                            </button>
+                        )}
+                    </div>
                 </td>
             </tr>
             {isDirectory && (
