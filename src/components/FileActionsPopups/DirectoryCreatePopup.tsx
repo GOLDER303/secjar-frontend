@@ -33,8 +33,8 @@ const DirectoryCreatePopup: React.FC<DirectoryCreatePopupProps> = ({ parenDirect
                     type="text"
                     ref={directoryNameInputRev}
                 />
-                <button onClick={() => closePopup()}>Cancel</button>
                 <button type="submit">Apply</button>
+                <button onClick={() => closePopup()}>Cancel</button>
             </form>
         </div>
     )
