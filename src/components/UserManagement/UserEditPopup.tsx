@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import "../../css/FileUploadPopup.css"
+import "../../css/GenericPopup.css"
 import UserPatchRequestDTO from "../../ts/interfaces/UserPatchRequestDTO"
 
 interface UserEditPopupProps {
@@ -39,7 +39,7 @@ const UserEditPopup: React.FC<UserEditPopupProps> = ({ handleUserEdit, closePopu
     }
 
     return (
-        <div className="file-upload-popup">
+        <div className="popup">
             <form
                 onSubmit={(event) => {
                     event.preventDefault()
@@ -80,13 +80,15 @@ const UserEditPopup: React.FC<UserEditPopupProps> = ({ handleUserEdit, closePopu
                     MB
                 </label>
                 <br />
-                <input type="submit" />
-                <button
-                    type="submit"
-                    onClick={closePopup}
-                >
-                    Close
-                </button>
+                <div className="buttons">
+                    <input type="submit" />
+                    <button
+                        type="submit"
+                        onClick={closePopup}
+                    >
+                        Zamknij
+                    </button>
+                </div>
             </form>
         </div>
     )

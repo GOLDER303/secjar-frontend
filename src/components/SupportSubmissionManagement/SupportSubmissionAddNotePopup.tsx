@@ -1,5 +1,5 @@
 import React from "react"
-import "../../css/FileUploadPopup.css"
+import "../../css/GenericPopup.css"
 
 interface SupportSubmissionAddNotePopupProps {
     handleNoteAdd: (submissionNoteContent: string) => void
@@ -17,7 +17,7 @@ const SupportSubmissionAddNotePopup: React.FC<SupportSubmissionAddNotePopupProps
     }
 
     return (
-        <div className="file-upload-popup">
+        <div className="popup">
             <form
                 onSubmit={(event) => {
                     event.preventDefault()

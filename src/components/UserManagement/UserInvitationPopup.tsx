@@ -1,5 +1,5 @@
 import React from "react"
-import "../../css/FileUploadPopup.css"
+import "../../css/GenericPopup.css"
 import UserInviteRequestDTO from "../../ts/interfaces/UserInviteRequestDTO"
 
 interface UserInvitationPopupProps {
@@ -27,7 +27,7 @@ const UserInvitationPopup: React.FC<UserInvitationPopupProps> = ({ handleUserInv
     }
 
     return (
-        <div className="file-upload-popup">
+        <div className="popup">
             <form
                 onSubmit={(event) => {
                     event.preventDefault()
@@ -70,13 +70,15 @@ const UserInvitationPopup: React.FC<UserInvitationPopupProps> = ({ handleUserInv
                     />
                 </label>
                 <br />
-                <input type="submit" />
-                <button
-                    type="submit"
-                    onClick={closePopup}
-                >
-                    Close
-                </button>
+                <div className="buttons">
+                    <input type="submit" />
+                    <button
+                        type="submit"
+                        onClick={closePopup}
+                    >
+                        Zamknij
+                    </button>
+                </div>
             </form>
         </div>
     )
