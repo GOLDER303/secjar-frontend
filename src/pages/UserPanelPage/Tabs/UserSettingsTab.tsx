@@ -5,7 +5,7 @@ import DoubleClickEditText from "../../../components/DoubleClickEditText"
 import PasswordChangeForm from "../../../components/PasswordChangeForm"
 import { editUserInfo, getUserInfo, updateUsingMFA } from "../../../services/UserManagementService"
 import UserInfoDTO from "../../../ts/interfaces/UserInfoDTO"
-import MFATypes from "../../../ts/types/MFATypes"
+import MFAType from "../../../ts/types/MFAType"
 
 const UserSettingsTab: React.FC = () => {
     const navigate = useNavigate()
@@ -67,7 +67,7 @@ const UserSettingsTab: React.FC = () => {
 
         setTotpQrCode("")
 
-        const response = await updateUsingMFA(userInfo.uuid, mfaTypeSelectRef.current.value as MFATypes)
+        const response = await updateUsingMFA(userInfo.uuid, mfaTypeSelectRef.current.value as MFAType)
 
         if (response.error) {
             setStatusMessage("Coś poszło nie tak, spróbuj ponownie później")
