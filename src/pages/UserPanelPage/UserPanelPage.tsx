@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { Link, Navigate, Outlet, useOutlet } from "react-router-dom"
 import { IsLoggedInContext, IsLoggedInContextType } from "../../contexts/IsLoggedInContext"
+import UsernamesUuidsMapProvider from "../../contexts/UsernamesUuidsMapContext"
 import "../../css/UserPanelPage.css"
 import { getFileSystemEntriesInfo } from "../../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../../ts/interfaces/FileSystemEntryInfoDTO"
@@ -52,7 +53,9 @@ const UserPanelPage: React.FC = () => {
                         <Link to={"settings"}>Ustawienia</Link>
                     </nav>
 
-                    {outlet ? <Outlet context={{ fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList }} /> : <Navigate to={"uploaded"} />}
+                    <UsernamesUuidsMapProvider>
+                        {outlet ? <Outlet context={{ fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList }} /> : <Navigate to={"uploaded"} />}
+                    </UsernamesUuidsMapProvider>
                 </>
             ) : (
                 <h2>

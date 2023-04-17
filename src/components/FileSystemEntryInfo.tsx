@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useLocation } from "react-router"
+import { UsernamesUuidsMapContext, UsernamesUuidsMapContextType } from "../contexts/UsernamesUuidsMapContext"
 import { patchFile } from "../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 import formatFileContentType from "../utils/FormatFileContentType"
@@ -32,6 +33,9 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
     handleFileSystemEntryRestore,
 }) => {
     const [showFileArray, setShowFileArray] = useState(false)
+
+    const { usernamesUuidsMap } = React.useContext(UsernamesUuidsMapContext) as UsernamesUuidsMapContextType
+
     const colSpan = 7 //number of collumns in the table
 
     const location = useLocation()
@@ -42,6 +46,10 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
 
     const handleNameChange = (name: string) => {
         patchFile(fileSystemEntryInfoDTO.uuid, undefined, undefined, name)
+    }
+
+    if (!usernamesUuidsMap) {
+        return <h1>Coś poszło nie tak</h1>
     }
 
     return (
@@ -57,7 +65,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                     />
                 </td>
                 <td>{contentType}</td>
-                <td>{fileSystemEntryInfoDTO.user}</td>
+                <td>{usernamesUuidsMap.get(fileSystemEntryInfoDTO.user)}</td>
                 <td>
                     {sizeValue} {sizeUnit}
                 </td>
