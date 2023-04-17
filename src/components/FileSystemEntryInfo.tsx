@@ -18,6 +18,9 @@ interface FileEntryProps {
     handleFileFavoriteToggle: (fileUuid: string, isFavorite: boolean) => void
     handleFileSystemEntryDownload: (fileSystemEntryUuid: string, fileName: string, fileExtension: string) => void
     handleFileSystemEntryRestore: (fileSystemEntryUuid: string) => void
+    currentClassName: string
+    setParentDirectoryClassNameCallback: (name: string) => void
+    setDirectoryPathCallback: (directory: string) => void
 }
 
 const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
@@ -31,12 +34,17 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
     handleFileFavoriteToggle,
     handleFileSystemEntryDownload,
     handleFileSystemEntryRestore,
+    currentClassName,
+    setParentDirectoryClassNameCallback,
+    setDirectoryPathCallback,
 }) => {
     const [showFileArray, setShowFileArray] = useState(false)
 
     const { usernamesUuidsMap } = React.useContext(UsernamesUuidsMapContext) as UsernamesUuidsMapContextType
 
-    const colSpan = 7 //number of collumns in the table
+    const [thisClassName, setThisClassName] = React.useState("")
+    //Locks the state of thisClassName
+    const [isClassNameLocked, setIsClassNameLocked] = React.useState(true)
 
     const location = useLocation()
 
@@ -52,12 +60,45 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
         return <h1>Coś poszło nie tak</h1>
     }
 
+    React.useEffect(() => {
+        if (isClassNameLocked){
+            setThisClassName(currentClassName);
+        }
+        setIsClassNameLocked(true);
+    }, [currentClassName])
+
+    React.useEffect(() => {
+        if (showFileArray) {
+            setIsClassNameLocked(false);
+            setParentDirectoryClassNameCallback("")
+            setThisClassName("current-directory")
+        }else {
+            setParentDirectoryClassNameCallback("current-directory")
+        }
+    }, [showFileArray])
+
     return (
         <>
             <tr
-                className={fileSystemEntryInfoDTO.parent != null || isDirectory ? "directory" : ""}
+                className={fileSystemEntryInfoDTO.parent != null || isDirectory ? "directory " + thisClassName : thisClassName}
                 key={fileSystemEntryInfoDTO.uuid}
             >
+                {isDirectory ? (
+                    <td
+                        onClick={() => {
+                            setShowFileArray(!showFileArray)
+                            if (showFileArray){
+                                setDirectoryPathCallback("~" + fileSystemEntryInfoDTO.name)
+                            }else {
+                                setDirectoryPathCallback(fileSystemEntryInfoDTO.name)
+                            }
+                        }}
+                    >
+                        {showFileArray ? "▼" : "►"}
+                    </td>
+                ) : (
+                    <td />
+                )}
                 <td className="wrap">
                     <DoubleClickEditText
                         value={fileSystemEntryInfoDTO.name}
@@ -71,6 +112,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                 </td>
                 <td>{new Date(fileSystemEntryInfoDTO.uploadDate).toLocaleDateString()}</td>
                 <td
+                    className="star-icon"
                     onClick={() => {
                         handleFileFavoriteToggle(fileSystemEntryInfoDTO.uuid, fileSystemEntryInfoDTO.favorite)
                     }}
@@ -144,19 +186,6 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
             </tr>
             {isDirectory && (
                 <>
-                    <tr
-                        className="directory"
-                        key={fileSystemEntryInfoDTO.uuid + "dir"}
-                    >
-                        <td
-                            colSpan={colSpan}
-                            onClick={() => {
-                                setShowFileArray(!showFileArray)
-                            }}
-                        >
-                            {showFileArray ? "▼" : "►"}
-                        </td>
-                    </tr>
                     {showFileArray && (
                         <>
                             {fileSystemEntryInfoDTO.children.map((fileSystemEntryInfo) => {
@@ -172,6 +201,9 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                                         handleFileFavoriteToggle={handleFileFavoriteToggle}
                                         handleFileSystemEntryDownload={handleFileSystemEntryDownload}
                                         handleFileSystemEntryRestore={handleFileSystemEntryRestore}
+                                        currentClassName={thisClassName}
+                                        setParentDirectoryClassNameCallback={setThisClassName}
+                                        setDirectoryPathCallback={setDirectoryPathCallback}
                                     />
                                 )
                             })}
