@@ -42,20 +42,32 @@ const UserPanelPage: React.FC = () => {
 
     return (
         <div className="user-panel-page-container">
-            <h1>User Panel Page</h1>
             {isUserLoggedIn ? (
                 <>
                     <nav>
-                        <Link to={"uploaded"}>Przesłane pliki</Link>
-                        <Link to={"favorite"}>Ulubione pliki</Link>
-                        <Link to={"deleted"}>Usunięte pliki</Link>
-                        <Link to={"shared"}>Udostępnione pliki</Link>
-                        <Link to={"settings"}>Ustawienia</Link>
+                        <ul>
+                            <li>
+                                <Link to={"uploaded"}>Przesłane pliki</Link>
+                            </li>
+                            <li>
+                                <Link to={"favorite"}>Ulubione pliki</Link>
+                            </li>
+                            <li>
+                                <Link to={"deleted"}>Usunięte pliki</Link>
+                            </li>
+                            <li>
+                                <Link to={"shared"}>Udostępnione pliki</Link>
+                            </li>
+                            <li>
+                                <Link to={"settings"}>Ustawienia</Link>
+                            </li>
+                        </ul>
                     </nav>
-
-                    <UsernamesUuidsMapProvider>
-                        {outlet ? <Outlet context={{ fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList }} /> : <Navigate to={"uploaded"} />}
-                    </UsernamesUuidsMapProvider>
+                    <div className="tab-container">
+                        <UsernamesUuidsMapProvider>
+                            {outlet ? <Outlet context={{ fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList }} /> : <Navigate to={"uploaded"} />}
+                        </UsernamesUuidsMapProvider>
+                    </div>
                 </>
             ) : (
                 <h2>
