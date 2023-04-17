@@ -68,8 +68,8 @@
     margin-top: 35px;
 }
 
-.inputBox input,
-.inputBox textarea {
+.inputBox :is(input, div[contenteditable="true"], textarea) {
+    display: inline-block;
     position: relative;
     width: 100%;
     padding: 10px;
@@ -103,15 +103,9 @@
     transition: 0.5s;
 }
 
-.inputBox input:not(:placeholder-shown) ~ label,
-.inputBox input:focus ~ label {
-    color: var(--main-color);
-    transform: translateX(0px) translateY(-34px);
-    font-size: 0.75em;
-}
-
-.inputBox textarea:not(:placeholder-shown) ~ label,
-.inputBox textarea:focus ~ label {
+.inputBox div[contenteditable="true"]:not(:empty) ~ label,
+.inputBox :is(input, textarea):not(:placeholder-shown) ~ label,
+.inputBox :is(input, div[contenteditable="true"], textarea):focus ~ label {
     color: var(--main-color);
     transform: translateX(0px) translateY(-34px);
     font-size: 0.75em;
@@ -133,8 +127,8 @@
     z-index: 9;
 }
 
-.inputBox:has(input:not(:placeholder-shown))::after,
-.inputBox:has(textarea:not(:placeholder-shown))::after,
+.inputBox:has(div[contenteditable="true"]:not(:empty))::after,
+.inputBox:has(:is(input, textarea):not(:placeholder-shown))::after,
 .inputBox:focus-within::after {
     height: calc(100% - var(--input-margin-top));
 }
@@ -176,6 +170,7 @@ input[type="submit"] {
     margin-top: 10px;
 }
 
+button:active,
 input[type="submit"]:active {
     opacity: 0.8;
 }
