@@ -10,6 +10,7 @@ import {
 } from "../../../services/SupportSubmissionManagmentService"
 import SupportSubmissionNoteDTO from "../../../ts/interfaces/SupportSubmissionNoteDTO"
 import SupportNoteList from "../../../components/SupportSubmissionManagement/SupportNoteList"
+import "../../../css/SupportSubmission.css"
 
 const SubmissionManagementTab: React.FC = () => {
     const [supportSubmission, setSupportSubmission] = React.useState<SupportSubmissionDTO[]>([])
@@ -115,7 +116,7 @@ const SubmissionManagementTab: React.FC = () => {
     }
 
     return (
-        <div className="container">
+        <div className="aside">
             <div>
                 <h2>Zgłoszenia</h2>
                 <SupportSubmissionList
