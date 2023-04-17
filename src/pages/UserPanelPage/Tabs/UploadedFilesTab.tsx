@@ -67,15 +67,17 @@ const UploadedFilesTab: React.FC = () => {
                 setFileUploadDirectory={setFileUploadDirectory}
                 refreshFileSystemEntriesInfos={refreshFileSystemEntriesInfoList}
             />
-            <button
-                onClick={() => {
-                    setFileUploadDirectory(undefined)
-                    openFileUploadPopup()
-                }}
-            >
-                Upload to root
-            </button>
-            <button onClick={() => openDirectoryCreatePopup()}>Create directories</button>
+            <div style={{display: "flex", gap: "10px"}}>
+                <button
+                    onClick={() => {
+                        setFileUploadDirectory(undefined)
+                        openFileUploadPopup()
+                    }}
+                >
+                    Upload to root
+                </button>
+                <button onClick={() => openDirectoryCreatePopup()}>Create directories</button>
+            </div>
 
             {isFileUploadPopupVisible && (
                 <FileUploadPopup
