@@ -1,5 +1,6 @@
 import React, {useEffect} from "react"
 import SupportSubmissionNoteDTO from "../../ts/interfaces/SupportSubmissionNoteDTO"
+import ContentEditable from "react-contenteditable"
 
 interface SupportNoteProps {
     supportSubmissionNoteDTO: SupportSubmissionNoteDTO
@@ -27,51 +28,63 @@ const SupportNote: React.FC<SupportNoteProps> = ({ supportSubmissionNoteDTO, han
     return (
         isNoteEdited ? (
             <tr>
-                <td>
+                <td className="scrollable">
                     <form
+                        id="SupportNoteEdit"
                         onSubmit={(event) => {
                             event.preventDefault()
                             handleSubmit()
                         }}
                     >
-                        <textarea
-                            name="content"
-                            id="content"
-                            value={editedNoteContent}
-                            cols={30} rows={10}
-                            onChange={(e) => {
-                                setSubmissionNoteContent(e.target.value)
-                            }}
-                        />
-                                <input type="submit" />
-                                <button type="submit"
-                                    onClick={() => {
-                                        setIsNoteEdited(false)
-                                    }}
-                                >
-                                    Anuluj edycję
-                                </button>
+                        <div className="inputBox wrap" style={{marginTop: "0", marginBottom: "5px"}}>
+                            <ContentEditable
+                                html={editedNoteContent}
+                                onChange={(e) => {
+                                    setSubmissionNoteContent(e.target.value)
+                                }}
+                            />
+                        </div>
                     </form>
+                </td>
+                <td>
+                    <div className="table-buttons">
+                        <input form="SupportNoteEdit" type="submit" />
+                        <button type="submit"
+                                onClick={() => {
+                                    setIsNoteEdited(false)
+                                }}
+                        >
+                            Anuluj edycję
+                        </button>
+                    </div>
                 </td>
             </tr>
         ) : (
             <tr>
-                <td>{supportSubmissionNoteDTO.noteContent}</td>
+                <td className="scrollable wrap">
+                    <ContentEditable
+                        html={editedNoteContent}
+                        onChange={() => {}}
+                        disabled
+                    />
+                </td>
                 <td>
-                    <button
-                        onClick={() => {
-                            setIsNoteEdited(true)
-                        }}
-                    >
-                        Edytuj notatkę
-                    </button>
-                    <button
-                        onClick={() => {
-                            handleNoteDelete(supportSubmissionNoteDTO.uuid)
-                        }}
-                    >
-                        Usuń notatkę
-                    </button>
+                    <div className="table-buttons">
+                        <button
+                            onClick={() => {
+                                setIsNoteEdited(true)
+                            }}
+                        >
+                            Edytuj notatkę
+                        </button>
+                        <button
+                            onClick={() => {
+                                handleNoteDelete(supportSubmissionNoteDTO.uuid)
+                            }}
+                        >
+                            Usuń notatkę
+                        </button>
+                    </div>
                 </td>
             </tr>
         )
