@@ -1,0 +1,43 @@
+.aside {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    white-space: normal;
+    flex-grow: 4;
+    overflow: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-width: 30%;
+}
+
+ul:has(li.aside) {
+    background-color: var(--secondary-background);
+    min-width: 320px;
+    max-width: 30%;
+    width: auto;
+    border-radius: 8px;
+    margin: 5px;
+}
+
+li.aside {
+    min-width: 300px;
+    max-width: calc(100% - 20px);
+    width: auto;
+    align-items: baseline;
+    padding-left: 20px;
+}
+
+.aside > div {
+    width: fit-content;
+}
+
+.aside .scrollable {
+    width: fit-content;
+    overflow: auto;
+}
+
+.aside .inputBox::after {
+    height: 2px;
+}
