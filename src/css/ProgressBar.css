@@ -1,0 +1,16 @@
+.progress-bar {
+    width: 100%;
+}
+
+.progress-bar progress{
+    width: 100%;
+    accent-color: var(--secondary-color)
+}
+
+.progress-bar progress::after{
+    content: 'Disc space: ' attr(unitValue) '/' attr(unitMax);
+    position: absolute;
+    left: 50%;
+    font-size: 9pt;
+    transform: translate(-50%, 12px);
+}
