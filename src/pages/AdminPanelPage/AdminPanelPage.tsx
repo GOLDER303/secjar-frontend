@@ -9,7 +9,7 @@ const AdminPanelPage: React.FC = () => {
     const outlet = useOutlet()
 
     return (
-        <div className="admin-panel-page-container">
+        <div className="user-panel-page-container">
             <h1>Admin Panel Page</h1>
             {isUserLoggedIn ? (
                 <>
@@ -21,8 +21,9 @@ const AdminPanelPage: React.FC = () => {
                             <li><Link to={"dashboard"}>Dashboard</Link></li>
                         </ul>
                     </nav>
-
-                    {outlet || <Navigate to={"dashboard"} />}
+                    <div className="tab-container">
+                        {outlet || <Navigate to={"dashboard"} />}
+                    </div>
                 </>
             ) : (
                 <h2>

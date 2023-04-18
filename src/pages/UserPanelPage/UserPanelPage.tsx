@@ -63,10 +63,11 @@ const UserPanelPage: React.FC = () => {
                             </li>
                         </ul>
                     </nav>
-
-                    <UsernamesUuidsMapProvider>
-                        {outlet ? <Outlet context={{ fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList }} /> : <Navigate to={"uploaded"} />}
-                    </UsernamesUuidsMapProvider>
+                    <div className="tab-container">
+                        <UsernamesUuidsMapProvider>
+                            {outlet ? <Outlet context={{ fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList }} /> : <Navigate to={"uploaded"} />}
+                        </UsernamesUuidsMapProvider>
+                    </div>
                 </>
             ) : (
                 <h2>
