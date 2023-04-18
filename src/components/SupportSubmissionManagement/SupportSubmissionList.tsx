@@ -18,6 +18,7 @@ const SupportSubmissionList: React.FC<UserInfoListProps> = ({ supportSubmissionD
                 <th>Dane kontaktowe</th>
                 <th>Zawartość zgłoszenia</th>
                 <th>Ilość notatek</th>
+                <th>Akcje</th>
             </tr>
             {supportSubmissionDTO.map((supportSubmission) => {
                 return (

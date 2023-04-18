@@ -1,5 +1,6 @@
 import React from "react"
 import "../../css/GenericPopup.css"
+import ContentEditable from "react-contenteditable";
 
 interface SupportSubmissionAddNotePopupProps {
     handleNoteAdd: (submissionNoteContent: string) => void
@@ -7,11 +8,11 @@ interface SupportSubmissionAddNotePopupProps {
 }
 
 const SupportSubmissionAddNotePopup: React.FC<SupportSubmissionAddNotePopupProps> = ({ handleNoteAdd, closePopup }) => {
-    const submissionNoteContent = React.useRef<HTMLTextAreaElement>(null)
+    const [submissionNoteContent, setSubmissionNoteContent] = React.useState<string>("")
 
     const handleSubmit = () => {
-        if (submissionNoteContent.current) {
-            handleNoteAdd(submissionNoteContent.current.value)
+        if (submissionNoteContent != "") {
+            handleNoteAdd(submissionNoteContent)
             closePopup()
         }
     }
@@ -24,15 +25,24 @@ const SupportSubmissionAddNotePopup: React.FC<SupportSubmissionAddNotePopupProps
                     handleSubmit()
                 }}
             >
-                <label htmlFor="content">Notatka:</label><br />
-                <textarea ref={submissionNoteContent} name="content" id="content" cols={30} rows={10} /><br />
-                <input type="submit" />
-                <button
-                    type="submit"
-                    onClick={closePopup}
-                >
-                    Close
-                </button>
+                <div className="inputBox">
+                    <ContentEditable
+                        html={submissionNoteContent}
+                        onChange={(e) => {
+                            setSubmissionNoteContent(e.target.value)
+                        }}
+                    />
+                    <label htmlFor="content">Notatka:</label>
+                </div>
+                <div className="buttons">
+                    <input type="submit" />
+                    <button
+                        type="submit"
+                        onClick={closePopup}
+                    >
+                        Close
+                    </button>
+                </div>
             </form>
         </div>
     )
