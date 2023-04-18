@@ -1,4 +1,9 @@
 .user-panel-page-container {
     position: relative;
     width: 100%;
+    padding: 10px;
+}
+
+.tab-container {
+    overflow: auto;
 }

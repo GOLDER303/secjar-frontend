@@ -1,21 +1,22 @@
 import React from "react"
 import { createSupportSubmission } from "../services/SupportService"
 import "../css/GenericForm.css"
+import ContentEditable from "react-contenteditable";
 
 const SupportPage: React.FC = () => {
     const nameInputRef = React.useRef<HTMLInputElement>(null)
     const surnameInputRef = React.useRef<HTMLInputElement>(null)
     const emailInputRef = React.useRef<HTMLInputElement>(null)
-    const descriptionInputRef = React.useRef<HTMLTextAreaElement>(null)
+    const [descriptionInputContent, setDescriptionInputContent] = React.useState<string>("")
 
     const [submissionMessage, setSubmissionMessage] = React.useState<string>("")
 
     const handleSubmit = async () => {
-        if (!nameInputRef.current || !surnameInputRef.current || !emailInputRef.current || !descriptionInputRef.current) {
+        if (!nameInputRef.current || !surnameInputRef.current || !emailInputRef.current || descriptionInputContent == "") {
             return
         }
 
-        const createSupportSubmissionResponse = await createSupportSubmission(nameInputRef.current.value, surnameInputRef.current.value, emailInputRef.current.value, descriptionInputRef.current.value)
+        const createSupportSubmissionResponse = await createSupportSubmission(nameInputRef.current.value, surnameInputRef.current.value, emailInputRef.current.value, descriptionInputContent)
 
         if (createSupportSubmissionResponse.error) {
             setSubmissionMessage("Coś poszło nie tak")
@@ -48,7 +49,12 @@ const SupportPage: React.FC = () => {
                             <label htmlFor="email">E-mail: </label>
                         </div>
                         <div className="inputBox">
-                            <textarea placeholder=" " ref={descriptionInputRef} name="description" id="description" rows={10} />
+                            <ContentEditable
+                                html={descriptionInputContent}
+                                onChange={(e) => {
+                                    setDescriptionInputContent(e.target.value)
+                                }}
+                            />
                             <label htmlFor="description">Opis zgłoszenia: </label>
                         </div>
                         <div className="buttons">

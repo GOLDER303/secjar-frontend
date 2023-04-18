@@ -13,6 +13,7 @@ const SupportNoteList: React.FC<SupportNoteListProps> = ({ supportSubmissionNote
         <table>
             <tr>
                 <th>Zawartość notatki</th>
+                <th>Akcje</th>
             </tr>
             {supportSubmissionNoteDTO.map((supportSubmissionNoteD) => {
                 return (

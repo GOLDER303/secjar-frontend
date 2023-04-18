@@ -90,6 +90,7 @@ const UserPanelPage: React.FC = () => {
                             </li>
                         </ul>
                     </nav>
+                    
                     <div className="progress-bar">
                         <progress
                             value={currentDiskSpace}
@@ -99,6 +100,7 @@ const UserPanelPage: React.FC = () => {
                         >
                         </progress>
                     </div>
+                    
                     <div className="tab-container">
                         <UsernamesUuidsMapProvider>
                             {outlet ? <Outlet context={{ fileSystemEntriesInfoList, refreshFileSystemEntriesInfoList }} /> : <Navigate to={"uploaded"} />}

@@ -1,5 +1,6 @@
 import React from "react"
 import SupportSubmissionDTO from "../../ts/interfaces/SupportSubmissionDTO"
+import ContentEditable from "react-contenteditable";
 
 interface SupportSubmissionProps {
     supportSubmissionDTO: SupportSubmissionDTO
@@ -15,33 +16,41 @@ const SupportSubmission: React.FC<SupportSubmissionProps> = ({ supportSubmission
             <td>{supportSubmissionDTO.name}</td>
             <td>{supportSubmissionDTO.surname}</td>
             <td>{supportSubmissionDTO.email}</td>
-            <td>{supportSubmissionDTO.message}</td>
-            <td>{supportSubmissionDTO.notes && supportSubmissionDTO.notes.length}</td>
+            <td className="scrollable wrap">
+                <ContentEditable
+                    html={supportSubmissionDTO.message}
+                    onChange={() => {}}
+                    disabled
+                />
+            </td>
+            <td className="number">{supportSubmissionDTO.notes && supportSubmissionDTO.notes.length}</td>
             <td>
-                <button
-                    onClick={() => {
-                        openAddNotePopup()
-                        setSupportSubmissionTarget(supportSubmissionDTO.uuid)
-                    }}
-                >
-                    Dodaj notatkę
-                </button>
-                <button
-                    onClick={() => {
-                        openReadNotesSidePanel()
-                        setSupportSubmissionTarget(supportSubmissionDTO.uuid)
-                    }}
-                >
-                    Czytaj notatki
-                </button>
-                <button
-                    onClick={() => {
-                        handleSubmissionClose()
-                        setSupportSubmissionTarget(supportSubmissionDTO.uuid)
-                    }}
-                >
-                    Zamknij zgłoszenie
-                </button>
+                <div className="table-buttons">
+                    <button
+                        onClick={() => {
+                            openAddNotePopup()
+                            setSupportSubmissionTarget(supportSubmissionDTO.uuid)
+                        }}
+                    >
+                        Dodaj notatkę
+                    </button>
+                    <button
+                        onClick={() => {
+                            openReadNotesSidePanel()
+                            setSupportSubmissionTarget(supportSubmissionDTO.uuid)
+                        }}
+                    >
+                        Czytaj notatki
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleSubmissionClose()
+                            setSupportSubmissionTarget(supportSubmissionDTO.uuid)
+                        }}
+                    >
+                        Zamknij zgłoszenie
+                    </button>
+                </div>
             </td>
         </tr>
     )
