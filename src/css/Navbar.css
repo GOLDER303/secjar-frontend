@@ -9,16 +9,16 @@ nav {
     z-index: 10;
 }
 #root > nav::before {
-    content: ' ';
+    content: " ";
     padding-right: 80px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 5px 50%;
     margin-right: 5px;
-    background-image: url("../img/logoSECJAR_orygina_4.png");
+    background-image: url("../img/logo_secjar.png");
 }
 
-nav li *{
+nav li * {
     margin: 0;
     padding: 0;
     list-style-type: none;
