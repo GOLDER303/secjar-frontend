@@ -167,7 +167,6 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                                         <FileSystemEntryInfo
                                             fileSystemEntryInfoDTO={fileSystemEntryInfo}
                                             displayRule={displayRule}
-                                            openFileInputPopup={openFileInputPopup}
                                             openFileMovePopup={openFileMovePopup}
                                             openFileSharePopup={openFileSharePopup}
                                             openDirectoryCreatePopup={openDirectoryCreatePopup}
@@ -178,6 +177,25 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                                             handleFileSystemEntryRestore={handleFileSystemEntryRestore}
                                         />
                                     )
+                                } else if (fileSystemEntryInfo.children.length > 0) {
+                                    return fileSystemEntryInfo.children.map((child) => {
+                                        if (displayRule(child)) {
+                                            return (
+                                                <FileSystemEntryInfo
+                                                    fileSystemEntryInfoDTO={child}
+                                                    displayRule={displayRule}
+                                                    openFileMovePopup={openFileMovePopup}
+                                                    openFileSharePopup={openFileSharePopup}
+                                                    openDirectoryCreatePopup={openDirectoryCreatePopup}
+                                                    setFileUploadDirectory={setFileUploadDirectory}
+                                                    handleFileDelete={handleFileDelete}
+                                                    handleFileFavoriteToggle={handleFileFavoriteToggle}
+                                                    handleFileSystemEntryDownload={handleFileSystemEntryDownload}
+                                                    handleFileSystemEntryRestore={handleFileSystemEntryRestore}
+                                                />
+                                            )
+                                        }
+                                    })
                                 }
                             })}
                         </>

@@ -79,6 +79,26 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({
                             handleFileSystemEntryRestore={handleFileSystemEntryRestore}
                         />
                     )
+                } else if (fileSystemEntryInfoDTO.children.length > 0) {
+                    return fileSystemEntryInfoDTO.children.map((child) => {
+                        if (displayRule(child)) {
+                            return (
+                                <FileSystemEntryInfo
+                                    fileSystemEntryInfoDTO={child}
+                                    displayRule={displayRule}
+                                    openFileInputPopup={openFileUploadPopup}
+                                    openFileMovePopup={openFileMovePopup}
+                                    openFileSharePopup={openFileSharePopup}
+                                    openDirectoryCreatePopup={openDirectoryCreatePopup}
+                                    setFileUploadDirectory={setFileUploadDirectory}
+                                    handleFileDelete={handleFileDelete}
+                                    handleFileFavoriteToggle={handleFileFavoriteToggle}
+                                    handleFileSystemEntryDownload={handleFileSystemEntryDownload}
+                                    handleFileSystemEntryRestore={handleFileSystemEntryRestore}
+                                />
+                            )
+                        }
+                    })
                 }
             })}
         </table>
