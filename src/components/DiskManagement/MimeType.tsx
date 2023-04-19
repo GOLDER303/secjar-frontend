@@ -7,7 +7,7 @@ interface MimeTypeProps {
 
 const MimeType: React.FC<MimeTypeProps> = ({ mimeType, handleMimeTypeDelete }) => {
     return (
-        <li className="container">
+        <li className="aside">
             {mimeType}
             <button
                 onClick={() => {
