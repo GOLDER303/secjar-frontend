@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import "../../css/FileUploadPopup.css"
+import "../../css/GenericPopup.css"
 import { shareFileSystemEntry } from "../../services/FileSystemEntryInfoService"
 
 interface FileSharePopupProps {
@@ -36,26 +36,29 @@ const FileSharePopup: React.FC<FileSharePopupProps> = ({ targetFileUuid, closePo
     }
 
     return (
-        <div className="file-upload-popup">
+        <div className="popup">
             <form
                 onSubmit={(event) => {
                     event.preventDefault()
                     handleSubmit()
                 }}
             >
-                <label htmlFor="shareType">Co chcesz zrobić? </label>
-                <select
-                    name="shareType"
-                    id="shareType"
-                    ref={shareAction}
-                >
-                    <option value="LINK_SHARE">Udostępnij przez link</option>
-                    <option value="STOP">Przestań udostępniać</option>
-                </select>
-                <button type="submit">Zatwierdź</button>
-                <button onClick={closePopup}>Zamknij</button>
+                <div className="exotic-input-box">
+                    <label htmlFor="shareType">Co chcesz zrobić? </label>
+                    <select
+                        name="shareType"
+                        id="shareType"
+                        ref={shareAction}
+                    >
+                        <option value="LINK_SHARE">Udostępnij przez link</option>
+                        <option value="STOP">Przestań udostępniać</option>
+                    </select>
+                </div>
+                <div className="buttons">
+                    <button type="submit">Zatwierdź</button>
+                    <button onClick={closePopup}>Zamknij</button>
+                </div>
             </form>
-            <br />
             {shareLink && <div>Link: {shareLink}</div>}
         </div>
     )

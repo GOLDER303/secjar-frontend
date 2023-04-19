@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import "../../css/FileUploadPopup.css"
+import "../../css/GenericPopup.css"
 import { patchFile } from "../../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../../ts/interfaces/FileSystemEntryInfoDTO"
 
@@ -44,27 +44,31 @@ const FileMovePopup: React.FC<FileMovePopupProps> = ({ targetFileUuid, fileSyste
     }
 
     return (
-        <div className="file-upload-popup">
+        <div className="popup">
             <form
                 onSubmit={(event) => {
                     event.preventDefault()
                     handleSubmit()
                 }}
             >
-                <label htmlFor="targetDirUuid">Gdzie chcesz przenieść plik?</label>
-                <select
-                    name="targetDirUuid"
-                    id="targetDirUuid"
-                    ref={targetDirSelectRef}
-                >
-                    <option value="">Folder główny</option>
-                    {directoriesInfos.map((directoryInfo) => (
-                        <option value={directoryInfo.uuid}>{directoryInfo.name}</option>
-                    ))}
-                </select>
-                {errorMessage && <p>{errorMessage}</p>}
-                <button type="submit">Przenieś</button>
-                <button onClick={closePopup}>Close</button>
+                <div className="exotic-input-box">
+                    <label htmlFor="targetDirUuid">Gdzie chcesz przenieść plik? </label>
+                    <select
+                        name="targetDirUuid"
+                        id="targetDirUuid"
+                        ref={targetDirSelectRef}
+                    >
+                        <option value="">Folder główny</option>
+                        {directoriesInfos.map((directoryInfo) => (
+                            <option value={directoryInfo.uuid}>{directoryInfo.name}</option>
+                        ))}
+                    </select>
+                    {errorMessage && <p>{errorMessage}</p>}
+                </div>
+                <div className="buttons">
+                    <button type="submit">Przenieś</button>
+                    <button onClick={closePopup}>Zamknij</button>
+                </div>
             </form>
         </div>
     )
