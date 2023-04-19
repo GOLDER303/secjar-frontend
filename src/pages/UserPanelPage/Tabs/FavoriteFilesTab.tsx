@@ -4,6 +4,7 @@ import FileMovePopup from "../../../components/FileActionsPopups/FileMovePopup"
 import FileSharePopup from "../../../components/FileActionsPopups/FileSharePopup"
 import FileUploadPopup from "../../../components/FileActionsPopups/FileUploadPopup"
 import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
+import FileSystemEntryInfoDTO from "../../../ts/interfaces/FileSystemEntryInfoDTO"
 import { fileSystemEntriesInfoListContextType } from "../UserPanelPage"
 
 const FavoriteFilesTab: React.FC = () => {
@@ -42,13 +43,16 @@ const FavoriteFilesTab: React.FC = () => {
         setIsFileSharePopupVisible(true)
     }
 
+    const displayRule = (fileSystemEntryInfo: FileSystemEntryInfoDTO) => {
+        return fileSystemEntryInfo.favorite && fileSystemEntryInfo.deleteDate == null
+    }
+
     return (
         <>
             <h2>Ulubione pliki</h2>
             <FileSystemEntryInfoList
-                fileSystemEntriesInfoDTO={fileSystemEntriesInfoList.filter((fileSystemEntryInfo) => {
-                    return fileSystemEntryInfo.deleteDate == null && fileSystemEntryInfo.favorite
-                })}
+                fileSystemEntriesInfoDTO={fileSystemEntriesInfoList}
+                displayRule={displayRule}
                 openFileUploadPopup={openFileUploadPopup}
                 openFileMovePopup={openFileMovePopup}
                 openFileSharePopup={openFileSharePopup}

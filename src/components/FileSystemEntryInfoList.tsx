@@ -1,12 +1,13 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import "../css/FileSystemEntryInfo.css"
 import { deleteFile, downloadFileSystemEntry, patchFile, restoreFileSystemEntry } from "../services/FileSystemEntryInfoService"
 import FileSystemEntryInfoDTO from "../ts/interfaces/FileSystemEntryInfoDTO"
 import FileSystemEntryInfo from "./FileSystemEntryInfo"
-import "../css/FileSystemEntryInfo.css"
 
 interface FileSystemEntryInfoListProps {
     fileSystemEntriesInfoDTO: FileSystemEntryInfoDTO[]
+    displayRule: (fileSystemEntryInfo: FileSystemEntryInfoDTO) => boolean
     openFileUploadPopup?: () => void
     openFileMovePopup?: (targetFileUuid: string) => void
     openFileSharePopup?: (targetFileUuid: string) => void
@@ -15,7 +16,16 @@ interface FileSystemEntryInfoListProps {
     refreshFileSystemEntriesInfos: () => void
 }
 
-const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileSystemEntriesInfoDTO, openFileUploadPopup, openFileMovePopup, openFileSharePopup, openDirectoryCreatePopup, setFileUploadDirectory, refreshFileSystemEntriesInfos }) => {
+const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({
+    fileSystemEntriesInfoDTO,
+    displayRule,
+    openFileUploadPopup,
+    openFileMovePopup,
+    openFileSharePopup,
+    openDirectoryCreatePopup,
+    setFileUploadDirectory,
+    refreshFileSystemEntriesInfos,
+}) => {
     const navigate = useNavigate()
 
     const handleFileDelete = async (fileUuid: string, instantDelete: boolean) => {
@@ -53,20 +63,23 @@ const FileSystemEntryInfoList: React.FC<FileSystemEntryInfoListProps> = ({ fileS
                 <th>Akcje</th>
             </tr>
             {fileSystemEntriesInfoDTO.map((fileSystemEntryInfoDTO) => {
-                return (
-                    <FileSystemEntryInfo
-                        fileSystemEntryInfoDTO={fileSystemEntryInfoDTO}
-                        openFileInputPopup={openFileUploadPopup}
-                        openFileMovePopup={openFileMovePopup}
-                        openFileSharePopup={openFileSharePopup}
-                        openDirectoryCreatePopup={openDirectoryCreatePopup}
-                        setFileUploadDirectory={setFileUploadDirectory}
-                        handleFileDelete={handleFileDelete}
-                        handleFileFavoriteToggle={handleFileFavoriteToggle}
-                        handleFileSystemEntryDownload={handleFileSystemEntryDownload}
-                        handleFileSystemEntryRestore={handleFileSystemEntryRestore}
-                    />
-                )
+                if (displayRule(fileSystemEntryInfoDTO)) {
+                    return (
+                        <FileSystemEntryInfo
+                            fileSystemEntryInfoDTO={fileSystemEntryInfoDTO}
+                            displayRule={displayRule}
+                            openFileInputPopup={openFileUploadPopup}
+                            openFileMovePopup={openFileMovePopup}
+                            openFileSharePopup={openFileSharePopup}
+                            openDirectoryCreatePopup={openDirectoryCreatePopup}
+                            setFileUploadDirectory={setFileUploadDirectory}
+                            handleFileDelete={handleFileDelete}
+                            handleFileFavoriteToggle={handleFileFavoriteToggle}
+                            handleFileSystemEntryDownload={handleFileSystemEntryDownload}
+                            handleFileSystemEntryRestore={handleFileSystemEntryRestore}
+                        />
+                    )
+                }
             })}
         </table>
     )

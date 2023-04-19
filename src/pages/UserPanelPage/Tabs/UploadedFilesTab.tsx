@@ -5,6 +5,7 @@ import FileMovePopup from "../../../components/FileActionsPopups/FileMovePopup"
 import FileSharePopup from "../../../components/FileActionsPopups/FileSharePopup"
 import FileUploadPopup from "../../../components/FileActionsPopups/FileUploadPopup"
 import FileSystemEntryInfoList from "../../../components/FileSystemEntryInfoList"
+import FileSystemEntryInfoDTO from "../../../ts/interfaces/FileSystemEntryInfoDTO"
 import { fileSystemEntriesInfoListContextType } from "../UserPanelPage"
 
 const UploadedFilesTab: React.FC = () => {
@@ -55,11 +56,16 @@ const UploadedFilesTab: React.FC = () => {
         setIsDirectoryCreatePopupVisible(false)
     }
 
+    const displayRule = (fileSystemEntryInfo: FileSystemEntryInfoDTO) => {
+        return fileSystemEntryInfo.deleteDate == null
+    }
+
     return (
         <>
             <h2>Przesłane pliki</h2>
             <FileSystemEntryInfoList
-                fileSystemEntriesInfoDTO={fileSystemEntriesInfoList.filter((fileSystemEntryInfo) => fileSystemEntryInfo.deleteDate == null)}
+                fileSystemEntriesInfoDTO={fileSystemEntriesInfoList}
+                displayRule={displayRule}
                 openFileUploadPopup={openFileUploadPopup}
                 openFileMovePopup={openFileMovePopup}
                 openFileSharePopup={openFileSharePopup}
@@ -67,7 +73,7 @@ const UploadedFilesTab: React.FC = () => {
                 setFileUploadDirectory={setFileUploadDirectory}
                 refreshFileSystemEntriesInfos={refreshFileSystemEntriesInfoList}
             />
-            <div style={{display: "flex", gap: "10px"}}>
+            <div style={{ display: "flex", gap: "10px" }}>
                 <button
                     onClick={() => {
                         setFileUploadDirectory(undefined)

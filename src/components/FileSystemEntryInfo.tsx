@@ -9,6 +9,7 @@ import DoubleClickEditText from "./DoubleClickEditText"
 
 interface FileEntryProps {
     fileSystemEntryInfoDTO: FileSystemEntryInfoDTO
+    displayRule: (fileSystemEntryInfo: FileSystemEntryInfoDTO) => boolean
     openFileInputPopup?: () => void
     openFileMovePopup?: (targetFileUuid: string) => void
     openFileSharePopup?: (targetFileUuid: string) => void
@@ -22,6 +23,7 @@ interface FileEntryProps {
 
 const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
     fileSystemEntryInfoDTO,
+    displayRule,
     openFileInputPopup,
     openFileMovePopup,
     openFileSharePopup,
@@ -160,20 +162,23 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                     {showFileArray && (
                         <>
                             {fileSystemEntryInfoDTO.children.map((fileSystemEntryInfo) => {
-                                return (
-                                    <FileSystemEntryInfo
-                                        fileSystemEntryInfoDTO={fileSystemEntryInfo}
-                                        openFileInputPopup={openFileInputPopup}
-                                        openFileMovePopup={openFileMovePopup}
-                                        openFileSharePopup={openFileSharePopup}
-                                        openDirectoryCreatePopup={openDirectoryCreatePopup}
-                                        setFileUploadDirectory={setFileUploadDirectory}
-                                        handleFileDelete={handleFileDelete}
-                                        handleFileFavoriteToggle={handleFileFavoriteToggle}
-                                        handleFileSystemEntryDownload={handleFileSystemEntryDownload}
-                                        handleFileSystemEntryRestore={handleFileSystemEntryRestore}
-                                    />
-                                )
+                                if (displayRule(fileSystemEntryInfo)) {
+                                    return (
+                                        <FileSystemEntryInfo
+                                            fileSystemEntryInfoDTO={fileSystemEntryInfo}
+                                            displayRule={displayRule}
+                                            openFileInputPopup={openFileInputPopup}
+                                            openFileMovePopup={openFileMovePopup}
+                                            openFileSharePopup={openFileSharePopup}
+                                            openDirectoryCreatePopup={openDirectoryCreatePopup}
+                                            setFileUploadDirectory={setFileUploadDirectory}
+                                            handleFileDelete={handleFileDelete}
+                                            handleFileFavoriteToggle={handleFileFavoriteToggle}
+                                            handleFileSystemEntryDownload={handleFileSystemEntryDownload}
+                                            handleFileSystemEntryRestore={handleFileSystemEntryRestore}
+                                        />
+                                    )
+                                }
                             })}
                         </>
                     )}
