@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
         <nav>
             <ul>
                 <li>
-                    <Link to={"/home"}>Home</Link>
+                    <Link to={"/home"}>Panel główny</Link>
                 </li>
                 <li>
                     <Link to={"/support"}>Pomoc Techniczna</Link>
@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
                         <Link to={"/adminPanel"}>Admin panel</Link>
                     </li>
                 )}
-                <li>{isUserLoggedIn ? <button onClick={logoutHandler}>Logout</button> : <Link to={"/login"}>Login</Link>}</li>
+                <li>{isUserLoggedIn ? <button onClick={logoutHandler}>Wyloguj</button> : <Link to={"/login"}>Zaloguj</Link>}</li>
             </ul>
         </nav>
     )

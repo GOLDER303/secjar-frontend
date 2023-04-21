@@ -80,9 +80,9 @@ const UploadedFilesTab: React.FC = () => {
                         openFileUploadPopup()
                     }}
                 >
-                    Upload to root
+                    Prześlij
                 </button>
-                <button onClick={() => openDirectoryCreatePopup()}>Create directories</button>
+                <button onClick={() => openDirectoryCreatePopup()}>Stwórz folder</button>
             </div>
 
             {isFileUploadPopupVisible && (

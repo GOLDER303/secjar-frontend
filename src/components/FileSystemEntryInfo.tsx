@@ -86,14 +86,14 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                                 handleFileSystemEntryDownload(fileSystemEntryInfoDTO.uuid, fileSystemEntryInfoDTO.name, contentType)
                             }}
                         >
-                            Download
+                            Pobierz
                         </button>
                         <button
                             onClick={() => {
                                 handleFileDelete(fileSystemEntryInfoDTO.uuid, location.pathname === "/home/deleted")
                             }}
                         >
-                            Delete
+                            Usuń
                         </button>
                         {location.pathname === "/home/deleted" && (
                             <button
@@ -101,7 +101,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                                     handleFileSystemEntryRestore(fileSystemEntryInfoDTO.uuid)
                                 }}
                             >
-                                Restore
+                                Przywróć
                             </button>
                         )}
                         {openFileMovePopup && (
@@ -110,7 +110,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                                     openFileMovePopup(fileSystemEntryInfoDTO.uuid)
                                 }}
                             >
-                                Move
+                                Przemiść
                             </button>
                         )}
                         {openFileSharePopup && (
@@ -119,7 +119,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                                     openFileSharePopup(fileSystemEntryInfoDTO.uuid)
                                 }}
                             >
-                                Share
+                                Udostępnij
                             </button>
                         )}
                         {isDirectory && openDirectoryCreatePopup && (
@@ -128,7 +128,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                                     openDirectoryCreatePopup(fileSystemEntryInfoDTO.uuid)
                                 }}
                             >
-                                Create Directory
+                                Utwórz folder
                             </button>
                         )}
                         {isDirectory && openFileInputPopup && setFileUploadDirectory && (
@@ -138,7 +138,7 @@ const FileSystemEntryInfo: React.FC<FileEntryProps> = ({
                                     setFileUploadDirectory(fileSystemEntryInfoDTO.uuid)
                                 }}
                             >
-                                Upload here
+                                Prześlij tutaj
                             </button>
                         )}
                     </div>

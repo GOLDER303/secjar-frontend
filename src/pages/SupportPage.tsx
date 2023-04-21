@@ -1,7 +1,7 @@
 import React from "react"
 import { createSupportSubmission } from "../services/SupportService"
 import "../css/GenericForm.css"
-import ContentEditable from "react-contenteditable";
+import ContentEditable from "react-contenteditable"
 
 const SupportPage: React.FC = () => {
     const nameInputRef = React.useRef<HTMLInputElement>(null)
@@ -29,7 +29,7 @@ const SupportPage: React.FC = () => {
         <div className="container">
             <div className="box-outline">
                 <div className="box-content wide-inputBox">
-                    <h1 className="header">Support Page</h1>
+                    <h1 className="header">Pomoc techniczna</h1>
                     <form
                         onSubmit={(event) => {
                             event.preventDefault()
@@ -37,15 +37,33 @@ const SupportPage: React.FC = () => {
                         }}
                     >
                         <div className="inputBox">
-                            <input placeholder=" " ref={nameInputRef} type="text" name="name" id="name" />
+                            <input
+                                placeholder=" "
+                                ref={nameInputRef}
+                                type="text"
+                                name="name"
+                                id="name"
+                            />
                             <label htmlFor="name">Imię: </label>
                         </div>
                         <div className="inputBox">
-                            <input placeholder=" " ref={surnameInputRef} type="text" name="surname" id="surname" />
+                            <input
+                                placeholder=" "
+                                ref={surnameInputRef}
+                                type="text"
+                                name="surname"
+                                id="surname"
+                            />
                             <label htmlFor="surname">Nazwisko: </label>
                         </div>
                         <div className="inputBox">
-                            <input placeholder=" " ref={emailInputRef} type="email" name="email" id="email" />
+                            <input
+                                placeholder=" "
+                                ref={emailInputRef}
+                                type="email"
+                                name="email"
+                                id="email"
+                            />
                             <label htmlFor="email">E-mail: </label>
                         </div>
                         <div className="inputBox">

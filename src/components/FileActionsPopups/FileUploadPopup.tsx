@@ -50,7 +50,10 @@ const FileUploadPopup: React.FC<FileUploadPopupProps> = ({ fileUploadCallback, c
                     onChange={(e) => setFileToUpload(e.target.files ? e.target.files[0] : null)}
                 />
                 <div className="buttons">
-                    <input type="submit" />
+                    <input
+                        type="submit"
+                        value="Prześlij"
+                    />
                     <button
                         type="submit"
                         onClick={closePopup}

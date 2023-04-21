@@ -37,8 +37,8 @@ const DirectoryCreatePopup: React.FC<DirectoryCreatePopupProps> = ({ parenDirect
                     <label htmlFor="directoryName">Nazwa folderu: </label>
                 </div>
                 <div className="buttons">
-                    <button type="submit">Apply</button>
-                    <button onClick={() => closePopup()}>Cancel</button>
+                    <button type="submit">Stwórz</button>
+                    <button onClick={() => closePopup()}>Anuluj</button>
                 </div>
             </form>
         </div>
