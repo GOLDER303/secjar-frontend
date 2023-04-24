@@ -1,5 +1,7 @@
+import { Navigate } from "react-router-dom"
+
 const IndexPage = () => {
-    return <h1>Index Page</h1>
+    return <Navigate to={"login"} />
 }
 
 export default IndexPage
